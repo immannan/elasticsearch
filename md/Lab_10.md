@@ -554,7 +554,7 @@ Let\'s see what each filter plugin is doing.
 We essentially specify the whereabouts of the database that we want to connect to, the
 username/password, the JDBC driver `.jar` file, and the class.
 We already created the database in the [*Setting up the metadata
-database*]  section[*.*]  
+database*]  section. 
 
 Download the latest MySQL JDBC Driver, also known
 as **Connector**/**J**,
@@ -807,10 +807,10 @@ Linux-like shell that supports the `curl` command and
 basic **BASH** (Bourne Again SHell) commands.
 As you may already have a GitHub workspace checked out, you may be
 using [*Git for Windows, *] which has Git
-BASH.[* *] This can be used to run the script that loads data.
+BASH. This can be used to run the script that loads data.
 If you don\'t have Git BASH, please download and install [*Git for
 Windows*]  from <https://git-scm.com/download/win> and launch
-Git BASH[* *] to run the commands mentioned in this section.
+Git BASH to run the commands mentioned in this section.
 
 
 Now, go to
@@ -1072,7 +1072,7 @@ over time
 2.  Set up the **Metrics** section exactly same as the first
     chart that we created, that
     is `Average Temperature over time` on
-    the `reading`[* *] field.
+    the `reading` field.
 3.  Since we are aggregating the data over
     the **time** field, we need to choose the **Date
     Histogram** aggregation in the `Buckets` section.

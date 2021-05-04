@@ -28,7 +28,7 @@ The main task of an analyzer is to take the value of a field and break
 it down into terms. In Lab 2, [*Getting Started with
 Elasticsearch*], we looked at the structure of an inverted index. The job of the analyzer is to take
 documents and each field within them and extract terms from them. These
-terms[* *] make the index searchable, that is, they can help
+terms make the index searchable, that is, they can help
 us find out which documents contain particular search terms.
 
 The analyzer performs this process of breaking up input character
@@ -123,7 +123,7 @@ the following effect:
 `I am not feeling well today _sad_`.
 
 Since character filters are at the very beginning of the processing
-chain in an analyzer (see [*Figure 3.1*] ),[* *] the
+chain in an analyzer (see [*Figure 3.1*] ), the
 tokenizer will always see the replaced characters. Character filters can
 be useful for replacing characters with something more meaningful in
 certain cases, such as replacing the numeric characters from other
@@ -368,7 +368,7 @@ are two things to notice here:
     additional configuration on Standard Analyzer.
 -   We created one type called `_doc` in the index and
     explicitly set a field level analyzer on the only
-    field, `my_text`[*.*] 
+    field, `my_text`.
 
 
 Let\'s check how Elasticsearch will do the analysis for
@@ -437,7 +437,7 @@ following tokens:
 ```
 
 Please note that, in this case, the field level analyzer for the
-`my_field`[* *] field was set to Standard Analyzer
+`my_field` field was set to Standard Analyzer
 explicitly. Even if it wasn\'t set explicitly for the field, Standard
 Analyzer is the default analyzer if no other analyzer is specified.
 
@@ -722,7 +722,7 @@ The `title` and `description` fields are analyzed
 text fields on which analysis should be
 performed. This will enable full-text queries on these fields. The
 `manufacturer` field is of the `text` type, but it
-also has a field with the name `raw`[*.*]  The
+also has a field with the name `raw`. The
 `manufacturer` field is stored in two
 ways, as `text`, and `manufacturer.raw` is stored as
 a `keyword`. All fields of the `keyword`
@@ -799,7 +799,7 @@ during indexing. Here, specifically, we are looking at how the inverted
 index is built and queried for the `manufacturer.raw` field.
 Remember, from our definition of the index, the
 `manufacturer.raw` field is of
-the `keyword` type.[* *] The `keyword`
+the `keyword` type. The `keyword`
 type fields are not analyzed; the field\'s value is directly stored as a
 term in the inverted index. 
 
@@ -917,7 +917,7 @@ Please take a note of the following:
     executed as a filter. It doesn\'t do the scoring. All documents have
     a score of one.
 -   The `hits.hits` array lists all the
-    actual `hits`[*.*]  Elasticsearch doesn\'t
+    actual `hits`. Elasticsearch doesn\'t
     return all `201` hits in a single pass by default. It just
     returns the first 10 records. If you wish to scroll through all
     results, you can do so easily by issuing multiple queries, as we
@@ -1138,7 +1138,7 @@ a document fits the query, we can speed up the query by wrapping it
 inside `constant_score` with a `filter`. There are
 also other types of compound queries that can help in converting
 different types of queries and combining other queries; we will look at
-them when we examine compound queries[*.*] 
+them when we examine compound queries.
 
 
 
@@ -1310,7 +1310,7 @@ By default, if the search term specified
 results in multiple terms after applying the analyzer, we need a way to
 combine the results from individual terms. As we saw in the preceding
 example, the default behavior of
-the `match`[* *] query is to combine the results
+the `match` query is to combine the results
 using the [*or*]  operator, that is, one of the terms has to
 be present in the document\'s field.
 
@@ -1453,10 +1453,10 @@ real video saltware aquarium on your desktop!
 
 What we want are all the products that have this exact sequence of words
 right next to each other: `real video saltware aquarium`. We
-can use the `match_phrase`[* *] query to achieve it.
-The `match`[* *] query will not work, as it doesn\'t
+can use the `match_phrase` query to achieve it.
+The `match` query will not work, as it doesn\'t
 consider the sequence of terms and their proximity to each other.
-The `match`[* *] query can include all those
+The `match` query can include all those
 documents that have any of the terms, even when they are out of order
 within the document:
 
@@ -1501,7 +1501,7 @@ The response will look like the following:
 }
 ```
 
-The `match_phrase`[* *] query also supports
+The `match_phrase` query also supports
 the `slop` parameter, which allows you to specify an integer:
 0, 1, 2, 3, and so on. `slop` relaxes the number of
 words/terms that can be skipped at the time of querying.
@@ -1669,7 +1669,7 @@ GET /amazon_products/_search
 
 Notice the text in bold. This part is the actual `term` query.
 By default, the `query` JSON element that contains the bold
-text defines a query context[*.*] 
+text defines a query context.
 
 The response contains the score for every document. Please see the
 following partial response:
@@ -1775,8 +1775,8 @@ Let\'s look at the `bool` query next.
 The `bool` query in Elasticsearch is your Swiss Army knife. It can help you write many types of
 complex queries. If you are come from an SQL background, you already
 know how to filter based on
-multiple `AND`[* *] and `OR` conditions in
-the `WHERE`[* *] clause. The `bool` query
+multiple `AND` and `OR` conditions in
+the `WHERE` clause. The `bool` query
 allows you to combine multiple scoring and
 non-scoring queries.
 
@@ -1858,7 +1858,7 @@ GET /amazon_products/_search
 
 Since we want to `OR` the conditions, we have placed them
 under `should`. Since we are not interested in the scores, we
-have wrapped our `bool`[* *] query inside a
+have wrapped our `bool` query inside a
 `constant_score` query.
 
 #### Combining AND and OR conditions
@@ -1958,7 +1958,7 @@ GET /amazon_products/_search
 }
 ```
 
-The `bool`[* *] query with the `must_not`
+The `bool` query with the `must_not`
 element is useful for negate any query. To negate or apply
 a `NOT` filter to the query, it should be wrapped inside the
 `bool` with `must_not`, as follows:
@@ -2063,7 +2063,7 @@ follow the steps mentioned in
 [lab-03/products\_with\_features\_data](https://github.com/fenago/elasticsearch/tree/v7.0/lab-03/products_with_features_data).
 
 Here, we want to establish a relationship between
-products[* *] and features. When using the `join`
+products and features. When using the `join`
 datatype, we still need to index everything into a single Elasticsearch
 index within a single Elasticsearch type. Remember, we can\'t have more
 than one type within a single index. The `join` datatype
@@ -2130,7 +2130,7 @@ PUT amazon_products_with_features/doc/c0001_screen_size?routing=c0001
 
 Notice that, while indexing a `feature`, we need to set which
 is the parent of the document
-within `product_or_feature`[*.*]  We also need to
+within `product_or_feature`. We also need to
 set a routing parameter that is equal to the document ID of the parent
 so that the child document gets indexed in the same shard as the
 parent. Please follow the instructions at
@@ -2219,15 +2219,15 @@ Please note the following points about the query:
     is used will be run against the child type that we specified. We are
     using a `bool` query because we want to filter by all features
     where---`feature_key` =
-    `processor_series`[* *] **AND `feature_value`
-    = `Core i7`[*.*] 
+    `processor_series` **AND `feature_value`
+    = `Core i7`.
 -   We have used a `bool` query, as explained in the previous
     point. The first of the conditions is included as a `term`
     query here under the `must` clause. This `term`
     query checks that we filter for `feature_key` =
-    `processor_series`[*.*] 
+    `processor_series`.
 -   This is the second condition under
-    the `must`[* *] clause, in which the
+    the `must` clause, in which the
     `term` query checks that we filter
     for `feature_value` = `Core i5`.
 
@@ -2280,7 +2280,7 @@ have used the `join` type in Elasticsearch.
 
 
 
-In the previous type of query, `has_child`,[* *] we
+In the previous type of query, `has_child`, we
 wanted to get records of the `parent_type` query based on a
 query that we executed against the child type. The
 `has_parent` query is useful for exactly the opposite purpose,
@@ -2422,8 +2422,8 @@ GET /amazon_products_with_features/_search
 ```
 
 The response of this query will be exactly the same as
-the `has_parent`[* *] query we wrote earlier. The
-key difference between the `has_parent`[* *] query
+the `has_parent` query we wrote earlier. The
+key difference between the `has_parent` query
 and the `parent_id` query is that the former is used to get
 all children based on an arbitrary Elasticsearch query executed against
 the `parent_type` query, whereas the latter
@@ -2456,9 +2456,3 @@ querying Elasticsearch data. There are many more types of queries
 supported by Elasticsearch, but we have covered the most essential ones.
 This should help you get started and enable you to understand other
 types of queries from the Elasticsearch reference documentation.
-
-In Lab 4, [*Analytics with Elasticsearch*], we will learn
-about the analytics capabilities of Elasticsearch. With that lab
-under your belt, we will conclude by learning the core components of the
-Elastic Stack and Elasticsearch, and you will be well-equipped to
-understand the other components of the Elastic Stack.

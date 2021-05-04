@@ -849,7 +849,7 @@ Once in production, it often happens that we need to reindex data from one ind
 or more applications developed in Java, Python, .NET, or other
 programming environments that may be referring to these indexes. In the
 event that the production index needs to be changed
-from `index1`[* *] to `index2`, it will
+from `index1` to `index2`, it will
 require a change in all client applications.
 
 Aliases come to the rescue here. They offer extra flexibility, and

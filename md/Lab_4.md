@@ -72,7 +72,7 @@ POST /<index_name>/_search
 }
 ```
 
-The `aggs`[* *] element should contain the actual
+The `aggs` element should contain the actual
 aggregation query. The body depends on the
 type of aggregation that we want to do. We will cover these aggregations
 later in this lab. 
@@ -650,7 +650,7 @@ GET bigginsight/_search
 ```
 
 These aggregations were really simple. Now, let\'s look at some more
-advanced stats and extended stats[* *] aggregations.
+advanced stats and extended stats aggregations.
 
 
 ### Stats and extended stats aggregations
@@ -904,7 +904,7 @@ in the network traffic data example that we have loaded, we have the
 following question:
 
 Which are the
-top categories[*,*] **[* *] **that
+top categories[*,*] ** **that
 is, [*categories that are surfed the most by users?*] 
 
 We are interested in the most surfed categories -- not in terms of the
@@ -1104,7 +1104,7 @@ This returns a response like the following:
 ```
 
 Note
-that `sum_other_doc_count`[* *] **has a
+that `sum_other_doc_count` **has a
 big value, `129191`. This is a big number that\'s relative to
 the total hits; as we saw in the previous query, there are around
 242,000 documents in the index. The reason for this is that the
@@ -1119,7 +1119,7 @@ network traffic data. The number in
 remaining 20 applications that were not included in the buckets list.
 
 To get the top [*n *] buckets instead of the default 10, we
-can use the[* *] `size` parameter inside the
+can use the `size` parameter inside the
 `terms` aggregation:
 
 ```
@@ -1139,7 +1139,7 @@ GET /bigginsight/_search?size=0
 Notice that this `size` (specified inside the
 `terms` aggregation) is different from the `size`
 specified at the top level. At the top level,
-the `size`[* *] parameter is used to prevent any
+the `size` parameter is used to prevent any
 search hits, whereas the `size` parameter being used inside
 the `terms` aggregation denotes the maximum number of term
 buckets to be returned. 
@@ -1151,7 +1151,7 @@ with Kibana*], you will learn that Kibana terms aggregation
 is useful for generating pie and bar charts.
 
 Next, we will look at how to do bucketing on `numerical` types
-of fields[*.*] 
+of fields.
 
 
 ### Bucketing on numerical data
@@ -1353,7 +1353,7 @@ you will almost always need to apply some filters before applying
 aggregations (either metric or bucket aggregations).
 
 Let\'s revisit the example that we looked at in the [*Terms
-aggregation*]  section[*.*]  We found out the top
+aggregation*]  section. We found out the top
 categories in the whole index and type. Now, what we want to do is find
 the top category for a specific customer, not for all of the customers:
 
@@ -1644,7 +1644,7 @@ Let\'s look at them, one by one.
 
 
 Why would you want to use filter
-aggregation[*?*]  Filter aggregation[* *] allows you
+aggregation[*?*]  Filter aggregation allows you
 to create a single bucket using any arbitrary filter and computes the
 metrics within that bucket. 
 
@@ -2160,7 +2160,7 @@ the `unit` parameter as km, mi, and so on, to switch to
 different units.
 
 Now, let\'s look at what happens if you specify both `from`
-and `to`[* *] in the geodistance aggregation. This
+and `to` in the geodistance aggregation. This
 will correspond to the right circle in the preceding diagram:
 
 ```
@@ -2319,7 +2319,7 @@ aggregation.
 
 
 While discussing Date Histogram aggregation, in the [*Focusing on a
-specific day and changing intervals*] [* *] section,
+specific day and changing intervals*]  section,
 we looked at the aggregation that\'s used to compute hourly bandwidth usage for one particular day. After
 completing that exercise, we had data for September 24, with hourly
 consumption between 12:00 am to 1:00 am, 1:00 am to 2:00 am, and so on.
@@ -2373,7 +2373,7 @@ over the newly added code, which has been annotated with numbers:
     its name, `cumulative_sum`, here.
 -   The `buckets_path` element refers to the metric over which
     we want to do the cumulative sum. In our case, we want to sum over
-    the `hourly_usage`[* *] metric that was created
+    the `hourly_usage` metric that was created
     previously.
 
 
