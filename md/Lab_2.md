@@ -30,7 +30,6 @@ and aware of the REST API. It allows for auto completion, and for the
 formatting of queries as you write them.
 
 
-
 In Lab 1, we successfully
 installed Kibana and launched the UI at
 `http://localhost:5601`. As we mentioned previously, Kibana is
@@ -39,17 +38,18 @@ data through visualizations, but it also has developer tools such as the `Consol
 the `Console` UI:
 
 
-![](./images/im1.PNG)
+![](./images/im2.PNG)
+
+![](./images/im3.PNG)
 
 
-In Kibana 7.0, you can navigate to the `Console` by first clicking
-on `Console` under `Manage and Administer the Elastic Stack`.
 The Console is divided into two parts: the editor pane and the results
 pane. You can type the REST API command and press the green
 triangle-like icon, which sends the query to the Elasticsearch instance
 (or cluster).
 
- 
+
+![](./images/im4.PNG)
 
 Here, we have simply sent the `GET /` query. This is
 equivalent to the `curl` command that we sent to Elasticsearch
@@ -64,10 +64,8 @@ and port with every request. As you start typing in the `Console`
 editor, you will get an autosuggestion dropdown, as displayed
 in the following screenshot:
 
+![](./images/im1.PNG)
 
-![](./images/im2.PNG)
-
-![](./images/im3.PNG)
 
 
 
@@ -157,13 +155,10 @@ PUT /customers/_doc/1
  "lastName": "Smith",
  "contact": {
  "mobile": "212-xxx-yyyy"
- },
- ...
+ }
+
 }
 ```
-
- 
-
  
 
 The following code is for the index for products:
@@ -172,8 +167,7 @@ The following code is for the index for products:
 PUT /products/_doc/1
 {
  "title": "Apple iPhone Xs (Gold, 4GB RAM, 64GB Storage, 12 MP Dual Camera, 458 PPI Display)",
- "price": 999.99,
- ...
+ "price": 999.99
 }
 ```
 
@@ -200,8 +194,7 @@ PUT /catalog/_doc/2
 }
 ```
 
-Copy and paste this example into the editor of your Kibana Console UI
-and execute it.
+Copy and paste this example into the editor of your Kibana Console UI and execute it.
 
 As you can see, the product has many different fields, as it is of a
 completely different category. Yet, there are some fields that are
@@ -331,14 +324,6 @@ is mapped as follows:
 }
 ```
 
-As you may have noticed, each field that was sent as a string is
-assigned the `text` datatype. The `text` datatype
-enables full-text search on a field. Additionally, the same field is
-also stored as a multi-field, and it is also stored as
-a `keyword` type. This effectively enables
-full-text search and analytics (such as sorting, aggregations, and
-filtering) on the same field. We will look at both search and analytics
-in the upcoming labs of this book.
 
 
 
@@ -408,7 +393,7 @@ string, as highlighted in the response:
 {
   "_index" : "catalog",
   "_type" : "_doc",
-  "_id" : "1ZFMpmoBa_wgE5i2FfWV",
+  "_id" : "UpdateIdHere",
   "_version" : 1,
   "result" : "created",
   "_shards" : {
@@ -421,14 +406,14 @@ string, as highlighted in the response:
 }
 ```
 
+<span style="color:red;">Copy "_id" field value and save it, we will use its value in the next steps.</span>
+
 
 ### Note
 
 As per pure REST conventions, `POST` is used for creating a
 new resource and `PUT` is used for updating an existing
-resource. Here, the usage of `PUT` is equivalent to saying [*I
-know the ID that I want to assign, so use this ID while indexing this
-document*] . 
+resource. Here, the usage of `PUT` is equivalent to saying [*I know the ID that I want to assign, so use this ID while indexing this document*] . 
 
 
 
@@ -439,8 +424,10 @@ document*] . 
 The get API is useful for retrieving a document when you already know the ID of the document. It is essentially a get by primary key operation, as follows:
 
 ```
-GET /catalog/_doc/1ZFMpmoBa_wgE5i2FfWV
+GET /catalog/_doc/UpdateIdHere
 ```
+
+**Note:** Replace `UpdateIdHere` with your "_id" value.
 
 The format of this request is `GET /<index>/<type>/<id>`. The
 response would be as expected:
@@ -449,7 +436,7 @@ response would be as expected:
 {
   "_index" : "catalog",
   "_type" : "_doc",
-  "_id" : "1ZFMpmoBa_wgE5i2FfWV",
+  "_id" : "UpdateIdHere",
   "_version" : 1,
   "_seq_no" : 4,
   "_primary_term" : 1,
@@ -496,17 +483,20 @@ The response of the update request is as follows:
 
 ```
 {
-"_index": "catalog",
-"_type": "_doc",
-"_id": "1",
-"_version": 2,
-"result": "updated",
-"_shards": {
-"total": 2,
-"successful": 1,
-"failed": 0
+  "_index" : "catalog",
+  "_type" : "_doc",
+  "_id" : "1",
+  "_version" : 4,
+  "result" : "updated",
+  "_shards" : {
+    "total" : 2,
+    "successful" : 1,
+    "failed" : 0
+  },
+  "_seq_no" : 6,
+  "_primary_term" : 1
 }
-}
+
 ```
 
 Internally, Elasticsearch maintains the version of each document.
@@ -526,9 +516,6 @@ provided `doc` with the existing document. If the document
 with the given ID doesn\'t exist, it inserts a new document with the
 given document contents.
 
- 
-
- 
 
 The following example uses `doc_as_upsert` to merge into the
 document with an ID of `3` or insert a new document if it
@@ -539,8 +526,8 @@ POST /catalog/_update/3
 {
 "doc": {
     "author": "Albert Paro",
-    "title": "Elasticsearch 5.0 Cookbook",
-    "description": "Elasticsearch 5.0 Cookbook Third Edition",
+    "title": "Elasticsearch 7",
+    "description": "Elasticsearch 7 Course",
 "price": "54.99"
 },
 "doc_as_upsert": true
@@ -552,7 +539,7 @@ field or another field in the document. The following update uses an
 inline script to increase the price by two for a specific product:
 
 ```
-POST /catalog/_update/1ZFMpmoBa_wgE5i2FfWV
+POST /catalog/_update/UpdateIdHere
 {
   "script": {
     "source": "ctx._source.price += params.increment",
@@ -572,21 +559,16 @@ POST /catalog/_update/1ZFMpmoBa_wgE5i2FfWV
 The delete API lets you delete a document by ID:
 
 ```
-DELETE /catalog/_doc/1ZFMpmoBa_wgE5i2FfWV
+DELETE /catalog/_doc/UpdateIdHere
 ```
 
- 
-
- 
-
-The response of the delete operation is as
-follows:
+The response of the delete operation is as follows:
 
 ```
 {
   "_index" : "catalog",
   "_type" : "_doc",
-  "_id" : "1ZFMpmoBa_wgE5i2FfWV",
+  "_id" : "UpdateIdHere",
   "_version" : 4,
   "result" : "deleted",
   "_shards" : {
@@ -625,7 +607,7 @@ In this section, we will look at the following:
 You can create an index and specify the number of shards and replicas to create:
 
 ```
-PUT /catalog
+PUT /catalog_abc
 {
   "settings": {
     "index": {
@@ -779,11 +761,6 @@ PUT /catalog/_mapping
 }
 ```
 
- 
-
- 
-
- 
 
 This mapping is merged into the existing mappings of the
 `_doc` type. The mapping looks like the following after it is
@@ -963,14 +940,12 @@ remove the unnecessary repetition of documents:
 
 ### Note
 
-The hits list contained within an array doesn\'t contain all matched
-documents. It would be wasteful to return everything that matched the
-search criteria, as there could be millions or billions of such matched
-documents. Elasticsearch truncates the hits by `size`, which
+Elasticsearch truncates the hits by `size`, which
 can be optionally specified as a request parameter using
 `GET /_search?size=100`. The default value for the
 `size` is 10, hence the search hits array will contain up to
 10 records by default.
+
 
 ##### Searching all documents in one index
 
@@ -993,17 +968,20 @@ GET /catalog/_doc/_search
 The version with the `_doc` type name produces a deprecation
 warning because each index is supposed to contain only one type.
 
- 
 
 ##### Searching all documents in multiple indexes
 
 
-
-The following will search for all the documents within the `catalog` index and an index named
-`my_index`:
+The following will search for all the documents within the `catalog` index and an index named `my_index`:
 
 ```
 GET /catalog,my_index/_search
+```
+
+**Task:** create new index named `my_index`. Otherwise, execute following query in Kibana Console UI:
+
+```
+GET /catalog,catalog/_search
 ```
 
 

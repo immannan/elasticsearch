@@ -169,11 +169,6 @@ Elasticsearch version 5.0. Matrix aggregations work on multiple fields
 and compute matrices across all the documents
 within the query context.
 
-Matrix aggregations can be nested inside bucket aggregations, but bucket
-aggregations cannot be nested inside of matrix aggregations. This is
-still a relatively new feature. Coverage of matrix aggregations is not
-within the scope of this book.
-
 ### Pipeline aggregations
 
 
@@ -1334,8 +1329,6 @@ The resulting buckets will have the keys set
 with each bucket. This is helpful for looking up the relevant bucket
 from the response without iterating through all the buckets.
 
-There are more aggregations available for numerical data, but covering
-all of these aggregations is beyond the scope of this book. 
 
 Next, we will look at a couple of important concepts related to bucket
 aggregation and aggregations in general.

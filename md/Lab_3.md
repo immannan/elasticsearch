@@ -11,7 +11,6 @@ Lab 3. Searching - What is Relevant
 We will cover the following topics in this lab:
 
 
--   The basics of text analysis
 -   Searching from structured data
 -   Writing compound queries
 -   Searching from full-text
@@ -19,155 +18,10 @@ We will cover the following topics in this lab:
 
 
 
-
-### Understanding Elasticsearch analyzers
-
-
-
-The main task of an analyzer is to take the value of a field and break
-it down into terms. In Lab 2, [*Getting Started with
-Elasticsearch*], we looked at the structure of an inverted index. The job of the analyzer is to take
-documents and each field within them and extract terms from them. These
-terms make the index searchable, that is, they can help
-us find out which documents contain particular search terms.
-
-The analyzer performs this process of breaking up input character
-streams into terms. This happens twice: 
-
-
--   At the time of indexing
--   At the time of searching
-
-
-The core task of the analyzer is to parse the document fields and build
-the actual index.
-
-Every field of `text` type needs to be analyzed before the
-document is indexed. This process of analysis is what makes the
-documents searchable by any term that is used at the time of searching.
-
-Analyzers can be configured on a per field basis, that is, it is
-possible to have two fields of the `text` type within the same
-document, each one using different analyzers.
-
-Elasticsearch uses analyzers to analyze text data. An analyzer has the
-following components:
-
-
--   **Character filters**: Zero or more
--   **Tokenizer**: Exactly one
--   **Token filters**: Zero or more
-
-
-The following diagram depicts the components of an analyzer:
-
-
-![](./images/17fb404f-a755-4cbf-8dd2-3bf8bc373376.png)
-
-
-Figure 3.1: Anatomy of an analyzer
-
-Let\'s understand the role of each component one by one.
-
-
-
-#### Character filters
-
-
-
-When composing an analyzer, we can configure
-zero or more character filters[*. *] A character filter works
-on a stream of characters from the input field; each
-character filter can add, remove, or change
-the characters in the input field.
-
-Elasticsearch ships with a few built-in character filters, which you can
-use to compose or create your own custom analyzer. 
-
-For example, one of the character filters that Elasticsearch ships with
-is the Mapping Char Filter. It can map a character or sequence of
-characters into target characters.
-
-For example, you may want to transform emoticons into some text that
-represents those emoticons:
-
-
--   `:)` should be translated to `_smile_`
--   `:(` should be translated to `_sad_`
--   `:D` should be translated to `_laugh_`
-
-
-This can be achieved through the following character filter. The short
-name for the Mapping Char Filter is the mapping filter:
-
-```
-      "char_filter": {
-        "my_char_filter": {
-          "type": "mapping",
-          "mappings": [
-            ":) => _smile_",
-            ":( => _sad_",
-            ":D => _laugh_"
-          ]
-        }
-      }
-```
-
-When this character filter is used to create an analyzer, it will have
-the following effect:
-
-`Good morning everyone :)` will be transformed in to
-`Good morning everyone _smile_`.
-
-`I am not feeling well today :(` will be transformed in to
-`I am not feeling well today _sad_`.
-
-Since character filters are at the very beginning of the processing
-chain in an analyzer (see [*Figure 3.1*] ), the
-tokenizer will always see the replaced characters. Character filters can
-be useful for replacing characters with something more meaningful in
-certain cases, such as replacing the numeric characters from other
-languages with English language decimals, that is, digits from Hindi,
-Arabic, and other languages can be turned into 0, 1, 2, and so on.
-
-You can find a list of available built-in character
-filters here:
-<https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-charfilters.html>.
-
-#### Tokenizer
-
-
-
-An analyzer has exactly one tokenizer. The responsibility of a
-tokenizer is to receive a stream of
-characters and generate a stream of tokens. These tokens are used to
-build an inverted index. A token is roughly
-equivalent to a word. In addition to breaking down characters into words
-or tokens, it also produces, in its output, the start and end offset of
-each token in the input stream.
-
-Elasticsearch ships with a number of tokenizers that can be used to
-compose a custom analyzer; these tokenizers are also used by
-Elasticsearch itself to compose its built-in analyzers.
-
-You can find a list of available built-in tokenizers here: <https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-tokenizers.html>.
-
-Standard tokenizer is one of the most popular tokenizers as it is
-suitable for most languages. Let\'s look at what standard tokenizer
-does.
-
-
-
 ##### Standard tokenizer
 
 
-
-Loosely speaking, the standard tokenizer
-breaks down a stream of characters by
-separating them with whitespace characters and punctuation.
-
-The following example shows how the standard tokenizer breaks a
-character stream into tokens:
+The following example shows how the standard tokenizer breaks a character stream into tokens:
 
 ```
 POST _analyze
@@ -227,113 +81,11 @@ This token stream can be further processed by the token filters of the
 analyzer.
 
 
-#### Token filters
-
-
-
-There can be zero or more token filters in an
-analyzer. Every token filter can add, remove, or change tokens in the
-input token stream that it receives. Since it
-is possible to have multiple token filters in an analyzer, the output of
-each token filter is sent to the next one until all token filters are
-considered.
-
-Elasticsearch comes with a number of token
-filters, and they can be used to compose your own custom analyzers.
-
-Some examples of built-in token filters are the following:
-
-
--   **Lowercase token
-    filter**:[* *] Replaces all
-    tokens in the input with their lowercase
-    versions.
--   **Stop token
-    filter**:[* *] Removes stopwords,
-    that is, words that do not add more meaning to the context. For
-    example, in English sentences, words
-    like [*is*], [*a*], [*an*], and
-    [*the*], do not add extra meaning to a sentence. For many
-    text search problems, it makes sense to remove such words, as they
-    don\'t add any extra meaning or context to the content.
-
-
-You can find a list of available built-in
-token
-filters here: <https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-tokenfilters.html>.
-
-Thus far, we have looked at the role of character filters, tokenizers,
-and token filters. This sets us up to understand how some of the
-built-in analyzers in Elasticsearch are composed. 
-
-
-### Using built-in analyzers
-
-
-
-Elasticsearch comes with a number of built-in
-analyzers that can be used directly. Almost all of these analyzers work
-without any need for additional configuration, but they provide the
-flexibility of configuring some parameters.
-
-Some analyzers come packaged with Elasticsearch. Some popular analyzers
-are the following:
-
-
--   **Standard analyzer**: This is the default analyzer in Elasticsearch. If not
-    overridden by any other field-level,
-    type-level, or index-level analyzer, all fields are analyzed using
-    this analyzer.
--   **Language analyzers**: Different
-    languages have different
-    grammatical rules. There are differences
-    between some languages as to how a stream of characters is tokenized
-    into words or tokens. Additionally, each language has its own set of
-    stopwords, which can be configured while configuring language
-    analyzers.
--   **Whitespace analyzer**: The whitespace
-    analyzer breaks down input into tokens wherever it finds a whitespace token such as
-    a space, a tab, a new line, or a carriage return. 
-
-
-You can find a list of the available built-in
-analyzers
-here: <https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-analyzers.html>.
-
-
 
 #### Standard analyzer
 
 
-
-Standard Analyzer is suitable for many
-languages and situations. It can also be customized for the underlying
-language or situation. Standard analyzer comprises of the
-following components:
-
-**Tokenizer**:
-
-
--   **Standard tokenizer**: A tokenizer that splits tokens at
-    whitespace characters
-
-
-**Token filters**:
-
-
--   **Standard token filter**: Standard token filter is used
-    as a placeholder token filter within the Standard Analyzer. It does
-    not change any of the input tokens but may be used in future to
-    perform some tasks.
--   **Lowercase token filter**: Makes all tokens in the input
-    lowercase.
--   **Stop token filter**: Removes specified stopwords. The
-    default setting has a stopword list set to `_none_`, which
-    doesn\'t remove any stopwords by default.
-
-
-Let\'s see how Standard analyzer works by
-default with an example:
+Let\'s see how Standard analyzer works by default with an example:
 
 ```
 PUT index_standard_analyzer
@@ -358,17 +110,7 @@ PUT index_standard_analyzer
 }
 ```
 
-Here, we created an index, `index_standard_analyzer`. There
-are two things to notice here:
-
-
--   Under the `settings` element, we explicitly defined one
-    analyzer with the name `std`. The `type` of
-    analyzer is `standard`. Apart from this, we did not do any
-    additional configuration on Standard Analyzer.
--   We created one type called `_doc` in the index and
-    explicitly set a field level analyzer on the only
-    field, `my_text`.
+Here, we created an index, `index_standard_analyzer`. 
 
 
 Let\'s check how Elasticsearch will do the analysis for
@@ -472,15 +214,9 @@ PUT index_standard_analyzer_english_stopwords
 }
 ```
 
-Notice the difference here. This new index is
-using `_english_` stopwords[*. *] You can also
-specify a list of stopwords directly, such as `stopwords`:
-([*a*], [*an*], [*the*] ). The
-`_english_` value includes all such English words.
+Notice the difference here. This new index is using _english_ stopwords. You can also specify a list of stopwords directly, such as stopwords: (a, an, the). The _english_ value includes all such English words.
 
-When you try the `_analyze` API on the new index, you will see
-that it removes the stopwords, such as `the` and
-`this`:
+When you try the _analyze API on the new index, you will see that it removes the stopwords, such as the and this:
 
 ```
 POST index_standard_analyzer_english_stopwords/_analyze
@@ -537,20 +273,6 @@ Let\'s go through a practical application of creating a custom analyzer.
 ### Implementing autocomplete with a custom analyzer
 
 
-
-In certain situations, you may want to create
-your own custom analyzer by composing
-character filters, tokenizers, and token filters of your choice. Please
-remember that most requirements can be fulfilled by one of the built-in
-analyzers with some configuration. Let\'s create an analyzer that can
-help when implementing autocomplete functionality.
-
-To support autocomplete, we cannot rely on Standard Analyzer or one of
-the pre-built analyzers in Elasticsearch. The analyzer is responsible
-for generating the terms at indexing time. Our analyzer should be able
-to generate the terms that can help with autocompletion. Let\'s
-understand this through a concrete example.
-
 If we were to use Standard Analyzer at indexing time, the following
 terms would be generated for the field with the
 `Learning Elastic Stack 7` value:
@@ -563,18 +285,8 @@ GET /_analyze
 }
 ```
 
-The response of this request would contain the terms
-`Learning`, `Elastic`, `Stack`,
-and `7`. These are the terms that Elasticsearch would create
-and store in the index if Standard Analyzer was used. Now, what we want
-to support is that when the user starts typing a few characters, we
-should be able to match possible matching products. For example, if the
-user has typed `elas`, it should still recommend
-`Learning Elastic Stack 7` as a product. Let\'s compose an
-analyzer that can generate terms such as [*el*],
-[*ela*], [*elas*], [*elast*],
-[*elasti*], [*elastic*], [*le*],
-[*lea*], and so on:
+The response of this request would contain the terms Learning, Elastic, Stack, and 7. These are the terms that Elasticsearch would create and store in the index if Standard Analyzer was used. Now, what we want to support is that when the user starts typing a few characters, we should be able to match possible matching products. For example, if the user has typed elas, it should still recommend Learning Elastic Stack 7 as a product. Let's compose an analyzer that can generate terms such as el, ela, elas, elast, elasti, elastic, le, lea, and so on:
+
 
 ```
 PUT /custom_analyzer_index
@@ -658,24 +370,12 @@ the term `Ela` in the index. Since the index was built using a
 custom analyzer using an `edge_ngram` token filter, it would
 find a match for both products.
 
-In this section, we have learned about analyzers. Analyzers play a vital
-role in the functioning of Elasticsearch. Analyzers decide which terms
-get stored in the index. As a result, what kind of search operations can
-be performed on the index after it has been built is decided by the
-analyzer used at index time. For example, Standard Analyzer cannot
-fulfill the requirement of supporting the autocompletion feature. We
-have looked at the anatomy of analyzers, tokenizers, token filters,
-character filters, and some built-in support in Elasticsearch. We also
-looked at a scenario in which building a custom analyzer solves a real business problem regarding supporting
-the autocomplete function in your application.
 
 Before we move onto the next section and start looking at different
 query types, let\'s set up the necessary index with the data required
 for the next section. We are going to use product catalog data taken
 from the popular e-commerce site
-[www.amazon.com](http://www.amazon.com/). The data is
-downloadable from
-<http://dbs.uni-leipzig.de/file/Amazon-GoogleProducts.zip>.
+[www.amazon.com](http://www.amazon.com/).
 
 Before we start with the queries, let\'s create the required index and
 import some data:
@@ -725,13 +425,7 @@ performed. This will enable full-text queries on these fields. The
 also has a field with the name `raw`. The
 `manufacturer` field is stored in two
 ways, as `text`, and `manufacturer.raw` is stored as
-a `keyword`. All fields of the `keyword`
-type internally use the keyword analyzer. The keyword analyzer consists
-of just the keyword tokenizer, which is a **noop** tokenizer,
-simply returning the whole input as one token. Remember, in an analyzer,
-character filters and token filters are optional. Thus, by using
-the `keyword` type on the field, we are choosing a noop
-analyzer and hence skipping the whole analysis process on that field.
+a `keyword`.
 
 The `price` field is chosen to be of
 the `scaled_float` type. This is a new type introduced with
@@ -740,17 +434,74 @@ example, 13.99 will be stored as 1399 with a scaling factor of 100. This
 is space-efficient as `float` and `double` datatypes
 occupy much more space.
 
-To import the data, please follow the
-instructions in the book\'s accompanying source code repository at
-GitHub: [https://github.com/fenago/elasticsearch](https://github.com/fenago/elasticsearch/tree/v7.0/) in
-the branch
-[v7.0](https://github.com/fenago/elasticsearch/tree/v7.0/).
 
-The instructions for importing data are
-in [lab-03/products\_data/README.md](https://github.com/fenago/elasticsearch/tree/v7.0/lab-03/products_data#import-product-data-into-elasticsearch).
+#### Import product data into Elasticsearch
 
-After you have imported the data, verify that it is imported with the
-following query:
+1. Switch user from terminal: `su elasticsearch`
+2. Logstash has been already downloaded at following path: `/elasticstack/logstash-7.12.1` and added to variable `PATH`.
+
+https://www.elastic.co/downloads/logstash
+
+
+3. Files have been already copied at path `/elasticstack/logstash-7.12.1/files` . The structure of files should look like -
+
+```
+/elasticstack/logstash-7.12.1/files/products.csv
+/elasticstack/logstash-7.12.1/files/logstash_products.conf
+```
+
+4. Create the following index by executing the command in the your Kibana - Dev Tools.
+
+```
+PUT /amazon_products
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0,
+    "analysis": {
+      "analyzer": {}
+    }
+  },
+  "mappings": {
+    "properties": {
+      "id": {
+        "type": "keyword"
+      },
+      "title": {
+        "type": "text"
+      },
+      "description": {
+        "type": "text"
+      },
+      "manufacturer": {
+        "type": "text",
+        "fields": {
+          "raw": {
+            "type": "keyword"
+          }
+        }
+      },
+      "price": {
+        "type": "scaled_float",
+        "scaling_factor": 100
+      }
+    }
+  }
+}
+```
+
+6. Run logstash from command line, using the following commands:
+
+```
+cd /elasticstack/logstash-7.12.1
+
+logstash -f files/logstash_products.conf
+```
+
+
+#### Verify Data Import
+
+After you have imported the data, verify that it is imported with the following query:
 
 ```
 GET /amazon_products/_search
@@ -762,90 +513,6 @@ GET /amazon_products/_search
 ```
 
 In the next section, we will look at structured search queries.
-
-
-
-Searching from structured data
-------------------------------------------------
-
-
-
-In certain situations, we may want to find out whether a given document
-should be included or not; that is, a simple binary answer. On the other
-hand, there are other types of queries that
-are relevance-based. Such relevance-based queries also return a score
-against each document to say how well that document fits the query. Most
-structured queries do not need relevance-based scoring, and the answer
-is a simple yes/no for any item to be included or excluded from the
-result. These structured search queries are also referred to as **term-level queries**.
-
-Let\'s understand the flow of a term-level query\'s execution:
-
-
-![](./images/3808134c-ce62-4db1-9e50-5d3add4c5b84.png)
-
-
-Figure 3.2: Term-level query flow
-
-As you can see, the figure is divided into
-two parts. The left-hand half of the figure depicts what happens at the
-time of indexing, and the right-hand half depicts what happens at the
-time of a query when a term-level query is executed.
-
- 
-
-Looking at the left-hand half of the figure, we can see what happens
-during indexing. Here, specifically, we are looking at how the inverted
-index is built and queried for the `manufacturer.raw` field.
-Remember, from our definition of the index, the
-`manufacturer.raw` field is of
-the `keyword` type. The `keyword`
-type fields are not analyzed; the field\'s value is directly stored as a
-term in the inverted index. 
-
-At query time, when we search using a `term` query that is a
-term-level query, we see the flow of execution on the right-hand half of
-the figure. The `term` query, as we will see later in this
-section, is a term-level query that directly passes on
-the `victory multimedia`search term, without breaking it down
-using an analyzer. This is how term-level queries completely skip the
-analysis process at query time and directly search for the given term in
-the inverted index.
-
-These term-level queries create a foundation layer on which other,
-high-level, full-text queries are built. We will look at high-level
-queries in the next section.
-
-We will cover the following structured or term-level queries:
-
-
--   Range query
--   Exists query
--   Term query
--   Terms query
-
-### Range query
-
-
-
-Range queries can be applied to fields with
-datatypes that have natural ordering. For example, integers, logs, and
-dates have a natural order. There is no ambiguity in deciding whether
-one value is less, equal to, or greater than the other values. Because
-of this well-defined datatypes order, a
-`range` query can be applied.
-
-We will look at how to apply range queries in the following ways:
-
-
--   On numeric types
--   With score boosting
--   On dates
-
-
-Let\'s look at the most typical `range` query on a numeric
-field.
-
 
 
 #### Range query on numeric types
@@ -905,7 +572,7 @@ The response of this query looks like the following:
       },
 ```
 
-Please take a note of the following:
+Take a note of the following:
 
 
 -   The `hits.total.value` field in the response shows how
@@ -990,29 +657,10 @@ GET /orders/_search
 {"query":{"range":{"orderDate":{"gte":"now-7d","lte":"now"}}}}
 ```
 
-The ability to use terms such as `now` makes this easier to
-comprehend.
+The ability to use terms such as `now` makes this easier to comprehend.
 
 
-### Note
 
-Elasticsearch supports many date-math operations. As part of its date
-support, it supports the special keyword `now`. It also
-supports adding or subtracting time with different units of measurement.
-It supports single character shorthands such as `y` (year),
-`M` (month), `w` (week), `d` (day),
-`h`or `H` (hours), `m` (minutes), and
-`s` (seconds). For example, `now - 1y` would mean a
-time of exactly 1 year ago until this moment. It is possible to round
-time into different units. For example, to round the interval by day,
-inclusive of both the start and end interval day, use
-`"gte": "now - 7d/d"` or`"lte": "now/d"`.
-Specifying `/d` rounds time by days.
-
-
-The `range` query runs in filter context by default. It
-doesn\'t calculate any scores and the score is always set to
-`1` for all matching documents.
 
 
 ### Exists query
@@ -1040,32 +688,10 @@ words, it runs in a filter context. This is
 similar to the `range` query where the scores don\'t matter. 
 
 
-### Note
-
-What is a **Filter Context**? When the query is just about
-filtering our documents, that is, deciding whether to include the
-document in the result or not, it is sufficient to skip the scoring
-process. Elasticsearch can skip the scoring process for certain types of
-queries and assign a uniform score of 1 to each document, which passes
-the filter criteria. This not only speeds up the query (as the scoring
-process is skipped) but also allows Elasticsearch to cache the results
-of filters. Elasticsearch caches the results of filters by maintaining
-arrays of zeros and ones.
-
 
 ### Term query
 
 
-
-How would you find all of the products made
-by a particular manufacturer? We know that the manufacturer field in our
-data is of the string type. The name of a
-manufacturer can possibly contain whitespaces. What we are looking for
-here is an exact search. For example, when we search
-for `victory multimedia`, we don\'t want any results that have
-a manufacturer that contains just `victory` or
-just `multimedia`. You can use a `term` query to
-achieve that.
 
 When we defined the `manufacturer` field, we stored it as
 both `text` and `keyword` fields. When doing an
@@ -2056,11 +1682,98 @@ and Feature may be a composite primary key:
 
  
 When we model a similar type of relationship in Elasticsearch, we can
-use the `join` datatype
-(<https://www.elastic.co/guide/en/elasticsearch/reference/7.x/parent-join.html>)
-to model relationships. To import the data,
-follow the steps mentioned in
-[lab-03/products\_with\_features\_data](https://github.com/fenago/elasticsearch/tree/v7.0/lab-03/products_with_features_data).
+use the `join` datatype to model relationships. To import the data,
+follow the steps mentioned below:
+
+
+#### Import product data into Elasticsearch
+
+1. Switch user from terminal: `su elasticsearch`
+2. Files have been already copied at path `/elasticstack/logstash-7.12.1/files` . The structure of files should look like -
+
+```
+/elasticstack/logstash-7.12.1/files/products_with_features_products.csv
+/elasticstack/logstash-7.12.1/files/logstash_products_with_features_products.conf
+/elasticstack/logstash-7.12.1/files/products_with_features_features.csv
+/elasticstack/logstash-7.12.1/files/logstash_products_with_features_features.conf
+```
+
+The first two files are the files containing products data and logstash configuration file for loading products data respectively.
+The third and fourth files are the files containing data for features of the products and logstash configuration file for loading features data respectively.
+
+4. Verify the `logstash_products_with_features_products.conf` file and ensure that it has the correct absolute path of products_with_features_products.csv file on your system. Similarly, verify the `logstash_products_with_features_features.conf` file and ensure that it has the correct absolute path of products_with_features_features.csv file on your system.
+
+5. Create the following index by executing the command in the your Kibana - Dev Tools.
+
+```
+PUT /amazon_products_with_features
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0,
+    "analysis": {
+      "analyzer": {}
+    }
+  },
+  "mappings": {
+    "doc": {
+      "properties": {
+        "id": {
+          "type": "keyword"
+        },
+        "product_or_feature": {
+          "type": "join",
+          "relations": {
+            "product": "feature"
+          }
+        },
+        "title": {
+          "type": "text"
+        },
+        "description": {
+          "type": "text"
+        },
+        "manufacturer": {
+          "type": "text",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          }
+        },
+        "price": {
+          "type": "scaled_float",
+          "scaling_factor": 100
+        },
+        "feature_key": {
+          "type": "keyword"
+        },
+        "feature": {
+          "type": "keyword"
+        },
+        "feature_value": {
+          "type": "keyword"
+        }
+      }
+    }
+  }
+}
+```
+
+6. Run the following commands from terminal:
+
+```
+cd /elasticstack/logstash-7.12.1
+logstash -f files/logstash_products_with_features_products.conf
+```
+
+After running the second command press CTRL + C to terminate logstash. These commands would have loaded the products data into the Elasticsearch index. Next, let's load the features using the following command.
+
+```
+cd /elasticstack/logstash-7.12.1
+logstash -f files/files/logstash_products_with_features_features.conf
+```
+
 
 Here, we want to establish a relationship between
 products and features. When using the `join`
@@ -2133,18 +1846,15 @@ is the parent of the document
 within `product_or_feature`. We also need to
 set a routing parameter that is equal to the document ID of the parent
 so that the child document gets indexed in the same shard as the
-parent. Please follow the instructions at
-[lab-03/products\_with\_features\_data](https://github.com/fenago/elasticsearch/tree/v7.0/lab-03/products_with_features_data) to
-load some sample data, that has products and features.
+parent.
 
-Once we have some products and features populated, we can query from
+We already populated products and features earlier in the lab, we can query from
 products while joining the data from features. For example, you may want
 to get all of the products that have a certain feature. 
 
 
 
 ### has\_child query
-
 
 
 If you want to get products based on some condition on the features, you can use `has_child` queries.
@@ -2208,28 +1918,6 @@ GET amazon_products_with_features/_search
 }
 ```
 
-Please note the following points about the query:
-
-
--   The `has_child` query is used to query based on the child
-    type `feature`.
--   The actual query to be used on the child type is specified under
-    the `query` element. We can use any query supported by
-    Elasticsearch under this `query` element. Whichever query
-    is used will be run against the child type that we specified. We are
-    using a `bool` query because we want to filter by all features
-    where---`feature_key` =
-    `processor_series` **AND `feature_value`
-    = `Core i7`.
--   We have used a `bool` query, as explained in the previous
-    point. The first of the conditions is included as a `term`
-    query here under the `must` clause. This `term`
-    query checks that we filter for `feature_key` =
-    `processor_series`.
--   This is the second condition under
-    the `must` clause, in which the
-    `term` query checks that we filter
-    for `feature_value` = `Core i5`.
 
 
 The result of this `has_child` query is that we get back all
@@ -2429,12 +2117,6 @@ all children based on an arbitrary Elasticsearch query executed against
 the `parent_type` query, whereas the latter
 (`parent_id` query) is useful if you know the ID.
 
-Covering all types of queries is beyond the scope of this book. Having
-learned different types of full-text queries, compound queries, and
-relationship queries in depth, you are now well equipped to try other
-queries that aren\'t covered here. Please refer to the Elasticsearch
-reference documentation to learn about their usage.
-
 
 
 Summary
@@ -2447,7 +2129,7 @@ Elasticsearch. We looked at the role of analyzers and the anatomy of an
 analyzer, saw how to use some of the built-in analyzers that come with
 Elasticsearch, and saw how to create custom analyzers. Along with a
 solid background on analyzers, we learned about two main types of
-queries---term-level queries and full-text queries. We also learned how
+queries --- term-level queries and full-text queries. We also learned how
 to compose different queries in more complex queries using one of the
 compound queries.
 
