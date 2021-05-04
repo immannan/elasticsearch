@@ -322,19 +322,150 @@ represents, let\'s load the data in our local instance.
 
 ### Loading the data using Logstash
 
+To import the data, please follow these instructions:
+
+# Import network traffic data to learn Analytics capabilities of Elasticsearch
+
+1. Switch user from terminal: `su elasticsearch`
+2. Logstash has been already downloaded at following path: `/elasticstack/logstash-7.12.1`.
+3. Files have been already copied at path `/elasticstack/logstash-7.12.1/files_lab4` . The structure of files should look like -
+
+```
+/elasticstack/logstash-7.12.1/files_lab4/network_traffic_data.zip
+/elasticstack/logstash-7.12.1/files_lab4/network_traffic_data.json
+```
+
+6. Create the following index by executing the command in the your Kibana - Dev Tools.
+
+```
+PUT /bigginsight
+{
+  "settings": {
+    "index": {
+      "number_of_replicas": "1",
+      "number_of_shards": "5"
+    }
+  },
+  "mappings": {
+    "properties": {
+      "accessPointId": {
+        "type": "keyword",
+        "fields": {
+          "analyzed": {
+            "type": "text"
+          }
+        }
+      },
+      "application": {
+        "type": "keyword",
+        "fields": {
+          "analyzed": {
+            "type": "text"
+          }
+        }
+      },
+      "band": {
+        "type": "keyword",
+        "fields": {
+          "analyzed": {
+            "type": "text"
+          }
+        }
+      },
+      "bandwidth": {
+        "type": "double"
+      },
+      "category": {
+        "type": "keyword",
+        "fields": {
+          "analyzed": {
+            "type": "text"
+          }
+        }
+      },
+      "customer": {
+        "type": "keyword",
+        "fields": {
+          "analyzed": {
+            "type": "text"
+          }
+        }
+      },
+      "department": {
+        "type": "keyword",
+        "fields": {
+          "analyzed": {
+            "type": "text"
+          }
+        }
+      },
+      "downloadCurrent": {
+        "type": "double"
+      },
+      "downloadTotal": {
+        "type": "integer"
+      },
+      "inactiveMs": {
+        "type": "integer"
+      },
+      "location": {
+        "type": "geo_point"
+      },
+      "mac": {
+        "type": "keyword",
+        "fields": {
+          "analyzed": {
+            "type": "text"
+          }
+        }
+      },
+      "networkId": {
+        "type": "keyword",
+        "fields": {
+          "analyzed": {
+            "type": "text"
+          }
+        }
+      },
+      "signalStrength": {
+        "type": "integer"
+      },
+      "time": {
+        "type": "date",
+        "format": "strict_date_optional_time||epoch_millis"
+      },
+      "uploadCurrent": {
+        "type": "double"
+      },
+      "uploadTotal": {
+        "type": "integer"
+      },
+      "usage": {
+        "type": "double"
+      },
+      "username": {
+        "type": "keyword",
+        "fields": {
+          "analyzed": {
+            "type": "text"
+          }
+        }
+      }
+    }
+  }
+}
+```
 
 
-To import the data, please follow the
-instructions in this book\'s accompanying
-source code repository on GitHub,
-at [https://github.com/fenago/elasticsearch](https://github.com/fenago/elasticsearch/tree/v7.0).
-This can be found in the v7.0 branch.
+7. Run logstash from command line, using the following commands
 
-Please clone or download the repository from GitHub. The instructions
-for importing data are at the following path within the
-project: [lab-04/README.md](https://github.com/fenago/elasticsearch/blob/master/lab-04/README.md).
-Once you have cloned the repository, check out the v7.0 branch.
+```
+cd /elasticstack/logstash-7.12.1
+logstash -f files_lab4/logstash_network_traffic_data.conf
+```
 
+
+#### Verify Data Import
 Once you have imported the data, verify that your data has been imported
 with the following query:
 
@@ -475,10 +606,7 @@ aggregation. Let\'s look at the sum aggregation first.
 
 #### Sum aggregation
 
-
-
-Here is how to write a simple sum
-aggregation:
+Here is how to write a simple sum aggregation:
 
 ```
 GET bigginsight/_search?track_total_hits=true
@@ -494,26 +622,6 @@ GET bigginsight/_search?track_total_hits=true
 }
 ```
 
-The key parts from the preceding code are
-explained in the following points:
-
-
--   The `aggs` or `aggregations` element at the top
-    level should wrap any aggregation.
--   Give a name to the aggregation; here, we are doing the sum
-    aggregation on the `downloadTotal` field, and hence, the
-    name we chose was `download_sum`. You can
-    name it anything. This field will be useful while looking up this
-    particular aggregation\'s result in the response.
--   We are doing a sum aggregation; hence, we have
-    the `sum` element.
--   We want to do `terms` aggregation on the
-    `downloadTotal` field.
--   Specify `size = 0` to prevent raw search results from
-    being returned. We just want aggregation results, and not the search
-    results, in this case. Since we haven\'t specified any top-level
-    `query` elements, it matches all documents. We do not want
-    any raw documents (or search hits) in the result.
 
 
 The response should look like the following:
@@ -549,9 +657,6 @@ numbered 1, 2, 3, and so on, and are explained in the following points:
     index. We passed `?track_total_hits=true` in the
     request, and hence, you will see the
     exact count of total hits in the index.
-
-
-
 -   Just like the request, this response is wrapped
     inside `aggregations` to indicate them.
 -   The response of the aggregation we requested was
@@ -560,8 +665,7 @@ numbered 1, 2, 3, and so on, and are explained in the following points:
 -   This is the actual value after applying the sum aggregation.
 
 
-The average, min, and max aggregations are very similar. Let\'s look at
-them briefly.
+The average, min, and max aggregations are very similar. Let\'s look at them briefly.
 
 #### Average aggregation
 
@@ -644,21 +748,7 @@ GET bigginsight/_search
 }
 ```
 
-These aggregations were really simple. Now, let\'s look at some more
-advanced stats and extended stats aggregations.
-
-
-### Stats and extended stats aggregations
-
-
-
-These aggregations compute some common statistics in a
-single request, without having to issue
-multiple requests. This saves resources on the Elasticsearch side, as
-well, because the statistics are computed in
-a single pass, rather than being requested multiple times. The client
-code also becomes simpler if you are interested in more than one of
-these statistics. Let\'s look at stats aggregation first.
+These aggregations were really simple. Now, let\'s look at some more advanced stats and extended stats aggregations.
 
 
 
@@ -713,13 +803,6 @@ The response should look like the following:
   }
 }
 ```
-
-As you can see, the response with
-the `download_stats` element contains `count`,
-`min`, `max`, `average`, and
-`sum`; everything is included in the same response. This is
-very handy, as it reduces the overhead of
-multiple requests, and also simplifies the client code.
 
 Let\'s look at the extended stats aggregation.
 
@@ -843,64 +926,11 @@ at some of the bucket aggregations. 
 
 
 
-Bucket aggregations
--------------------------------------
-
-
-
-Bucket aggregations are useful to analyze how the whole relates to its parts, so that we can gain better
-insight on the data. They help in segmenting the data into smaller
-parts. Each type of bucket aggregation slices the data into different
-segments, or buckets. Bucket aggregations are the most common type of
-aggregation used in any analysis process.
-
-In this section, we will cover the following topics, keeping the network
-traffic data example at the center:
-
-
--   Bucketing on string data
--   Bucketing on numerical data
--   Aggregating filtered data
--   Nesting aggregations
--   Bucketing on custom conditions
--   Bucketing on date/time data
--   Bucketing on geospatial data
-
-### Bucketing on string data
-
-
-
-Sometimes, we may need to bucket the data, or
-segment the data, based on a field that has a `string`
-datatype, which is typically `keyword` typed fields in
-Elasticsearch. This is very common. Some examples of scenarios in which
-you may want to segment the data by a string typed field are as follows:
-
-
--   Segmenting the network traffic data per department
--   Segmenting the network traffic data per user
--   Segmenting the network traffic data per application, or per category
-
-
-The most common way to bucket or segment your string typed data is by
-using terms aggregation[*. *] Let\'s take a look at terms
-aggregation.
 
 
 
 #### Terms aggregation
 
-
-
-Terms aggregation is probably the most widely
-used aggregation. It is useful for segmenting
-or grouping the data by a given field\'s distinct values. Suppose that,
-in the network traffic data example that we have loaded, we have the
-following question:
-
-Which are the
-top categories[*,*] ** **that
-is, [*categories that are surfed the most by users?*] 
 
 We are interested in the most surfed categories -- not in terms of the
 bandwidth used, but just in terms of counts (record counts). In a
@@ -1011,55 +1041,8 @@ The response looks like the following:
 }
 ```
 
-Please note the following in the response,
-and notice the numbers that are annotated as
-well:
 
-
--   The `total` element
-    under `hits` (we will refer to this as
-    `hits.total`, navigating the path from the top JSON
-    element) is greater than `10000`. This is the total number
-    of documents considered in this aggregation. As we mentioned
-    previously, if you want the exact total hits to be returned, you
-    need to pass an extra parameter in the request.
--   The `hits.hits` array is empty. This is because we
-    specified `"size": 0`, so as to not include any search
-    hits here. What we were interested in was the aggregations, and not
-    the search results.
--   The `aggregations` element at the top level in the JSON
-    response contains all the aggregation results.
-
-
-
--   The name of the aggregation is `byCategory`. This is the
-    name that was given by us to this `terms` aggregation.
-    This name helps us to relate the response to the request, since the
-    request can be generated for several aggregations at once.
--   `doc_count_error_upper_bound` is the measure of error
-    while doing this aggregation. Data is distributed in shards; if each
-    shard sends data for all bucket keys, this results in too much data
-    being sent across the network. Elasticsearch only sends the top
-    [*n*]  buckets across the network if the aggregation was
-    requested for the top [*n*]  items. Here, [*n*] 
-    is the number of aggregation buckets determined by
-    the `size` parameter to the bucket aggregation. We will
-    look at bucket aggregation\'s size parameter later in this lab.
--   `sum_other_doc_count` is the total count of documents that
-    are not included in the buckets that are returned. By default,
-    the `terms` aggregations returns the top 10 buckets if
-    there are more than 10 distinct buckets. The remaining documents,
-    other than these 10 buckets, are summed and returned in this field.
-    In this case, there are only eight categories, and hence, this field
-    is set to zero.
--   The list of buckets returned by the aggregation.
--   The key of one of the buckets, that is, the category of
-    `Chat`.
--   The count of documents in the bucket.
-
-
-As you can see, there are only eight distinct buckets in the results of
-the query. 
+As you can see, there are only eight distinct buckets in the results of the query. 
 
 Next, we want to find out the top applications in terms of the maximum
 number of records for each application:
@@ -1098,22 +1081,8 @@ This returns a response like the following:
 }
 ```
 
-Note
-that `sum_other_doc_count` **has a
-big value, `129191`. This is a big number that\'s relative to
-the total hits; as we saw in the previous query, there are around
-242,000 documents in the index. The reason for this is that the
-`terms` aggregation only returns 10 buckets, by default. In
-the current setting, the top 10 buckets with the highest
-documents are returned in descending order.
-The remaining documents that are not covered in the top 10 buckets are
-indicated in `sum_other_doc_count`. There are
-actually 30 different applications for which we have
-network traffic data. The number in
-`sum_other_doc_count` is the sum of the counts for the
-remaining 20 applications that were not included in the buckets list.
 
-To get the top [*n *] buckets instead of the default 10, we
+To get the top *n* buckets instead of the default 10, we
 can use the `size` parameter inside the
 `terms` aggregation:
 
@@ -1141,38 +1110,15 @@ buckets to be returned. 
 
 Terms aggregation is very useful for generating data for pie charts or
 bar charts, where we may want to analyze the relative counts of string
-typed fields in a set of documents. In Lab 7, [*Visualizing Data
-with Kibana*], you will learn that Kibana terms aggregation
+typed fields in a set of documents. In Lab 7, you will learn that Kibana terms aggregation
 is useful for generating pie and bar charts.
 
-Next, we will look at how to do bucketing on `numerical` types
-of fields.
+Next, we will look at how to do bucketing on `numerical` types of fields.
 
 
-### Bucketing on numerical data
-
-
-
-Another common scenario is when we want to
-segment or slice the data into various buckets, based on a numerical
-field. For example, we may want to slice the product data by different
-price ranges, such as up to \$10, \$10 to \$50, \$50 to \$100, and so
-on. You may want to segment the data by age group, employee count, and
-so on.
-
-We will look at the following aggregations in this section:
-
-
--   Histogram aggregation
--   Range aggregation
 
 #### Histogram aggregation
 
-
-
-Histogram aggregation can slice the data into
-different buckets based on one numerical field. The range of each slice,
-also called the interval, can be specified in the input of the query.
 
 Here, we have some records of network traffic usage data.
 The `usage` field tells us about the number of bytes that are
@@ -1229,24 +1175,11 @@ The response should look like the following (truncated for brevity):
 }
 ```
 
-This is how the histogram aggregation creates
-buckets of equal ranges by using the `interval` specified in
-the query. By default, it includes all buckets with the given interval,
-regardless of whether there are any documents in that bucket. It is
-possible to get back only those buckets that have at least some
-documents. This can be done by using the `min_doc_count`
-parameter. If specified, the histogram aggregation only returns those
-buckets that have, at the very least, the specified number of documents.
 
-Let\'s look at another aggregation, range aggregation, which can be used
-on numerical data.
+Let\'s look at another aggregation, range aggregation, which can be used on numerical data.
 
 #### Range aggregation
 
-
-
-What if we don\'t want all the buckets to have the same interval? It\'s possible to create unequal sized
-buckets by using the `range` aggregation.
 
 The following `range` aggregation slices the data into three buckets: up to 1 KB, 1 KB to 100 KB, and 100
 KB or more. Notice that we can
@@ -1338,15 +1271,7 @@ aggregation and aggregations in general.
 
 
 
-In our quest to learn about different bucket
-aggregations, let\'s take a very short detour to understand how to apply
-aggregations on filtered data. So far, we have been applying all of our
-aggregations on all the data of the given index/type. In the real world,
-you will almost always need to apply some filters before applying
-aggregations (either metric or bucket aggregations).
-
-Let\'s revisit the example that we looked at in the [*Terms
-aggregation*]  section. We found out the top
+Let\'s revisit the example that we looked at in the *Terms aggregation*  section. We found out the top
 categories in the whole index and type. Now, what we want to do is find
 the top category for a specific customer, not for all of the customers:
 
@@ -1368,10 +1293,6 @@ GET /bigginsight/_search?size=0&track_total_hits=true
 }
 ```
 
-We modified the original query, which found the top categories, with an
-additional query (highlighted in the preceding query in bold). We added
-a query, and inside that query, we added a term filter for a specific
-customer that we were interested in. 
 
 This type of query, when used with any type of aggregation, changes the
 context of the data on which aggregations are calculated. The
@@ -1429,22 +1350,9 @@ we will continue on our detour of learning about different bucket
 aggregations and look at how to nest metric aggregations inside bucket
 aggregations.
 
+
+
 ### Nesting aggregations
-
-
-
-Bucket aggregations split the context into
-one or more buckets. We can restrict the context of the
-aggregation by specifying the query element,
-as we saw in the previous section.
-
-When a metric aggregation is nested inside a bucket aggregation, the
-metric aggregation is computed within each bucket. Let\'s go over this
-by considering the following question, which we may want to get an
-answer for:
-
-[*What is the total bandwidth consumed by each user, or a specific
-customer, on a given day? *] 
 
 We have to take the following steps:
 
@@ -1589,18 +1497,6 @@ GET /bigginsight/usageReport/_search?size=0
 }
 ```
 
-Please see the following explanation of the annotated numbers in the
-query:
-
-
--   This is a query that filters the specific customer and time range.
--   The top-level terms aggregation to get a bucket for each department.
--   The second-level terms aggregation to get the top two users (note
-    that `size = 2`) within each bucket.
--   The metric aggregation that has the sum of usage within its parent
-    bucket. The immediate parent bucket of the `total_usage`
-    aggregation is the `by_users` aggregation, which causes
-    the sum of usage to be calculated for each user.
 
 
 This is how we can nest bucket and metric aggregations to answer complex
@@ -1693,13 +1589,6 @@ more than one custom filter.
 
 #### Filters aggregation
 
-
-
-With filters aggregation, you can create
-multiple buckets, each with its own specified
-filter that will cause the documents satisfying that filter to fall into
-the related bucket. Let\'s look at an example.
-
 Suppose that we want to create multiple buckets to understand how much
 of the network traffic was caused by the `Chat` category. At
 the same time, we want to understand how much of it was caused by the
@@ -1729,79 +1618,13 @@ GET bigginsight/_search?size=0
 }
 ```
 
-We created three filters for the three buckets that we want, as follows:
 
-
--   **Bucket with`chat`key**: Here,
-    we specify the `category = Chat` filter. Remember that the
-    `match` query that we have used is a high-level query that
-    understands the mapping of the underlying field. The underlying
-    field category is a keyword field, and hence, the `match`
-    query looks for the exact term, that is, `Chat`.
--   **Bucket with`skype`key**: Here,
-    we specify the `application = Skype` filter and
-    only include Skype traffic.
--   **Bucket
-    with `other_than_skype`key**:
-    Here, we use a `bool` query to filter documents that are
-    in the `Chat` category, but not Skype.
-
-
-As you can see, filters aggregation is very powerful when you want
-custom buckets using different filters. It allows you to take full
-control of the bucketing process. You can choose your own fields and
-your own conditions to create the buckets of your choice, in order to
-segment the data in customized ways.
 
 Next, we will look at how to slice data on a `date` type
 column, so that we can slice it into different time intervals.
 
 
-### Bucketing on date/time data
 
-
-
-So far, you have seen how to bucket (or
-segment, or slice) your data on different types of columns/fields. The
-analysis of data across the time dimension is another very common
-requirement. We may have questions such as the following, which require
-the aggregation of data on the time dimension:
-
-
--   How are sales volumes growing over a period of time?
--   How is profit changing from month to month?
-
-
-In the context of the network traffic example that we are going through,
-the following questions can be answered through time series analysis of
-the data:
-
-
--   How are the bandwidth requirements changing for my organization over
-    a period of time?
--   Which are the top applications, over a period of time, in terms of
-    bandwidth usage?
-
-
-Elasticsearch has a very powerful Date Histogram aggregation that can
-answer questions like these. Let\'s look at how we can get answers to
-these questions.
-
-
-
-#### Date Histogram aggregation
-
-
-
-Using Date Histogram aggregation, we will see
-how we can create buckets on a date field. In
-the process, we will go through the following stages:
-
-
--   Creating buckets across time periods
--   Using a different time zone
--   Computing other metrics within sliced time intervals
--   Focusing on a specific day and changing intervals
 
 ##### Creating buckets across time periods
 
@@ -2006,11 +1829,6 @@ consumed each day. The following is the shortened response to the query:
 
 
 
-Next, we will look at how to focus on a
-specific day by filtering the data for the other time periods and
-changing the value of the interval to a smaller value. We are trying to get an hourly breakdown of data
-usage for September 25, 2017.
-
 What we are doing is also called drilling down in the data. Often, the
 result of the previous query is displayed as a line chart, with time on
 the [*x*]  axis and data used on the [*y*]  axis. If
@@ -2076,48 +1894,11 @@ The shortened response would look like the following:
 As you can see, we have buckets for one-hour intervals, with data for
 those hours aggregated within each bucket.
 
-The Date Histogram aggregation allows you to do many powerful time
-series analyses. As you have seen in these examples, aggregating from a
-one-day interval to a one-hour interval is extremely easy. You can slice
-your data in the required interval on demand, without planning it in
-advance. You can do this with big data; there are hardly any other data
-stores that can provide this type of flexibility with big data.
 
 
-
-### Bucketing on geospatial data
-
-
-
-Another powerful feature of bucket aggregation is the ability to do
-geospatial analysis on the data. If your data contains fields of the
-geo-point datatype, where the coordinates are
-captured, you can perform some interesting analysis, which can be
-rendered on a map to give you better insight into the data.
-
-We will cover two types of geospatial aggregations in this section:
-
-
--   Geodistance aggregation
--   GeoHash grid aggregation
 
 #### Geodistance aggregation
 
-
-
-Geodistance aggregation helps in creating
-buckets of distances from a given geo-point.
-This can be better illustrated using a diagram:
-
-
-![](./images/ac65cdf1-b256-4fba-bb3f-2870565913e4.png)
-
-
-Fig 4.2 Geodistance aggregation with only to specified (left), and both
-to and from specified (right)
-
-The shaded area in blue represents the area included in the geodistance
-aggregation.
 
 The following aggregation will form a bucket with all the documents
 within the given distance from the given geo-point. This corresponds to
@@ -2148,9 +1929,6 @@ websites. This is a good way to find all businesses within a given
 distance of your location (such as all coffee shops or hospitals within
 2 km).
 
-The default unit of distance is meters, but you can specify
-the `unit` parameter as km, mi, and so on, to switch to
-different units.
 
 Now, let\'s look at what happens if you specify both `from`
 and `to` in the geodistance aggregation. This
@@ -2274,38 +2052,6 @@ different sizes/precisions, which is quite powerful. This data can be
 visualized in Kibana, or it can be used in your application with a
 library that can render the data on a map.
 
-We have covered a wide variety of bucket aggregations that let us slice
-and dice data on fields of various datatypes. We also looked at how to
-aggregate over text data, numerical data, dates/times, and geospatial
-data. Next, we will look at what pipeline aggregations are.
-
-
-
-Pipeline aggregations
----------------------------------------
-
-
-
-Pipeline aggregations, as their name suggests, allow you to aggregate over the results of another aggregation. They
-let you pipe the results of an aggregation as input to another
-aggregation. Pipeline aggregations are a relatively new feature, and
-they are still experimental. At a high level, there are two types of
-pipeline aggregation:
-
-
--   **Parent pipeline** aggregations have the
-    pipeline aggregation nested inside other
-    aggregations
--   **Sibling pipeline** aggregations have the
-    pipeline aggregation as the sibling of
-    the original aggregation from which pipelining is done
-
-
-Let\'s look at how the pipeline aggregations work by considering one
-example of cumulative sum aggregation, which is a parent of pipeline
-aggregation.
-
-
 
 ### Calculating the cumulative sum of usage over time
 
@@ -2353,25 +2099,8 @@ GET /bigginsight/_search?size=0
 }
 ```
 
-Only the part highlighted in bold is the new addition over the query
-that we saw previously. What we wanted was to calculate the cumulative
-sum over the buckets generated by the previous aggregation. Let\'s go
-over the newly added code, which has been annotated with numbers:
 
-
--   This gives an easy to understand name to this aggregation and places
-    it inside the parent Date Histogram aggregation, which is the bucket
-    aggregation containing this aggregation.
--   We are using the cumulative sum aggregation, and hence, we refer to
-    its name, `cumulative_sum`, here.
--   The `buckets_path` element refers to the metric over which
-    we want to do the cumulative sum. In our case, we want to sum over
-    the `hourly_usage` metric that was created
-    previously.
-
-
-The response should look as follows. It has
-been truncated for brevity:
+The response should look as follows. It has been truncated for brevity:
 
 ```
 {
@@ -2410,15 +2139,9 @@ and the cumulative hourly usage are the same. From the second bucket
 onward, the cumulative hourly usage has the sum of all the hourly
 buckets we\'ve seen so far.
 
-Pipeline aggregations are powerful. They can compute derivatives, moving
-averages, the average over other buckets (as well as the min, max, and
-so on), and the average over previously calculated aggregations. 
-
-
 
 Summary
 -------------------------
-
 
 
 In this lab, you learned how to use Elasticsearch to build powerful
@@ -2432,13 +2155,4 @@ We also went over how pipeline aggregations work. We did all of this
 while dealing with a real-world-like dataset of network traffic data. We
 illustrated how flexible Elasticsearch is as an analytics engine.
 Without much additional data modeling and extra effort, we can analyze
-any field, even when the data is on a big data scale. This is a rare
-capability that\'s not offered by many data stores. As you will see in
-Lab 7, [*Visualizing Data with Kibana*], Kibana leverages
-many of the aggregations that we learned about in this lab.
-
-This concludes the labs on Elasticsearch, the core of Elastic Stack,
-in this book. You now have a very strong foundation to learn about the
-rest of the ecosystem of Elastic Stack. Starting with the next lab,
-we will shift our focus to learning about Logstash, which primarily
-deals with getting data into Elasticsearch from a variety of sources.
+any field, even when the data is on a big data scale.

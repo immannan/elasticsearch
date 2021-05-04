@@ -27,63 +27,6 @@ process.
 
 
 
-Using Logstash
---------------------------------
-
-
-
-Logstash is a popular open source data collection engine
-with real-time pipelining capabilities.
-Logstash allows us to easily build a pipeline that can help in
-collecting data from a wide variety of input sources, and parse, enrich,
-unify, and store it in a wide variety of destinations. Logstash provides
-a set of plugins known as input filters and output plugins, which are
-easy to use and are pluggable in nature, thus easing the process of
-unifying and normalizing huge volumes and varieties of data. Logstash
-does the work of the ETL engine:
-
-
-![](./images/e5d13b8a-a819-484c-8e63-a8cb86e5a06e.png)
-
-
-Some of the salient features of logstash are
-as follows:
-
-
--   **Pluggable data pipeline
-    architecture**: Logstash
-    contains over 200 plugins that have been
-    developed by Elastic and the open source community, which can be
-    used to mix, match, and orchestrate different inputs, filters, and
-    outputs, while building pipelines for data processing.
-
-
-
--   **Extensibility**: Logstash is written in
-    JRuby and, since it supports the
-    pluggable pipeline architecture, you can easily build/create custom
-    plugins to meet your custom needs.
--   **Centralized data processing**: Data from
-    disparate sources can be easily pulled
-    using the various input plugins it provides and can be enriched,
-    transformed, and sent to different/multiple destinations. 
--   **Variety and volume**: Logstash handles all
-    types of logging data, for example,
-    Apache, NGNIX logs, system logs, and window event logs, and also
-    collects metrics from a wide range of application platforms over TCP and
-    UDP. Logstash can transform HTTP requests into events and provides
-    webhooks for applications like Meetup, GitHub, JIRA, and so on. It
-    also supports consuming data from existing relational/NoSQL
-    databases and queues including Kafka, RabbitMQ, and so on.
-    The Logstash data processing pipeline can be easily scaled
-    horizontally, and, since Logstash 5, it supports persistent queues,
-    thus providing the ability to reliably process huge volumes of
-    incoming events/data.
--   **Synergy**: Logstash has a strong
-    synergy with Elasticsearch, Beats, and
-    Kibana, thus allowing you to build end-to-end log analysis solutions
-    with ease.
-
 ### Installation and configuration
 
 
@@ -109,7 +52,9 @@ java -version
 You should see the following output:
 
 ```
-java version "1.8.0_65"Java(TM) SE RuntimeEnvironment(build 1.8.0_65-b17)JavaHotSpot(TM)64-BitServer VM (build 25.65-b01, mixed mode)
+openjdk version "11.0.9.1" 2020-11-04
+OpenJDK Runtime Environment (build 11.0.9.1+1-Ubuntu-0ubuntu1.20.04)
+OpenJDK 64-Bit Server VM (build 11.0.9.1+1-Ubuntu-0ubuntu1.20.04, mixed mode, sharing)
 ```
 
 
@@ -130,68 +75,7 @@ the following screenshot:
 
 
 ### Note
-
-Post 6.3 Elastic components come with two variations (distributions):
-
-
--   OSS distribution, which is 100% Apache 2.0
--   Community License, which will have basic x-pack features that are
-    free to use and are bundled with Elastic components
-
-
-More details about this can be found
-at [https://www.elastic.co/products/x-pack/open.](https://www.elastic.co/products/x-pack/open) For
-this book, we will be using the logstash-oss version, which is based on
-the 100% Apache 2.0 license. 
-
-The Community License Logstash download page is available
-at <https://www.elastic.co/downloads/logstash#ga-release>.
-
-The Apache 2.0 Logstash download page is available at
-<https://www.elastic.co/downloads/logstash-oss#ga-release>.
-
-The Elastic developer community is quite vibrant, and newer releases
-with new features/fixes get released quite often. By the time you are
-reading this book, the latest Logstash version might have changed.
-Instructions in this book are based on Logstash version (logstash-oss)
-7.0.0. You can click on the `past releases` link and download
-version 7.0.0 if you want to follow this as is. The
-instructions/explanations in this book should hold good for any 7.x or
-6.7.x release.
-
-Unlike Kibana, which requires major and minor version compatibility with
-Elasticsearch, Logstash versions starting from 6.7 are compatible with
-Elasticsearch 7.x. The compatibility matrix can be found
-at <https://www.elastic.co/support/matrix#matrix_compatibility>.
-
-##### Installing on Windows
-
-
-
-Rename the downloaded file `logstash-7.0.0.zip`. Unzip the
-downloaded file. Once unzipped, navigate to the newly created folder, as shown in the following code snippet:
-
-```
-E:\>cd logstash-oss-7.0.0
-```
-
-
-##### Installing on Linux
-
-
-
- Unzip the `tar.gz` package and navigate to the newly created folder, as follows:
-
-```
-$>tar -xzf logstash-oss-7.0.0.tar.gz
-$>cd logstash-7.0.0/
-```
-
-
-### Note
-
-The Logstash installation folder will be referred to
-as `LOGSTASH_HOME`.
+The Logstash installation folder will be referred to as `LOGSTASH_HOME`.
 
 
 
@@ -212,7 +96,7 @@ fine after installation by running the following command with a simple
 configuration (the `logstash` pipeline) as a parameter:
 
 ```
-E:\logstash-7.0.0\bin>logstash -e "input { stdin { } } output { stdout {} }"
+logstash -e "input { stdin { } } output { stdout {} }"
 ```
 
 You should get the following logs:
@@ -244,46 +128,7 @@ section, we will explore the Logstash pipeline in more detail.
 
  
 
-
-### Note
-
-In some windows machines, after executing the previous mentioned
-command, you might encounter error like \"[*ERROR: Unknown command \'{
-stdin { } } output { stdout {} }\'*] \". In that case, please
-remove the spaces in between the command and execute the command as
-follows C:\\\>logstash -e
-**input\"{stdin{}}output{stdout{}}\"**
-
-
-
-The Logstash architecture
--------------------------------------------
-
-
-
-The Logstash event processing pipeline has
-three stages, that is, **Inputs**, **Filters**,
-and **Outputs**. A Logstash pipeline has two required
-elements, that is, input and output, and one option element known as
-filters:
-
-
-![](./images/511deac6-e82d-4fd3-8967-b82a368f04fd.png)
-
-
- 
-
-**Inputs** create events, **Filters** modify the
-input events, and **Outputs** ship them to the destination.
-Inputs and outputs support codecs, which allow you to encode or decode
-the data as and when it enters or exits the pipeline, without having to
-use a separate filter.
-
-Logstash uses in-memory bounded queues between pipeline stages by
-default (Input** to **Filter** and
-**Filter** to **Output) to buffer events. If
-Logstash terminates unsafely, any events that are stored in memory will
-be lost. To prevent data loss, you can enable Logstash to persist
+To prevent data loss, you can enable Logstash to persist
 in-flight events to the disk by making use of persistent queues. 
 
 
@@ -448,11 +293,6 @@ E:\logstash-7.0.0\bin>logstash-plugin list 'pager'
 ```
 
 
-### Note
-
-In the preceding example
-commands, `E:\logstash-7.0.0\bin>` refers to
-the `LOGSTASH_HOME\bin` directory on your machine.
 
 ### Installing or updating plugins
 
@@ -482,94 +322,6 @@ E:\logstash-oss-7.0.0\bin>logstash-plugin update logstash-output-s3
 Executing just the `bin\logstash-plugin update` command would
 update all the plugins.
 
-#### Input plugins
-
-
-
-An input plugin is used to configure a set of
-events to be fed to Logstash. The plugin allows you to configure single
-or multiple input sources. It acts as the
-first section, which is required in the Logstash configuration file. The
-list of available input plugins out of the box is as follows:
-
-![](./images/6.PNG)
- 
-
-Details of each of these plugins and a list of the other available
-plugins that are not part of the default
-distribution can be found at
-<https://www.elastic.co/guide/en/logstash/7.0/input-plugins.html>.
-
-#### Output plugins
-
-
-
-Output plugins are used to send data to a
-destination. Output plugins allow you to configure single or multiple
-output sources. They act as the last section,
-which is required in the Logstash configuration file. The list of
-available output plugins out of the box is as follows:
-
-![](./images/7.PNG)
-
-
-Details of each of the preceding plugins and
-a list of the other available plugins that are not part of the default
-distribution can be found at
-<https://www.elastic.co/guide/en/logstash/7.0/output-plugins.html>.
-
-#### Filter plugins
-
-
-
-A filter plugin is used to perform transformations on the data. It allows you to combine one or more plugins, and the
-order of the plugins defines the order in which the data is transformed. It acts as the intermediate section between
-input and output, and it\'s an optional section in the Logstash
-configuration. The list of available filter plugins out of the box is as
-follows:
-
-![](./images/8.PNG)
-
-Details of each of the preceding plugins and
-a list of the other available plugins that are not part of the default
-distribution can be found at
-<https://www.elastic.co/guide/en/logstash/7.0/filter-plugins.html>.
-
-#### Codec plugins
-
-
-
-Codec plugins are used to encode or decode
-incoming or outgoing events from Logstash. Codecs can be used in input
-and output as well. Input codecs render a convenient way to decode your
-data before it even enters the input. Output codecs provide a convenient
-way to encode your data before it leaves the
-output. The list of available codec plugins out of the box is as
-follows:
-
-![](./images/9.PNG)
-
- 
-
-Details of each of the preceding plugins and
-a list of the other available plugins that are not part of the default
-distribution can be found at
-<https://www.elastic.co/guide/en/logstash/7.0/codec-plugins.html>.
-
-
-### Exploring plugins
-
-
-
-In this section, we will explore some commonly used input, output, filters, and codec plugins.
-
-
-
-#### Exploring input plugins
-
-
-
-Let\'s walk through some of the most commonly used input plugins in detail.
 
 
 

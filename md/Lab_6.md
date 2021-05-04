@@ -708,7 +708,7 @@ is simple and straightforward:
 
 ### Note
 
-In this book, we will be using the Apache 2.0 version of Beats. Beats
+In this course, we will be using the Apache 2.0 version of Beats. Beats
 version 7.0.x is compatible with Elasticsearch 6.7.x and 7.0.x, and
 Logstash 6.7.x and 7.0.x. The compatibility matrix can be found
 at <https://www.elastic.co/support/matrix#matrix_compatibility>. When

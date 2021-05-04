@@ -87,7 +87,7 @@ Fig-9.1: Creating a new cluster on Elastic Cloud
 After selecting the cloud platform, you can choose a region for your cluster. 
 
 Select the version to be the latest 7.x version that is available. At
-the time of writing this book, version 7.1.0 is the latest version
+the time of writing this course, version 7.1.0 is the latest version
 available on Elastic Cloud. You have the option of choosing either
 **I/O Optimized**, **Compute Optimized**,
 **Memory Optimized**, or **Hot-Warm

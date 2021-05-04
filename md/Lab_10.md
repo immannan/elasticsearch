@@ -559,7 +559,7 @@ database*]  section. 
 Download the latest MySQL JDBC Driver, also known
 as **Connector**/**J**,
 from <https://dev.mysql.com/downloads/connector/j/>. At the time of
-writing this book, the latest version is 5.1.45, which works with MySQL
+writing this course, the latest version is 5.1.45, which works with MySQL
 5.5, 5.6, and 5.7. Download the `.tar`/`.zip` file
 containing the driver and extract it into your system. The path of this
 extracted `.jar` file should be updated in
