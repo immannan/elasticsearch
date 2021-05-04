@@ -360,17 +360,6 @@ GET /custom_analyzer_index/_search
 }
 ```
 
-This would not have been possible if the index was built using
-Standard Analyzer at indexing time. We will
-cover the `match` query later in this lab. For now, you
-can assume that it applies Standard Analyzer (the analyzer configured as
-`search_analyzer`) on the given search terms and then uses the
-output terms to perform the search. In this case, it would search for
-the term `Ela` in the index. Since the index was built using a
-custom analyzer using an `edge_ngram` token filter, it would
-find a match for both products.
-
-
 Before we move onto the next section and start looking at different
 query types, let\'s set up the necessary index with the data required
 for the next section. We are going to use product catalog data taken
@@ -463,27 +452,29 @@ PUT /amazon_products
     }
   },
   "mappings": {
-    "properties": {
-      "id": {
-        "type": "keyword"
-      },
-      "title": {
-        "type": "text"
-      },
-      "description": {
-        "type": "text"
-      },
-      "manufacturer": {
-        "type": "text",
-        "fields": {
-          "raw": {
-            "type": "keyword"
+    "products": {
+      "properties": {
+        "id": {
+          "type": "keyword"
+        },
+        "title": {
+          "type": "text"
+        },
+        "description": {
+          "type": "text"
+        },
+        "manufacturer": {
+          "type": "text",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
           }
+        },
+        "price": {
+          "type": "scaled_float",
+          "scaling_factor": 100
         }
-      },
-      "price": {
-        "type": "scaled_float",
-        "scaling_factor": 100
       }
     }
   }
@@ -572,26 +563,6 @@ The response of this query looks like the following:
       },
 ```
 
-Take a note of the following:
-
-
--   The `hits.total.value` field in the response shows how
-    many search hits were found. Here, there were `201` search
-    hits.
--   The `hits.max_score` field shows the score of the best
-    matching document for the query. Since a `range` query is
-    a structured query without any importance or relevance, it is
-    executed as a filter. It doesn\'t do the scoring. All documents have
-    a score of one.
--   The `hits.hits` array lists all the
-    actual `hits`. Elasticsearch doesn\'t
-    return all `201` hits in a single pass by default. It just
-    returns the first 10 records. If you wish to scroll through all
-    results, you can do so easily by issuing multiple queries, as we
-    will see later.
--   The `price` field in all search hits would
-    be within the requested range, that is,
-    10: `<= price <= 20`.
 
 
 #### Range query with score boosting
