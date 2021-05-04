@@ -89,7 +89,7 @@ POST _template/sensor_data_template
 }
 ```
 
-2. If not already done, download the latest 7.x version of logstash for your operating system from https://www.elastic.co/downloads/logstash. At the time of writing this book logstash-7.0.1 was the latest version. Extract logstash on your system.
+2. If not already done, download the latest 7.x version of logstash for your operating system from https://www.elastic.co/downloads/logstash. At the time of writing this book logstash-7.12.1 was the latest version. Extract logstash on your system.
 3. Copy the <b>files</b> directory in your logstash home folder. If logstash was installed at /usr/share/logstash, after copying the files, the structure of files should look like -
 
 ```shell
