@@ -1,4 +1,8 @@
 
+<img align="right" src="./images/logo.png">
+
+
+
 
 Lab 10. Building a Sensor Data Analytics Application
 -----------------------------------------------------------------
@@ -26,76 +30,6 @@ application:
 
 
 Let\'s go through the topics.
-
-
-
-Introduction to the application
--------------------------------------------------
-
-
-
-The internet of things ([**IoT**])  has found a
-wide range of applications in modern times. IoT can be defined as follows:
-
-
-> [*The Internet of things (IoT) is the collective web of connected
-> smart devices that can sense and communicate with each other by
-> exchanging data via the Internet.*] 
-
-
-IoT devices are connected to the internet;
-they [**sense**] and [**communicate**].
-They are equipped with different types of sensors that collect the data
-they observe and transmit it over the internet. This data can be stored,
-analyzed, and often acted upon in near-real time. The number of such
-connected devices is projected to rise rapidly; according to Wikipedia,
-there will be an estimated 30 billion connected devices by 2020. Since
-each device can capture the current value of a metric and transmit it
-over the internet, this can result in massive amounts of data.
-
-A plethora of different types of sensors have emerged in recent times
-for temperature, humidity, light, motion, and airflow; these can be used
-in different types of applications. Each sensor can be programmed to
-take a current reading and send it over the internet.
-
-Let\'s consider the following diagram for our
-understanding:
-
-
-![](./images/babdfae5-1e64-41b4-b06b-fc9bcb966d06.png)
-
-
-Figure 10.1: Connected devices and sensors sending data to Elastic Stack
-
-Figure 10.1 provides an idea of the high-level
-architecture of the system that we will
-discuss in this lab. The left-hand side of the figure depicts
-various types of devices equipped with sensors. These devices are
-capable of capturing different metrics and sending them over the
-internet for long-term storage and analysis. In the right half of the
-figure, you see the server-side components on the other side of the
-internet. The server-side components primarily consist of the Elastic
-Stack.
-
-In this lab, we will look at an application in which we want to
-store and analyze sensor data from two types of sensors: temperature and
-humidity sensors, placed at various locations.
-
-Sensors can be deployed across multiple sites or locations, with each
-site connected to the internet as shown in the figure. Our example
-demonstrates two types of sensors, temperature, and humidity, but the
-application can be extended to support any kind of sensor data.
-
-We will cover the following points about the system in this section:
-
-
--   Understanding the sensor-generated data
--   Understanding the sensor metadata
--   Understanding the final stored data
-
-
-Let\'s go deep into the application by understanding each topic one by
-one.
 
 
 
@@ -145,9 +79,9 @@ stored in Elasticsearch in an index. 
 The metadata about sensors primarily contains the following details:
 
 
--   [**Type of sensor**]: What type of sensor is it? It can be
+-   **Type of sensor**: What type of sensor is it? It can be
     a temperature sensor, a humidity sensor, and so on.
--   [**Location-related metadata**]: Where is the sensor with
+-   **Location-related metadata**: Where is the sensor with
     the given sensor ID physically located? Which customer is it
     associated with?
 
@@ -169,7 +103,7 @@ This information is stored in the following three tables in MySQL:
 ![](./images/16.PNG)
 
 
--   `sensors`:[** **]This
+-   `sensors`: This
     maps `sensor_id` with sensor types and locations:
 
 
@@ -405,7 +339,7 @@ in the index template mapping are as follows:
     have a look at the `customer` field.
 -   The latitude and longitude fields that we had in the enriched data
     are now mapped to a `geo_point` type of field with the
-    field name of `location`[**.**]
+    field name of `location`**.**
 
 
 At this point, we have defined an index template that will trigger the
@@ -623,7 +557,7 @@ We already created the database in the [*Setting up the metadata
 database*]  section[*.*]  
 
 Download the latest MySQL JDBC Driver, also known
-as [**Connector**]/[**J**],
+as **Connector**/**J**,
 from <https://dev.mysql.com/downloads/connector/j/>. At the time of
 writing this book, the latest version is 5.1.45, which works with MySQL
 5.5, 5.6, and 5.7. Download the `.tar`/`.zip` file
@@ -870,7 +804,7 @@ workspace that was checked out from GitHub.
 
 If your machine has a Windows operating system, you will need a
 Linux-like shell that supports the `curl` command and
-basic [**BASH**] ([**Bourne Again SHell**]) commands.
+basic **BASH** (Bourne Again SHell) commands.
 As you may already have a GitHub workspace checked out, you may be
 using [*Git for Windows, *] which has Git
 BASH.[* *] This can be used to run the script that loads data.
@@ -950,7 +884,7 @@ we need to set up the index pattern for all indexes that we will
 potentially have for the Sensor Data Analytics application. We need to
 do this because our index names are dynamic. We will have one index per
 day, but we want to be able to create visualizations and dashboards that work across multiple indices of sensor data
-even when there are multiple indices. To do this, click on the [**Index Patterns**] link under
+even when there are multiple indices. To do this, click on the **Index Patterns** link under
 the **`Manage and Administer the Elastic Stack`** section, as follows:
 
 
@@ -970,7 +904,7 @@ screenshot, and click **`Next step`**:
 Figure 10.3: Creating an index pattern
 
 On the next screen,
-in **`Time Filter Field Name`**, choose the [**time**] field as
+in **`Time Filter Field Name`**, choose the **time** field as
 follows and click
 on **`Create index pattern`**:
 
@@ -1018,7 +952,7 @@ the average temperature across all temperature sensors regardless of
 their location or any other criteria. As we saw in Lab
 7, [*Visualizing Data with Kibana*], we should go to
 the **`Visualize`** tab to create new visualizations and click on the button with
-a [****`+ Create a Visualization`****] button.
+a ****`+ Create a Visualization`**** button.
 
 Choose **`Line Chart`**, and then choose
 the `sensor_data*` index pattern as the source for the new
@@ -1034,27 +968,27 @@ time
 
 
 1.  Click on the time range selection fields near the top-right corner,
-    choose [**Absolute**], and select the date range as
-    [**December 1, 2017**] to [**December 2, 2017**].
+    choose **Absolute**, and select the date range as
+    **December 1, 2017** to **December 2, 2017**.
     We have to do this because our simulated sensor data is from
-    [**December 1, 2017**].
+    **December 1, 2017**.
 
 
 
 2.  Click on **`Add a filter`** as shown in Figure-10.5 and choose
-    the [**Filter**] as follows:
-    [**sensorType:Temperature**]. Click on
+    the **Filter** as follows:
+    **sensorType:Temperature**. Click on
     the **`Save`** button. We have two types of sensors,
     **`Temperature`** and **`Humidity`**. In the current
     visualization that we are building, we
     are only interested in the temperature readings. This is why we\'ve
     added this filter.
-3.  From the [**Metrics**] section, choose the values shown in
+3.  From the **Metrics** section, choose the values shown in
     Figure 10.5. We are interested in the average value of the readings.
     We have also modified the label to
     be `Average Temperature`.
-4.  From the [**Buckets**] section, choose the [**Date
-    Histogram**] aggregation and the [**time**] field,
+4.  From the **Buckets** section, choose the **Date
+    Histogram** aggregation and the **time** field,
     with the other options left as they are.
 5.  Click on the triangular **`Apply changes`** button.
 
@@ -1087,11 +1021,11 @@ with the name `Average temperature over time`.
 Execute the steps as follows to update the visualization:
 
 
-1.  Click on the filter with the  [**sensorType:
-    Temperature**] label and click on the [**Edit
-    Filter**] action.
+1.  Click on the filter with the  **sensorType:
+    Temperature** label and click on the **Edit
+    Filter** action.
 2.  Change the **`Filter`** value
-    from [**Temperature**] to [**Humidity**] and
+    from **Temperature** to **Humidity** and
     click on **`Save.`**
 
 
@@ -1108,9 +1042,9 @@ Execute the steps as follows to update the visualization:
 Figure 10.6: Creating the visualization for average humidity over time
 
 As you will see, the chart gets updated for the Humidity sensors. You
-can click on the [**Save**] link at the top navigation bar. You
+can click on the **Save** link at the top navigation bar. You
 can give a new name to the visualization, such
-as[** **]`Average humidity over time`, check
+as `Average humidity over time`, check
 the **`Save as a new visualization`** box, and click on **`Save`**. This
 completes our second visualization and answers our second question.
 
@@ -1133,38 +1067,38 @@ Figure 10.7: Creating the visualization for temperature at locations
 over time
 
 
-1.  Add a filter for [**sensorType: Temperature**] as we did
+1.  Add a filter for **sensorType: Temperature** as we did
     before.
-2.  Set up the [**Metrics**] section exactly same as the first
+2.  Set up the **Metrics** section exactly same as the first
     chart that we created, that
     is `Average Temperature over time` on
     the `reading`[* *] field.
 3.  Since we are aggregating the data over
-    the [**time**] field, we need to choose the [**Date
-    Histogram**] aggregation in the **`Buckets`** section.
-    Here, we should choose the [**time**] field and leave the
-    aggregation **`Interval`** as [**Auto**]**`. `**
+    the **time** field, we need to choose the **Date
+    Histogram** aggregation in the **`Buckets`** section.
+    Here, we should choose the **time** field and leave the
+    aggregation **`Interval`** as **Auto****`. `**
 4.  Up to this point, this visualization is the same
     as `Average temperature over time`. We don\'t just want to
     see the average temperature over time; we want to see it
-    per [**locationOnFloor**], which is our most fine-grained
+    per **locationOnFloor**, which is our most fine-grained
     unit of identifying a location. This is why we are splitting the
-    series using the [**Terms**] aggregation on the
-     [**locationOnFloor**] in this step. We select [**Order
-    By**] as [**metric: Average Temperature**], keep
-    **`Order`** as [**Descend**], and [**Size**] to
+    series using the **Terms** aggregation on the
+     **locationOnFloor** in this step. We select **Order
+    By** as **metric: Average Temperature**, keep
+    **`Order`** as **Descend**, and **Size** to
     be `5` to retain only the top five locations.
 
 
 We have now built a visualization that shows
 how the temperature changes for each value
-of [**locationOnFloor**] field in our data. You can clearly see
-that there is a spike in [**O-201**] on
-[**December 1, 2017**] at [**15:00 IST**]. Because of
+of **locationOnFloor** field in our data. You can clearly see
+that there is a spike in **O-201** on
+**December 1, 2017** at **15:00 IST**. Because of
 this spike, we had seen the average temperature in our first
 visualization spike at that time. This is an important insight that we
 have uncovered. Save this visualization
-as[** **]`Temperature at locations over time`.
+as `Temperature at locations over time`.
 
 A visualization for humidity can be created by following the same steps
 but just replacing `Temperature with Humidity`.
@@ -1173,9 +1107,9 @@ but just replacing `Temperature with Humidity`.
 
 
 
-We can visualize temperature and humidity over the map using the [**Coordinate Map**] visualization.
+We can visualize temperature and humidity over the map using the **Coordinate Map** visualization.
 Create a new **`Coordinate Map`** visualization by going to the
-[**Visualize**] tab and clicking the [**+**] icon to
+**Visualize** tab and clicking the **+** icon to
 create a new visualization, and perform the following steps as shown in
 the following screenshot:
 
@@ -1187,17 +1121,17 @@ Figure 10.8: Creating a visualization to view sensor locations over a map
 
 
 1.  As in previous visualizations, add a
-    filter for the [**sensorType: Temperature**].
+    filter for the **sensorType: Temperature**.
 2.  In the **`Metrics`** section,
-    choose [**Average**] aggregation on the **`reading`** field
+    choose **Average** aggregation on the **`reading`** field
     as done previously.
 
 
 
 3.  Since this is a **`Coordinate Map`**, we need to choose
-    the [**GeoHash**] grid aggregation and then select
+    the **GeoHash** grid aggregation and then select
     the **`geo_point`** field that we have in our data.
-    The [**location**] is the field to aggregate.
+    The **location** is the field to aggregate.
 
 
 As you can see, it helps in visualizing our data on the map. We can
@@ -1205,7 +1139,7 @@ immediately see the average temperature at each site when we hover over
 a specific location. Focus on the relevant part of the map and save the
 visualization with the name `Temperature over locations`.
 
-You can create a similar [**Coordinate Map**] visualization for
+You can create a similar **Coordinate Map** visualization for
 the Humidity sensors.
 
 #### How are the sensors distributed across departments?
@@ -1230,12 +1164,12 @@ Follow the steps as shown in the following screenshot:
 Figure 10.9: Creating a visualization for locations across departments
 
 
-1.  In the **`Metrics`** section, choose [**Unique
-    Count**] aggregation and 
-    the [**locationOnFloor**] field. You may modify
+1.  In the **`Metrics`** section, choose **Unique
+    Count** aggregation and 
+    the **locationOnFloor** field. You may modify
     the **`Custom Label`** to `Number of locations`.
 2.  In the **`Buckets`** section, we need to
-    choose [**Terms**] aggregation on the
+    choose **Terms** aggregation on the
     `department` field as we want to aggregate the data across
     different departments.
 
@@ -1267,7 +1201,7 @@ far. Please click on the **`Dashboard`** tab from the left-hand-side
 navigation bar in Kibana. Click on
 the **`+ Create new dashboard`** button to create a new dashboard.
 
-Click on the [**Add**] link to add visualizations to your newly
+Click on the **Add** link to add visualizations to your newly
 created dashboard. As you click, you will see all the visualizations we
 have built in a dropdown selection. You can add all the visualizations
 one by one and drag/resize to create a dashboard that suits your
@@ -1283,7 +1217,7 @@ application that we are building:
 Figure 10.10: Dashboard for sensor data analytics application
 
 With the dashboard, you can add filters by
-clicking on the [**Add filter**] link near the top-left corner
+clicking on the **Add filter** link near the top-left corner
 of the dashboard. The selected filter will be applied to all the
 charts. 
 
@@ -1303,8 +1237,8 @@ that building:
 
 Figure 10.11: Interacting with the visualizations in a dashboard
 
-Let us delete that filter by hovering over the [**buildingName: \"222
-Broadway\"**] filter by clicking on the trash icon. Next, we
+Let us delete that filter by hovering over the **buildingName: \"222
+Broadway\"** filter by clicking on the trash icon. Next, we
 will try to interact with one of the line charts, that is,
 the `Temperature at locations over time` visualization.
 
@@ -1328,9 +1262,9 @@ Figure 10.12: Zooming into a time interval from a line chart
 We uncover the following facts:
 
 
-1.  The temperature sensor at location [**O-201**] (pink legend
+1.  The temperature sensor at location **O-201** (pink legend
     in fig-10.12) is steadily rising around this time. 
-2.  In the [**Coordinate Map**] visualization, you can see that
+2.  In the **Coordinate Map** visualization, you can see that
     the highlighted circle is red, compared to the other locations,
     which are yellow. This highlights that the location has an
     abnormally high temperature compared to the other locations.
@@ -1356,14 +1290,3 @@ using only the components of the Elastic Stack, without using any other
 tools and programming languages, to obtain a powerful tool that can
 handle large volumes of data.
 
-We started at the very core by designing the data model for
-Elasticsearch. Then, we designed a data pipeline that is secured and can
-accept data over the internet using HTTP. We enriched the incoming data
-using the metadata that we had in a relational database and stored in
-Elasticsearch. We sent some test data over HTTP just like those that
-real sensors send over the internet. We built some meaningful
-visualizations that will give answers to some typical questions. We then
-put together all visualizations in a powerful, interactive dashboard.
-
-In Lab 11, [*Monitoring Server Infrastructure*], we will
-build another real-world application in which the Elastic Stack excels.

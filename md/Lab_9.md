@@ -1,24 +1,12 @@
 
+<img align="right" src="./images/logo.png">
+
+
+
 
 Lab 9. Running Elastic Stack in Production
 -------------------------------------------------------
 
-
-
-In our quest to learn Elastic Stack, we have covered good ground and
-have a solid footing in all of its components. We have a solid
-foundation of the core Elasticsearch with its search and analytics
-capabilities, and we have covered how to effectively use Logstash and
-Kibana to build a powerful platform that can deliver analytics on big
-data. We have also seen how X-Pack makes it easy to secure and monitor
-big data, generate alerts, and perform graph analysis and machine
-learning. 
-
-Taking the Elastic Stack components to production requires that you are
-aware of some common pitfalls, patterns, and strategies that can help
-you run your solution smoothly in production. In this lab, we will
-see some common patterns, tips, and tricks to run Elasticsearch,
-Logstash, Kibana, and other components in production.
 
 We will start with Elasticsearch and then move on to other
 components. There are various ways to run Elasticsearch in production.
@@ -53,9 +41,9 @@ Elasticsearch and Kibana configuration parameters. 
 
 There are multiple cloud providers that provide managed clusters for Elastic Stack, such as Elastic Cloud, QBox.io,
 Bonsai, and many more. In this section, we will go through how to
-get started with [**Elastic
-Cloud**]. Elastic Cloud is the official cloud offering by the
-company Elastic.co,[** **]which is the main company
+get started with **Elastic
+Cloud**. Elastic Cloud is the official cloud offering by the
+company Elastic.co, which is the main company
 contributing to the development of Elasticsearch and other Elastic Stack
 components. We will cover the following topics while working with
 Elastic Cloud:
@@ -84,8 +72,8 @@ your clusters. Since you just signed up for a trial account, you can
 create a free cluster during the trial period.
 
 We can choose a name for your trial cluster. You will also be able to
-choose [**AWS**] ([**Amazon Web Services**])
-or [**GCE**] ([**Google Compute Engine**]) while
+choose **AWS** (Amazon Web Services)
+or **GCE** (Google Compute Engine) while
 launching the cluster. Upon logging in, you
 can create a cluster from the following
 screen:
@@ -101,9 +89,9 @@ After selecting the cloud platform, you can choose a region for your cluster. 
 Select the version to be the latest 7.x version that is available. At
 the time of writing this book, version 7.1.0 is the latest version
 available on Elastic Cloud. You have the option of choosing either
-[**I/O Optimized**], [**Compute Optimized**],
-[**Memory Optimized**], or [**Hot-Warm
-Architecture**] deployment. Different types of clusters are
+**I/O Optimized**, **Compute Optimized**,
+**Memory Optimized**, or **Hot-Warm
+Architecture** deployment. Different types of clusters are
 suitable for different use cases.
 
 When you click the the **`Create deployment`** button, your cluster will
@@ -115,7 +103,7 @@ It also provides a **`Cloud ID`**, which is a helpful string when
 connecting to your cloud cluster from your Beats agents and Logstash
 servers.
 
-You can click under the [**Deployments**] text where you will
+You can click under the **Deployments** text where you will
 see the name with which you created your deployment. In this case, we
 called it `test-cluster`. If you click on that, you should see
 a screen that has a summary of your deployment:
@@ -127,7 +115,7 @@ a screen that has a summary of your deployment:
 Fig-9.2: Deployment Overview screen on Elastic Cloud
 
 As you can see, the cluster is up and running. In the
-second tab, [**Kibana**], you can
+second tab, **Kibana**, you can
 get the URL at which it is accessible. The Elasticsearch cluster is
 available at the given secured HTTPS URL.
 
@@ -151,7 +139,7 @@ X-Pack security. You will have to log in using the credentials provided
 to you after you created the Elastic Cloud cluster in the previous
 section.
 
-After logging in, you should see the [**Kibana**] UI, as
+After logging in, you should see the **Kibana** UI, as
 follows:
 
 
@@ -169,10 +157,10 @@ and monitor your Elasticsearch cluster from this Kibana UI.
 
 It is possible to override the configuration
 of your Elasticsearch nodes via the **`Edit`** menu in the navigation
-panel on the left side under the [**Deployments**]. Elastic
+panel on the left side under the **Deployments**. Elastic
 Cloud doesn\'t allow you to edit the `elasticsearch.yml` file
-directly. However, it provides a section called [**User
-Settings**], which allows you to override a subset of the
+directly. However, it provides a section called **User
+Settings**, which allows you to override a subset of the
 configuration parameters.
 
 The configuration parameters that can be overridden are documented in the Elastic Cloud reference documentation
@@ -187,8 +175,8 @@ all indexes in your cluster periodically
 (every 30 minutes) and keeps them for recovery purposes, if required.
 This happens automatically without doing any additional setup or code.
 You can visit the **`Snapshots`** link under your
-[**Deployments**] \> [**Elasticsearch**] to view the
-available list of [**Snapshots**], as follows:
+**Deployments** \> **Elasticsearch** to view the
+available list of **Snapshots**, as follows:
 
 
 ![](./images/f456a374-3310-4b53-a447-e33b6f6c6afb.png)
@@ -212,7 +200,7 @@ snapshot on a separate cluster. 
 
 Next, we will see how to get started with Elastic Stack if you are
 planning to manage the Elastic Stack components yourself. This is also
-called [**self-hosting**], in that you will be hosting and
+called **self-hosting**, in that you will be hosting and
 managing it on your own.
 
 
@@ -496,7 +484,7 @@ all nodes.
 
 
 Use a reverse proxy such as nginx
-(pronounced [**engine x**]) or Apache to proxy your requests to
+(pronounced **engine x) or Apache to proxy your requests to
 Elasticsearch/Kibana.
 
 #### Binding HTTP to local addresses
@@ -504,7 +492,7 @@ Elasticsearch/Kibana.
 
 
 You should run your Elasticsearch nodes in
-a [**VPC**] ([**Virtual Private Cloud**]). More
+a **VPC** (Virtual Private Cloud). More
 recently, AWS creates all nodes in a VPC. The
 nodes that do not need to interface with the clients accept the queries from clients over HTTP. This can
 be done by setting `http.host`
@@ -544,7 +532,7 @@ bucket.
 
 ### Note
 
-[**S3**] stands for [**Simple Storage Service**]. It
+**S3** stands for **Simple Storage Service**. It
 is a scalable, durable, and reliable storage service to store large
 amounts of data. It provides comprehensive security for your data and
 accessibility from many different platforms. It can meet very stringent
@@ -1112,7 +1100,7 @@ time.
 
 Once an index is created and documents start
 getting stored, the requirements can change. There is only one thing
-that is constant, [**change**]. 
+that is constant, **change**. 
 
 When the schema changes, the following types of change may happen with
 respect to the schema:
@@ -1160,15 +1148,15 @@ you may want to retain data for the past few weeks, months, or years in
 Elasticsearch, depending on your use case.
 
 Prior to Elasticsearch 2.x, this was achieved
-using [**TTL**] ([**Time to Live**]) set on individual
+using **TTL** (Time to Live) set on individual
 documents. Each document could be configured to remain in the index for
 a configurable amount of time. But, the TTL feature was deprecated with
 the 2.x version because of its overheads in maintaining time-to-live on
 a per-document basis.
 
 We have seen some problems that we might face while dealing with time
-series data. Now, let\'s look at how the use of [**time-based indexes **]addresses these issues.
-Time-based indexes are also called [**index-per-timeframe**]:
+series data. Now, let\'s look at how the use of **time-based indexes **addresses these issues.
+Time-based indexes are also called **index-per-timeframe**:
 
 
 -   How index-per-timeframe solves these issues

@@ -1,4 +1,7 @@
 
+<img align="right" src="./images/logo.png">
+
+
 
 Lab 11. Monitoring Server Infrastructure
 -----------------------------------------------------
@@ -22,25 +25,6 @@ In this lab, we will cover the following topics:
 -   Configuring Metricbeat
 -   Capturing system metrics
 -   Deployment architecture
-
-
-
-Metricbeat
-----------------------------
-
-
-
-Metricbeat is a lightweight shipper that
-periodically collects metrics from the operating system and from
-services running on the server. It helps you monitor servers by
-collecting metrics from the system and services such as Apache, MongoDB,
-Redis, and so on, that are running on the server. Metricbeat can push
-collected metrics directly into Elasticsearch or send them to Logstash,
-Redis, or Kafka. To monitor services, Metricbeat can be installed on the
-edge server where services are running, but it also provides the ability
-to collect metrics from remote servers as well. However, it\'s
-recommended that you have it installed on the edge servers where the
-services are running. 
 
 
 
@@ -114,9 +98,9 @@ $>cd metricbeat
 To install using dep/rpm, execute the appropriate commands in the
 Terminal as follows:
 
-[**deb:**]`curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.0.0-amd64.deb``sudo dpkg -i metricbeat-7.0.0-amd64.deb`
+**deb:**`curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.0.0-amd64.deb``sudo dpkg -i metricbeat-7.0.0-amd64.deb`
 
-[**rpm:**]`curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.0.0-x86_64.rpm``sudo rpm -vi metricbeat-7.0.0-x86_64.rpm`
+**rpm:**`curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.0.0-x86_64.rpm``sudo rpm -vi metricbeat-7.0.0-x86_64.rpm`
 
 Metricbeat will be installed in the `/usr/share/metricbeat`
 directory. The configuration files will be present
@@ -131,8 +115,8 @@ present within the `/var/log/metricbeat` directory.
 
 
 Metricbeat is made up of two components: one
-is called [**modules**] and the other is called
-[**metricsets**]. A Metricbeat module defines the basic logic of collecting data from a
+is called **modules** and the other is called
+**metricsets**. A Metricbeat module defines the basic logic of collecting data from a
 specific service, such as MongoDB, Apache,
 and so on. The module specifies details about the service, including how
 to connect, how often to collect metrics, and which metrics to collect.
@@ -162,26 +146,26 @@ MongoDB, as shown in the following diagram:
 The key benefits of Metricbeat are as follows: 
 
 
--   [**Metricbeat sends error events, too**]: When
+-   **Metricbeat sends error events, too**: When
     the service is not reachable or is down,
     Metricbeat will still send events that contain full error messages
     obtained when they are fetching information  from the host systems.
     This is beneficial for troubleshooting or identifying the reason
     behind the outage of the service. 
--   [**Combines multiple related metrics into a single
-    event**]: Metricbeat fetches all related metrics from the
+-   **Combines multiple related metrics into a single
+    event**: Metricbeat fetches all related metrics from the
     host system, making a single request rather than making multiple
     requests for fetching each metric one by one, thus resulting in less
     load on the services/host systems. Fetched metrics are combined into
     a single event and sent to the configured output.
--   [**Sends metadata information**]: Metrics sent by
+-   **Sends metadata information**: Metrics sent by
     Metricbeat contain both numbers as well as strings for contacting
     the status information. It also ships basic metadata information
     about each metric as part of each event. This is helpful for mapping
     appropriate data types during storage and helps with
     querying/filtering data, identifying events based on metadata
     information, and so on.
--   [**Sends raw data as it is**]: Metricbeat sends obtained
+-   **Sends raw data as it is**: Metricbeat sends obtained
     raw data as-is without performing any processing or any aggregation
     operations on it, thus reducing its complexity.
 
@@ -417,7 +401,7 @@ true and specify a frequency with which to look for config file changes.
 Set the `reload.period` parameter under
 the `metricbeat.config.modules` property.
 
-[**For example**]:
+**For example**:
 
 `#metricbeat.yml``metricbeat.config.modules:``path: ${path.config}/modules.d/*.yml``reload.enabled: true``reload.period: 20s`
 
@@ -465,7 +449,7 @@ This section contains configuration options and some general settings to contro
 Some of these configuration options/settings are as follows:
 
 
--   `name`:[** **]The name of the shipper that
+-   `name`: The name of the shipper that
     publishes the network data. By default, the hostname is used for
     this field, as follows:
 
@@ -475,7 +459,7 @@ name: "dc1-host1"
 ```
 
 
--   `tags`:[** **]A list of tags that will be
+-   `tags`: A list of tags that will be
     included in the `tags` field of every event Metricbeat
     ships. Tags make it easy to group servers by different logical
     properties and are useful when filtering events in Kibana and
@@ -487,7 +471,7 @@ tags: ["staging", "web-tier","dc1"]
 ```
 
 
--   `max_procs`:[** **]The maximum number of CPUs
+-   `max_procs`: The maximum number of CPUs
     that can be executing simultaneously. The default is the number of
     logical CPUs available in the system:
 
@@ -624,7 +608,7 @@ unresponsive, then the event will be sent to one of the other configured
 hosts. When multiple hosts are configured,events are distributed in a
 random order. To enable load-balancing events across the Logstash hosts,
 use the `loadbalance` flag, set
-to[** **]`true`, as follows:
+to `true`, as follows:
 
 ```
 output.logstash:
@@ -633,7 +617,7 @@ hosts: ["localhost:5045", "localhost:5046"]
 ```
 
 
--   `console`:[** **]This is used to send events to
+-   `console`: This is used to send events to
     `stdout`. These events are written in JSON format. This is
     useful during debugging or testing.
 
@@ -671,7 +655,7 @@ logging.files:
 Some of the available configuration options are as follows:
 
 
--   `level`:[** **]To specify the logging level.
+-   `level`: To specify the logging level.
 -   `to_files`: To write all logging output to files. The
     files are subject to file rotation. This is the default value.
 
@@ -680,7 +664,7 @@ Some of the available configuration options are as follows:
 -   `to_syslog`: To write logging output to syslogs if this
     setting is set to `true`.
 -   `files.path`, `files.name`,
-    and `files.keepfiles`:[** **]These are used to
+    and `files.keepfiles`: These are used to
     specify the location of the file, the name of the file, and the
     number of recently rotated log files to keep on the disk.
 
@@ -1005,7 +989,7 @@ execute the following steps:
 1.  Navigate to `http://localhost:5601` and open up Kibana.
 2.  Click on the **`Dashboard`** link found in the left navigation menu
     and select either
-    **`[Metricbeat System] Overview`** [****`ECS`****] or
+    **`[Metricbeat System] Overview` **`ECS`**** or
     **`[Metricbeat System] Host Overview ECS`** from the dashboard, as
     shown in the following screenshot:
 
@@ -1014,24 +998,24 @@ execute the following steps:
 ![](./images/02e58be8-89e8-4dc7-aba9-90e7b6bd4403.png)
 
 
-[**\[Metricbeat System\] Overview Dashboard ECS:**] This
+**\[Metricbeat System\] Overview Dashboard ECS:** This
 dashboard provides an overview of all the systems that are being
 monitored. Since we are monitoring only a single host, we see that the
-[**Number of hosts**] is [**1**], as shown in the
+**Number of hosts** is **1**, as shown in the
 following screenshot:
 
 
 ![](./images/f4a5e370-6bf5-4155-a3f6-a40e53039dc0.png)
 
 
-[**\[Metricbeat Host\] Overview
-Dashboard:**][** **]This dashboard is useful for
+**\[Metricbeat Host\] Overview
+Dashboard:** This dashboard is useful for
 finding the detailed metrics of individual systems/hosts. In order to
 filter metrics based on a particular host, enter the search/filter
 criterion in the search/query bar. In the following screenshot, the
-filter criterion is [**agent.name:metricbeat\_inst1**]. Any
+filter criterion is **agent.name:metricbeat\_inst1**. Any
 attribute that uniquely identifies a system/host can be used; for
-example, you can filter based on[**host.hostname**], as
+example, you can filter based on**host.hostname**, as
 follows:
 
 
@@ -1040,8 +1024,8 @@ follows:
 
 Since the `diskio` and`load` metricsets were
 disabled in the system module configuration, we will see empty
-visualizations for the [**Disk IO**] and [**System
-L**][**oad**] visualizations, as shown in the
+visualizations for the **Disk IO** and **System
+L****oad** visualizations, as shown in the
 following screenshot:
 
 
@@ -1091,20 +1075,20 @@ used Elastic Stack deployment architecture:
 This diagram depicts three possible architectures:
 
 
--   [**Ship the operation metrics directly to Elasticsearch**]:
+-   **Ship the operation metrics directly to Elasticsearch**:
     As seen in the preceding diagram, you will install various types of
-    [**Beats**], such as [**Metricbeat**],
-    [**Filebeat**], [**Packetbeat**], and so on, on
+    **Beats**, such as **Metricbeat**,
+    **Filebeat**, **Packetbeat**, and so on, on
     the edge servers from which you would like to ship the operation
     metrics/logs. If no further processing is required, then the
     generated events can be shipped directly to the Elasticsearch
     cluster. Once the data is present in Elasticsearch, it can then be
     visualized/analyzed using Kibana. In this architecture, the flow of
-    events would be [**Beats → Elasticsearch → Kibana**]. 
+    events would be **Beats → Elasticsearch → Kibana**. 
 
 
 
--   [**Ship the operation metrics to Logstash**]: The operation
+-   **Ship the operation metrics to Logstash**: The operation
     metrics/logs that are captured by Beats and installed on edge
     servers is sent to Logstash for further processing, such as parsing
     the logs or enriching log events. Then, the parsed/enriched events
@@ -1112,17 +1096,17 @@ This diagram depicts three possible architectures:
     you can scale up Logstash instances, for example, by configuring a
     set of Beats to send data toLogstash instance 1 and configuring
     another set of Beats to send data to Logstash instance 2, and so on.
-    In this architecture, the flow of events would be [**Beats →
-    Logstash → Elasticsearch → Kibana**]. 
--   [**Ship the operation metrics to a resilient queue**]: If
+    In this architecture, the flow of events would be **Beats →
+    Logstash → Elasticsearch → Kibana**. 
+-   **Ship the operation metrics to a resilient queue**: If
     the generated events are at a very high rate and if Logstash is
     unable to cope with the load or to prevent loss of data/events when
     Logstash is down, you can go for resilient queues such as Apache
     Kafka so that events are queued. Then, Logstash can process them at
     its own speed, thus avoiding the loss of operation metrics/logs
     captured by Beats. In this architecture, the flow of events would
-    be [**Beats → Kafka → Logstash → Elasticsearch →
-    Kibana**]. 
+    be **Beats → Kafka → Logstash → Elasticsearch →
+    Kibana**. 
 
 
 

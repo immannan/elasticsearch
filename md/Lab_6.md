@@ -1,24 +1,13 @@
 
 
+<img align="right" src="./images/logo.png">
+
+
+
 Lab 6. Building Data Pipelines with Logstash
 ---------------------------------------------------------
 
 
-
-In the previous lab, we understood the importance of Logstash in the
-log analysis process. We also covered its usage and its high-level
-architecture, and went through some commonly used plugins. One of the
-important processes of Logstash is converting unstructured log data into
-structured data, which helps us search for relevant information easily
-and also assists in analysis. Apart from parsing the log data to make it
-structured, it would also be helpful if we could enrich the log data
-during this process so that we can gain further insights into our logs.
-Logstash comes in handy for enriching our log data, too. In the previous
-lab, we have also seen that Logstash can read from a wide range of
-inputs and that Logstash is a heavy process. Installing Logstash on the
-edge nodes of shipping logs might not always be feasible. Is there an
-alternative or lightweight agent that can be used to ship logs? Let\'s
-explore that in this lab as well.
 
 In this lab, we will be covering the following topics:
 
@@ -201,7 +190,7 @@ conversion targets are `integer`, `string`,
 ### Note
 
 If the conversion type is `boolean`, these are the possible
-values:[**True**]: true, t, yes, y, and 1.[**False**]:
+values:**True**: true, t, yes, y, and 1.**False**:
 false, f, no, n, and 0.
 
 
@@ -493,7 +482,7 @@ Introducing Beats
 
 
 
-[**Beats**] are lightweight data shippers that are installed as agents on edge servers to ship operational
+**Beats** are lightweight data shippers that are installed as agents on edge servers to ship operational
 data to Elasticsearch. Just like Elasticsearch, Logstash, Kibana, and
 Beats are open source products too. Depending on the use case, Beats can
 be configured to ship the data to Logstash to transform events prior to
@@ -802,8 +791,8 @@ will be present within the `/var/log/filebeat` directory.
 
 
 
-Filebeat is made up of key components called [**inputs**],
-[**harvesters**], and [**spoolers**]. These
+Filebeat is made up of key components called **inputs**,
+**harvesters**, and **spoolers**. These
 components work in unison in order to tail
 files and allow you to send event data to the specified output. The
 input is responsible for identifying the list of files to read logs
@@ -1082,11 +1071,11 @@ collect logs.
     accepted by the `paths` parameter.
 -   `exclude_files`: This parameter takes `regex` to
     exclude file patterns from processing.
--   `exclude_lines`:[** **]It accepts a list of
+-   `exclude_lines`: It accepts a list of
     regular expressions to match. It drops the lines that match any
     regular expression from the list. In the preceding configuration
     example, it drops all the lines beginning with `DBG`. 
--   `include_lines`:[** **]It accepts a list of
+-   `include_lines`: It accepts a list of
     regular expressions to match. It exports the lines that match any
     regular expressions from the list. In the preceding configuration
     example, it exports all the lines beginning with either
@@ -1107,7 +1096,7 @@ link for all supported `regex` patterns:
     `tags` aid conditional filtering of events in Kibana or
     Logstash. In the preceding configuration example,
     `java_logs` is appended to the `tags` list.
--   `fields`:[** **]It is used to specify option
+-   `fields`: It is used to specify option
     fields that need to be included in each event Filebeat ships. Like
     `tags`, it helps with the conditional filtering of events
     in Kibana or Logstash. Fields can be scalar values, arrays,
@@ -1126,14 +1115,14 @@ To store custom fields as top-level fields, set the
 
 
 
--   `scan_frequency`:[** **]It is used to specify the
+-   `scan_frequency`: It is used to specify the
     time interval after which the input checks for any new files under
     the configured paths. By default, `scan_frequency` is set
     to `10` seconds.
--   `multiline`:[** **]It specifies how logs that are
+-   `multiline`: It specifies how logs that are
     spread over multiple lines need to be processed. This is very
     beneficial for processing stack traces/exception messages. It is
-    made up of a `pattern`[** **]that specifies the
+    made up of a `pattern` that specifies the
     regular expression pattern to match; `negate`, which
     specifies whether or not the pattern is negated; and
     `match`, which specifies how Filebeat combines matching
@@ -1177,11 +1166,11 @@ overlapping configuration parameters for the `log` input type.
 
 
 
--   `exclude_lines`:[** **]It accepts a list of
+-   `exclude_lines`: It accepts a list of
     regular expressions to match. It drops lines that match any regular
     expression from the list. In the preceding configuration example, it
     drops all lines beginning with `DBG`. 
--   `include_lines`:[** **]It accepts a list of
+-   `include_lines`: It accepts a list of
     regular expressions to match. It exports lines that match any
     regular expressions from the list. In the preceding configuration
     example, it exports all lines beginning with either `ERR`
@@ -1192,7 +1181,7 @@ overlapping configuration parameters for the `log` input type.
     Kibana or Logstash. In the preceding configuration
     example, `java_logs` is appended to
     the `tags` list.
--   `fields`:[** **]It is used to specify option
+-   `fields`: It is used to specify option
     fields that need to be included in each event Filebeat ships.
     Like `tags`, it aids conditional filtering of events in
     Kibana or Logstash. Fields can be scalar values, arrays,
@@ -1211,7 +1200,7 @@ To store custom fields as top-level fields, set the
 
 
 
--   `scan_frequency`:[** **]It is used to specify the
+-   `scan_frequency`: It is used to specify the
     time interval after which the input checks for any new files under
     the configured paths. By default, `scan_frequency` is set
     to `10` seconds.
@@ -1377,7 +1366,7 @@ unresponsive, then the event will be sent to one of the other configured
 hosts. When multiple hosts are configured, the events are distributed in
 a random order. To enable load balancing of events across the Logstash
 hosts, use the `loadbalance` flag, set
-to[** **]`true`:
+to `true`:
 
 ```
 output.logstash:
@@ -1424,7 +1413,7 @@ logging.files:
 Some available configuration options are as follows:
 
 
--   `level`:[** **]To specify the logging level.
+-   `level`: To specify the logging level.
 -   `to_files`: To write all logging output to files. The
     files are subject to file rotation. This is the default value.
 -   `to_syslog`: To write the logging output to
@@ -1433,7 +1422,7 @@ Some available configuration options are as follows:
 
 
 -   `files.path`, `files.name`,
-    and `files.keepfiles`:[** **]These are used to
+    and `files.keepfiles`: These are used to
     specify the location of the file, the name of the file, and the
     number of most recently rotated log files to keep on the disk,
     respectively.

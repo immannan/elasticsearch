@@ -1,11 +1,14 @@
 
+<img align="right" src="./images/logo.png">
+
+
 
 Lab 7. Visualizing Data with Kibana
 ------------------------------------------------
 
 
 
-[**Kibana**] is an open source
+**Kibana** is an open source
 web-based analytics and visualization tool that lets you visualize the
 data stored in Elasticsearch using a variety of tables, maps, and
 charts. Using its simple interface, users can easily explore large
@@ -40,22 +43,6 @@ on your operating system, download the ZIP/TAR file, as shown in the following
 ![](./images/ab0b21a5-4e36-4e2f-a719-4a46ca00fd0a.png)
 
 
-
-### Note
-
-The Elastic developer community is quite vibrant, and new releases with
-new features/fixes get released quite often. While you have been reading
-this book, the latest Kibana version might have changed. The
-instructions in this book are based on Kibana version 7.0.0. You can
-click on the **`past releases`** link and download version 7.0.0
-(kibana-oss) if you want to follow as is, but the
-instructions/explanations in this book should hold good for any 7.x
-release.
-
-
-Kibana is a visualization tool that relies on Elasticsearch for querying
-data that is used to generate visualizations. Hence, before proceeding
-further, make sure Elasticsearch is up and running.
 
 
 
@@ -262,7 +249,7 @@ page that we just saw. Similarly, if you want to configure Kibana
 against your own index and use it for data exploration and
 visualization, you can click on the link in section 2, in the previous
 screenshot. In earlier labs, you might have read briefly about
-[**Beats**], which is used for ingesting file or metric data
+**Beats**, which is used for ingesting file or metric data
 easily into Elasticsearch. Clicking on the buttons in section 3 will
 take you to screens that provide standard instructions of how you can
 enable the insertion of various types of data using Beats. We will be
@@ -271,7 +258,7 @@ covering more about Beats in the subsequent labs. 
 In this lab, rather than relying on the sample default data shipped
 out of the box, we will load custom data which we will use to follow the
 tutorial. One of the most common use cases is
-[**log analysis**]. For this tutorial, we will be loading
+**log analysis**. For this tutorial, we will be loading
 Apache server logs into Elasticsearch using Logstash and will then use
 it in Kibana for analysis/building visualizations.
 
@@ -282,7 +269,7 @@ period of May 2014 to June 2014. It contains 300,000 log events.
 
 Navigate to
 <https://github.com/elastic/elk-index-size-tests/blob/master/logs.gz>
-and click the [**Download**] button. Unzip the
+and click the **Download** button. Unzip the
 `logs.gz` file and place it in a folder (For example:
 `C:\fenago\data`).
 
@@ -416,21 +403,21 @@ in the left-hand side of the collapsible menu/sidebar, the Kibana
 UI consists of the following components:
 
 
--   [**Discover**]: This page assists in exploring the data present in ES Indexes. It provides
+-   **Discover**: This page assists in exploring the data present in ES Indexes. It provides
     the ability to query data, filter data, and inspect document
     structures.
--   [**Visualize**]: This page assists in building visualizations. It contains a variety of
+-   **Visualize**: This page assists in building visualizations. It contains a variety of
     visualizations, such as bar charts, line charts, maps, tag clouds,
     and so on. The user can pick and choose the appropriate
     visualizations that help in analyzing the data.
--   [**Dashboard**]: This page assists in bringing multiple visualizations on to a single page,
+-   **Dashboard**: This page assists in bringing multiple visualizations on to a single page,
     and thus builds a story about the data.
--   [**Dev Tools**]: This page consists of a set of plugins,
+-   **Dev Tools**: This page consists of a set of plugins,
     each of which assists in performing
     different functionalities. By default, this page contains only a
     single plugin, called **`Console`**, which provides a UI to interact
     with the REST API of Elasticsearch.
--   [**Management**]: This page assists in the configuring and managing of indexes. It also
+-   **Management**: This page assists in the configuring and managing of indexes. It also
     assists in the management (deleting, exporting, and importing) of
     existing visualizations, dashboards, and search queries.
 
@@ -448,17 +435,17 @@ with optional wildcards that can match multiple indices. Typically, two
 types of index exist within Elasticsearch:
 
 
--   [**Time-series indexes**]: If there is a correlation between the timestamp and the data, the
-    data is called [**time-series
-    data**]. This data will have a timestamp field. Examples of
+-   **Time-series indexes**: If there is a correlation between the timestamp and the data, the
+    data is called **time-series
+    data**. This data will have a timestamp field. Examples of
     this would be logs data, metrics data, and tweet data. When this
     data is stored in Elasticsearch, the data is stored in multiple
     indexes (rolling indexes) with index names appended by a timestamp,
     usually; for example, `unixlogs-2017.10.10`,
     `tweets-2017.05`, `logstash-2017.08.10`.
--   [**Regular indexes**]: If the data doesn\'t contain timestamp and the data has no
-    correlation with time, then the data is called [**regular
-    data**]. Typically, this data is
+-   **Regular indexes**: If the data doesn\'t contain timestamp and the data has no
+    correlation with time, then the data is called **regular
+    data**. Typically, this data is
     stored in single indexes---for example, departments data and product
     catalog data.
 
@@ -497,7 +484,7 @@ following screen:
 
 
 
-The [**Discover**] page helps you to
+The **Discover** page helps you to
 interactively explore data. It allows the user to interactively perform
 search queries, filter search results, and view document data. It also
 allows the user to save the search, or filter criteria so that it can be
@@ -524,21 +511,21 @@ screenshot:
 ![](./images/6c56eac0-f9be-474c-a5cb-653db5af3a63.jpg)
 
 
-The numbers in the preceding screenshot, represent individual sections---Index Pattern ([**1**]),
-Fields List ([**2**]), Document Table ([**3**]), Query
-Bar ([**4**]), Hits ([**5**]), Histogram
-([**6**]), Toolbar ([**7**]), Time Picker
-([**8**]), Filters ([**9**]), and Expand/Collapse
-([**10**]).
+The numbers in the preceding screenshot, represent individual sections---Index Pattern (1),
+Fields List (2), Document Table (3), Query
+Bar (4), Hits (5), Histogram
+(6), Toolbar (7), Time Picker
+(8), Filters (9), and Expand/Collapse
+(10).
 
 Let\'s look at each one of them:
 
 
--   [**Index Pattern**]:[** **]All the configured
+-   **Index Pattern**: All the configured
     index patterns are shown here in a dropdown and the default one is
     selected automatically. The user can choose the appropriate index
     pattern for data exploration.
--   [**Fields List**]:[** **]All the fields that are
+-   **Fields List**: All the fields that are
     part of the document are shown in this section. Clicking on the
     field shows **`Quick Count`**, that is, how many of the documents in
     the documents table contain a particular field, what the top five
@@ -551,8 +538,8 @@ Let\'s look at each one of them:
 
 
 
--   [**Document Table**]: This section shows the actual
-    document data. The table shows the [**500**] most recent
+-   **Document Table**: This section shows the actual
+    document data. The table shows the **500** most recent
     documents that match the user-entered query/filters, sorted by
     timestamp (if the field exists). By clicking the **`Expand`** button
     found to the left of the document\'s table entry, data can be
@@ -573,18 +560,18 @@ field\'s **`Toggle column in table`** button:
 ![](./images/2c9b8d05-3ecc-4a0f-87b0-0a6653e0fcba.png)
 
 
-Added field columns replace the [**\_source**] column in the
-[**Documents**] table. Field columns in the table can be
+Added field columns replace the **\_source** column in the
+**Documents** table. Field columns in the table can be
 shuffled by clicking the right or left arrows found when hovering over
 the column name. Similarly, by clicking the remove button,
-[**x**], columns can be removed from the table, as follows:
+**x**, columns can be removed from the table, as follows:
 
 
 ![](./images/140dd4ab-6413-4ca6-8ae6-f85e6017f9d1.png)
 
 
 
--   [**Query Bar**]:[** **]Using the query bar/search
+-   **Query Bar**: Using the query bar/search
     bar, the user can enter queries to filter the search results.
     Submitting a search request results in the histogram being updated
     (if the time field is configured for the selected index pattern),
@@ -592,7 +579,7 @@ the column name. Similarly, by clicking the remove button,
     reflect the search results. Matching search text is highlighted in
     the document table. To search your data, enter your search criteria
     in the query bar and press [*Enter*], or click the search
-    icon[**.**]
+    icon**.**
 
 
 The query bar accepts three types of queries:
@@ -627,7 +614,7 @@ the query bar, as follows:
 
 Let\'s see some examples:
 
-[**Free Text search**]: To search for text present in any of the fields, simply enter a text string in
+**Free Text search**: To search for text present in any of the fields, simply enter a text string in
 the query bar:
 
 
@@ -643,14 +630,14 @@ contain all the words given the search criteria, and the words should be
 in the same order, then surround the phrase with quotes. For
 example, `file logstash` or `files logstash`.
 
-[**Field search**]:[** **]To search for values against a specific field, use the
+**Field search**: To search for values against a specific field, use the
 `syntax` field: `value`:
 
 
 ![](./images/926cab44-beba-4cb1-9eef-c192046bf3aa.png)
 
 
-[**Boolean search**]:[** **]You canmakeuse of Boolean operators such as `AND`,
+**Boolean search**: You canmakeuse of Boolean operators such as `AND`,
 `OR`, and `-` (Must Not match) to build complex
 queries. Using Boolean operators, you can combine the
 field:`value`and free text as well.
@@ -676,7 +663,7 @@ There should be no space between the `-` operator and the
 search text/field.
 
 
-[**Grouping searches**]: When we want to build complex queries, often, we have to group the search
+**Grouping searches**: When we want to build complex queries, often, we have to group the search
 criteria. Grouping both by field and value is supported, as shown in the
 following screenshot:
 
@@ -684,7 +671,7 @@ following screenshot:
 ![](./images/074cc007-8d86-4958-9bca-28209bfec1e0.png)
 
 
-[**Range search**]: This allows you
+**Range search**: This allows you
 to search within a range of values. Inclusive ranges are specified with
 square brackets---for example, `[START_VALUE TO END_VALUE]`,
 and exclusive ranges with curly brackets---for
@@ -702,7 +689,7 @@ The `TO` operator is case-sensitive and its range values
 should be numeric values.
 
 
-[**Wildcard and Regex search**]: By using the `*` and `?` wildcards
+**Wildcard and Regex search**: By using the `*` and `?` wildcards
 with search text, queries can be
 executed; `*` denotes zero or more matches and `?`
 denotes zero or one match, as shown in the following screenshot:
@@ -719,7 +706,7 @@ preferable to add a wildcard as a suffix rather than a prefix of the
 search text.
 
 
-Like wildcards, [**regex queries**] are supported too. By
+Like wildcards, **regex queries** are supported too. By
 using slashes (`/`) and square
 brackets (`[]`), regex patterns can be specified. But be
 cautious when using regex queries, as they are very computationally
@@ -741,14 +728,14 @@ have `IE` in the `useragent.name` field and
 ![](./images/19377d20-d71f-41eb-bb94-1e1840dfa815.png)
 
 
-[**Hits**]: Hits represent the total number of documents that
+**Hits**: Hits represent the total number of documents that
 match the user-entered input query/criteria.
 
 #### KQL
 
 
 
-[**Kibana Query Language**] ([**KQL**]) is a query
+**Kibana Query Language** (KQL) is a query
 language specifically built for Kibana that
 is built to simplify query usage with easy-to-use syntax, support for
 querying on scripted fields, and ease of migration of queries as the
@@ -781,7 +768,7 @@ The operators `and`, `or`, and `not` are
 case-insensitive.
 
 
-[**Histogram**]: This section is only visible if a time field is configured for the selected index
+**Histogram**: This section is only visible if a time field is configured for the selected index
 pattern. This section displays the distribution of documents over time
 in a histogram. By default, the best time interval for generating the
 histogram is automatically inferred based on the time set in the time
@@ -805,12 +792,12 @@ After slicing through a histogram, the time interval/period changes. To
 revert back, click the browser\'s back button.
 
 
-[**Toolbar**]: User-entered search
+**Toolbar**: User-entered search
 queries and applied filters can be saved so that they can be reused or
 used to build visualizations on top of the filtered search results. The
-toolbar provides options for clearing the search ([**New**]),
-and saving ([**Save**]), viewing ([**Open**]), sharing
-([**Share**]), and inspecting ([**Inspect**]) search
+toolbar provides options for clearing the search (New),
+and saving (Save), viewing (Open), sharing
+(Share), and inspecting (Inspect) search
 queries.
 
 The user can refer to existing stored searches later and modify the
@@ -822,7 +809,7 @@ new search (by toggling the **`Save as new search`** option in the
 ![](./images/5ec1c4be-72be-4952-ab88-f553efe9230e.png)
 
 
-Clicking the [**Open**] button displays the saved searches, as
+Clicking the **Open** button displays the saved searches, as
 shown in the following screenshot:
 
 
@@ -831,14 +818,14 @@ shown in the following screenshot:
 
 In Kibana, the state of the current page/UI is stored in the URL itself,
 thus allowing it to be easily shareable. Clicking the
-[**S**`hare `****]button allows you to share the
+**S**`hare `****button allows you to share the
 **`Saved Search`**, as shown in the following screenshot:
 
 
 ![](./images/91a0ee8d-deeb-4f7c-a41b-dc67f74cda24.png)
 
 
-The [**Inspect**] button allows to view query statistics such
+The **Inspect** button allows to view query statistics such
 as total hits, query time, the actual query fired against ES, and the
 actual response returned by ES. This would be useful to understand how
 the Lucene/KQL query we entered in the query bar translates to an actual
@@ -848,19 +835,19 @@ ES query, as shown in the following screenshot:
 ![](./images/5a13f7d9-533d-42e2-9ebc-c58d3e3a163d.png)
 
 
-[**Time Picker**]: This section is only visible if a time field is configured for the selected index
+**Time Picker**: This section is only visible if a time field is configured for the selected index
 pattern. The Time Filter restricts the search results to a specific time
 period, thus assisting in analyzing the data belonging to the period of
 interest. When the **`Discover`** page is opened, by default, the Time
 Filter is set to `Last 15 minutes`.
 
-[**Time Filter**] provides the following options to
+**Time Filter** provides the following options to
 select time periods. Click
-on **`Time Filter`** (**`calendar icon`**)/ [**Date fields**]
+on **`Time Filter`** (**`calendar icon`**)/ **Date fields**
 to access the following options:
 
 
--   [**Quick time filter**]: This helps you to filter quickly based on some already available
+-   **Quick time filter**: This helps you to filter quickly based on some already available
     time ranges:
 
 
@@ -869,7 +856,7 @@ to access the following options:
 
 
 
--   [**Relative time filter**]: This helps you to filter based on the relative time with respect to
+-   **Relative time filter**: This helps you to filter based on the relative time with respect to
     the current time. Relative times can be in the past or the future. A
     checkbox is provided to round the time:
 
@@ -879,7 +866,7 @@ to access the following options:
 
 
 
--   [**Absolute time filter**]: This helps you to filter based on input start and end times:
+-   **Absolute time filter**: This helps you to filter based on input start and end times:
 
 
 
@@ -887,13 +874,13 @@ to access the following options:
 
 
 
--   [**Auto Refresh**]: During the
+-   **Auto Refresh**: During the
     analysis of real-time data or data that is continuously generated, a
     feature to automatically fetch the latest data would be very useful.
     Auto Refresh provides such a functionality. By default, the refresh
     interval is turned off. The user can choose the appropriate refresh
     interval that assists their analysis and click
-    the [**Start**] button, as shown in the following
+    the **Start** button, as shown in the following
     screenshot:
 
 
@@ -904,29 +891,29 @@ to access the following options:
 
 ### Note
 
-Time Filter is present on the [**Discover**],
-[**Visualize**], and [**Dashboard**] pages. The time
+Time Filter is present on the **Discover**,
+**Visualize**, and **Dashboard** pages. The time
 range that gets selected/set on any of these pages gets carried over to
 other pages, too.
 
  
 
 
-[**Filters**]: By using positive filters,
+**Filters**: By using positive filters,
 you can refine the search results to display
 only those documents that contain a particular value in a field. You can
 also create negative filters that exclude documents that contain the
 specified field value. 
 
-You can add field filters from [**Fields list**] or
-[**Documents table**], and even manually add a filter. In
-addition to creating positive and negative filters, [**Documents
-table**] enables you to determine whether a field is present. 
+You can add field filters from **Fields list** or
+**Documents table**, and even manually add a filter. In
+addition to creating positive and negative filters, **Documents
+table** enables you to determine whether a field is present. 
 
 To add a positive or negative filter, in **`Fields List`** or
 **`Documents Table`**, click on the positive icon or negative icon
 respectively. Similarly, to filter a search according to whether a field
-is present, click on the [****`*`****] icon (the exists
+is present, click on the ****`*`**** icon (the exists
 filter), as follows:
 
 
@@ -947,21 +934,21 @@ multiple filters, and the following actions can be applied to the
 applied filters:
 
 
--   [**Enable/Disable Filter**]: This icon allows the
+-   **Enable/Disable Filter**: This icon allows the
     enabling/disabling of the filter without removing it. Diagonal
     stripes indicate that a filter is disabled.
--   [**Pin Filter**]: Pin the filter. Pinned filters persist
+-   **Pin Filter**: Pin the filter. Pinned filters persist
     when you switch contexts in Kibana. For example, you can pin a
-    filter in [**Discover**] and it remains in place when you
-    switch to the [**Visualize**]/[**Dashboard**]
+    filter in **Discover** and it remains in place when you
+    switch to the **Visualize**/**Dashboard**
     page.
--   [**Toggle Filter**] ([**Include**]/[**Exclude
-    results**]): Allows you to switch from a positive filter to
+-   **Toggle Filter** (Include**/**Exclude
+    results): Allows you to switch from a positive filter to
     a negative filter and vice versa.
--   [**Delete Filter**]: Allows you to remove the applied
+-   **Delete Filter**: Allows you to remove the applied
     filter.
--   [**Edit Filter**]: Allows you to edit the applied filter. 
--   [**Expand**]/[**Collapse**]: Clicking this icon
+-   **Edit Filter**: Allows you to edit the applied filter. 
+-   **Expand**/**Collapse**: Clicking this icon
     will show the labels next to the icons on the left-hand-side menu.
 
 
@@ -985,7 +972,7 @@ follows:
 
 
 
-The [**Visualize**] page helps to
+The **Visualize** page helps to
 create visualizations in the form of graphs, tables, and charts, thus
 assisting in visualizing all the data that has been stored in
 Elasticsearch easily. By creating visualizations, the user can easily
@@ -1035,7 +1022,7 @@ them before jumping into building visualizations.
 
 
 
-The grouping of documents by a common criteria is called [**bucketing**]. Bucketing is very
+The grouping of documents by a common criteria is called **bucketing**. Bucketing is very
 similar to the `GROUP BY` functionality in SQL. Depending on
 the aggregation type, each bucket is
 associated with a criterion that determines whether a document in
@@ -1067,13 +1054,13 @@ example, finding the average age of employees per age group.
 Kibana supports the following types of bucket aggregations:
 
 
--   [**Histogram**]:[** **]This type of aggregation
+-   **Histogram**: This type of aggregation
     works only on numeric fields and, given
     the value of the numeric field and the interval, it works by
     distributing them into fixed-size interval buckets. For example, a
     histogram can be used to find the number of products per price
     range, with an interval of 100.
--   [**Date Histogram**]: This is a type of histogram
+-   **Date Histogram**: This is a type of histogram
     aggregation that works only on date
     fields. It works by distributing them into fixed-size date interval
     buckets. It supports date/time-oriented intervals such as 2 hours,
@@ -1084,7 +1071,7 @@ Kibana supports the following types of bucket aggregations:
     on, can be supplied. This histogram is ideal for analyzing
     time-series data---for example, finding the total number of incoming
     web requests per week/day.
--   [**Range**]: This is similar to histogram aggregations;
+-   **Range**: This is similar to histogram aggregations;
     however, rather than fixed intervals, ranges can be specified. Also,
     it not only works on numeric fields, but
     it can work on dates and IP addresses. Multiple ranges can be
@@ -1101,7 +1088,7 @@ excludes the `to` value for each range.
 
 
 
--   [**Terms**]:[** **]This type of aggregation
+-   **Terms**: This type of aggregation
     works by grouping documents based on each
     unique term in the field. This aggregation is ideal for finding the
     top [*n*]  values for a field---for example, finding the
@@ -1115,7 +1102,7 @@ This aggregation works on `keyword` fields only.
 
 
 
--   [**Filters**]:[** **]This aggregation is
+-   **Filters**: This aggregation is
     used to create buckets based on a filter
     condition. This aggregation allows for the comparison of specific
     values. For example, finding the average number of web requests in
@@ -1123,7 +1110,7 @@ This aggregation works on `keyword` fields only.
 
 
 
--   [**GeoHash Grid**]: This aggregation works with fields containing `geo_point` values.
+-   **GeoHash Grid**: This aggregation works with fields containing `geo_point` values.
     This aggregation is used for plotting `geo_points` on a
     map by grouping them into buckets---for example, visualizing web
     request traffic over different geographies.
@@ -1138,17 +1125,17 @@ the fields of a document. Metrics are used in
 conjunction with buckets. The different metrics that are available are as follows:
 
 
--   [**Count**]: The default metric
+-   **Count**: The default metric
     in Kibana visualizations; returns the count of documents
--   [**Average**]: Used to compute the average value (for a field) of all the documents in the bucket
--   [**Sum**]: Used to compute the sum value (for a field) of all the documents in the bucket
--   [**Median**]: Used to compute the median value (for a field) of all the documents in the bucket
--   [**Min**]: Used to compute the minimum value (for a field) of all the documents in the bucket
--   [**Max**]: Used to compute the maximum value (for a field) of all the documents in the bucket
--   [**Standard deviation**]: Used to compute the standard deviation (for a field) of all the
+-   **Average**: Used to compute the average value (for a field) of all the documents in the bucket
+-   **Sum**: Used to compute the sum value (for a field) of all the documents in the bucket
+-   **Median**: Used to compute the median value (for a field) of all the documents in the bucket
+-   **Min**: Used to compute the minimum value (for a field) of all the documents in the bucket
+-   **Max**: Used to compute the maximum value (for a field) of all the documents in the bucket
+-   **Standard deviation**: Used to compute the standard deviation (for a field) of all the
     documents in the bucket
--   [**Percentiles**]: Used to compute the number of percentile values
--   [**Percentile ranks**]: For a set of percentiles, this is used to compute the
+-   **Percentiles**: Used to compute the number of percentile values
+-   **Percentile ranks**: For a set of percentiles, this is used to compute the
     corresponding values
 
 
@@ -1164,35 +1151,35 @@ visualizations:
 
 1.  Navigate to the **`Visualize`** page and click
     the **`Create a new Visualization`** button or the
-    [****`+`****] button
+    ****`+`**** button
 2.  Select a visualization type
 3.  Select a data source
 4.  Build the visualization
 
 
-The [**Visualize**] Interface looks as follows:
+The **Visualize** Interface looks as follows:
 
 
 ![](./images/7125bfe0-88de-47df-b600-bf37ba76e403.png)
 
 
 The following are the components of the
-[**Visualize**] interface as depicted in the screenshot:
+**Visualize** interface as depicted in the screenshot:
 
 
--   [**Visualization designer**]: This is used for choosing
+-   **Visualization designer**: This is used for choosing
     appropriate metrics and buckets for creating visualizations.
--   [**Visualization preview**]: Based on the metrics, buckets,
+-   **Visualization preview**: Based on the metrics, buckets,
     queries, filters, and time frame selected, the visualization is
     dynamically changed.
--   [**Label**]: This reflects the metric type and bucket keys
+-   **Label**: This reflects the metric type and bucket keys
     as labels. Colors in the visualization can be changed by clicking on
-    [**Label**] and choosing the color from the color palette.
--   [**Query Bar/Field filters**]: This is used to filter the
+    **Label** and choosing the color from the color palette.
+-   **Query Bar/Field filters**: This is used to filter the
     search results.
--   [**Toolbar: **]This provides the option to save, inspect
+-   **Toolbar: **This provides the option to save, inspect
     (ES queries), and share visualizations.
--   [**Time filter**]: Using the time filter, the user can
+-   **Time filter**: Using the time filter, the user can
     restrict the time to filter the search results.
 
 
@@ -1252,7 +1239,7 @@ widget accepts GitHub-flavored Markdown text
 
 
 
-[**Metric**] aggregations work only
+**Metric** aggregations work only
 on numeric fields and display a single numeric value for the
 aggregations that are selected. 
 
@@ -1260,7 +1247,7 @@ aggregations that are selected. 
 
 
 
-[**Goal**] is a metric aggregation that provides visualizations that display how the metric progresses toward
+**Goal** is a metric aggregation that provides visualizations that display how the metric progresses toward
 a fixed goal. It is a new visualization that was introduced in Kibana
 5.5.
 
@@ -1268,7 +1255,7 @@ a fixed goal. It is a new visualization that was introduced in Kibana
 
 
 
-A [**gauge**] is a metric aggregation
+A **gauge** is a metric aggregation
 that provides visualizations that are used to
 show how a metric value relates to the predefined thresholds/ranges. For
 example, this visualization can be used to show whether a server load is
@@ -1299,10 +1286,10 @@ visualization was previously called a tile map.
 
 
 
-[**Region maps**] are thematic maps on which boundary vector shapes are colored using a
+**Region maps** are thematic maps on which boundary vector shapes are colored using a
 gradient; higher-intensity colors indicate higher values, and
 lower-intensity colors indicate lower values. These are
-also known as [**choropleth maps**]
+also known as **choropleth maps**
 (<https://en.wikipedia.org/wiki/Choropleth_map>). Kibana offers two
 vector layers by default: one for countries of the world and one for US
 shapes. It is a new type of visualization that was introduced in Kibana
@@ -1318,7 +1305,7 @@ shapes. It is a new type of visualization that was introduced in Kibana
 
 
 
-A [**tag cloud**] is a visual
+A **tag cloud** is a visual
 representation of text data typically used to
 visualize free-form text. Tags are usually single words, and the
 importance of each tag is shown with a font size or color. The font size
@@ -1346,10 +1333,10 @@ help us in doing the following:
 ### Note
 
 As the log events are from the period May 2014 to June 2014, set the
-appropriate date range in the time filter. Navigate to [**Time
-Filter**] \| [**Absolute Time Range**] and set
-[**From**] as `2014-05-28 00:00:00.000` and
-[**To**] to `2014-07-01 00:00:00.000`; click
+appropriate date range in the time filter. Navigate to **Time
+Filter** \| **Absolute Time Range** and set
+**From** as `2014-05-28 00:00:00.000` and
+**To** to `2014-07-01 00:00:00.000`; click
 **`Go`**.
 
 #### Response codes over time
@@ -1368,9 +1355,9 @@ Create a new visualization:
 3.  On the [*x*]  axis, select **`Date Histogram`** and
     **`@timestamp`** as the field
 4.  Click **`Add sub-buckets`** and select **`Split Series`**
-5.  Select [**Terms**] as the **`Sub Aggregation`**
-6.  Select [**response.keyword**] as the field
-7.  Click the **`Play`** ([**Apply Changes**]) button
+5.  Select **Terms** as the **`Sub Aggregation`**
+6.  Select **response.keyword** as the field
+7.  Click the **`Play`** (Apply Changes) button
 
 
 The following screenshot displays the steps to create a new
@@ -1383,9 +1370,9 @@ visualization for response codes over time:
 Save the visualization as`Response Codes By Time`.
 
 As seen in the visualization, on a few days, such as June 9, June 16,
-and so on, there is a significant amount of [**404**]. Now, to
-analyze just the [**404**] events, from the
-[**labels**]/[**keys**] panel, click on **`404 `**and
+and so on, there is a significant amount of **404**. Now, to
+analyze just the **404** events, from the
+**labels**/**keys** panel, click on **`404 `**and
 then click **`positive filter`**:
 
 
@@ -1405,7 +1392,7 @@ screenshot:
 You can expand the labels/keys and choose the colors from the color
 palette, thus changing the colors in the visualization. Pin the filter
 and navigate to the **`Discover`** page to see the requests resulting in
-[**404**]s.
+**404**s.
 
  
 
@@ -1424,14 +1411,14 @@ The steps are as follows:
 2.  Click on **`New`** and select **`Data Table`**
 3.  Select `Logstash-*` under
     **`From a New Search, Select Index`**
-4.  Select [**Buckets**] type as **`Split Rows`**
-5.  Select **`Aggregation`** as [**Terms**]
+4.  Select **Buckets** type as **`Split Rows`**
+5.  Select **`Aggregation`** as **Terms**
 
 
 
-6.  Select the [**request.keyword**] field
+6.  Select the **request.keyword** field
 7.  Set the **`Size`** to `10`
-8.  Click the **`Play`** ([**Apply Changes**]) button
+8.  Click the **`Play`** (Apply Changes) button
 
 
 The following screenshot displays the steps to create a new
@@ -1464,14 +1451,14 @@ The steps to demonstrate this are as follows:
 2.  Click on **`New`** and select **`Area Chart`**
 3.  Select `Logstash-*` under
     **`From a New Search, Select Index`**
-4.  In **`Y axis`**, select [**Aggregation**] type and [**Sum
-    of bytes**] as the field
+4.  In **`Y axis`**, select **Aggregation** type and **Sum
+    of bytes** as the field
 5.  In **`X axis`**, select **`Date Histogram`** and **`@timestamp`** as
     the field
 6.  Click **`Add sub-buckets`** and select **`Split Series`**
-7.  Select [**Terms**] as the **`Sub Aggregation`**
-8.  Select [**geoip.country\_name.keyword**] as the field
-9.  Click the **`Play`** ([**Apply Changes**]) button
+7.  Select **Terms** as the **`Sub Aggregation`**
+8.  Select **geoip.country\_name.keyword** as the field
+9.  Click the **`Play`** (Apply Changes) button
 
 
 The following screenshot displays the steps to create a new
@@ -1516,11 +1503,11 @@ The steps are as follows:
 
 
 
-5.  Select the [**Aggregation**] as [**Geohash**]
-6.  Select the [**geoip.location**] field
-7.  In the [**Options**] tab, select **`Map Type`** as
+5.  Select the **Aggregation** as **Geohash**
+6.  Select the **geoip.location** field
+7.  In the **Options** tab, select **`Map Type`** as
     **`Heatmap`**
-8.  Click the **`Play`** ([****`Apply Changes`****]) button:
+8.  Click the **`Play`** (**`Apply Changes`**) button:
 
 
 
@@ -1555,7 +1542,7 @@ region.
 
 
 This can be visualized easily using a variety
-of charts. Let\'s use [**Tag Cloud**].
+of charts. Let\'s use **Tag Cloud**.
 
 The steps are as follows:
 
@@ -1567,11 +1554,11 @@ The steps are as follows:
 
 
 
-4.  Set the bucket type to**` `**[**Tags**]
-5.  Select the [**Terms**] aggregation
-6.  Select the [**useragent.name.keyword**] field
+4.  Set the bucket type to**` `****Tags**
+5.  Select the **Terms** aggregation
+6.  Select the **useragent.name.keyword** field
 7.  Set the **`Size`** to `10` and click
-    the **`Play`** ([****`Apply Changes`****]) button:
+    the **`Play`** (**`Apply Changes`**) button:
 
 
 
@@ -1587,7 +1574,7 @@ originating from.
 
 
 
-[**Dashboards**] help you bring
+**Dashboards** help you bring
 different visualizations into a single page. By using previously stored
 visualizations and saved queries, you can
 build a dashboard that tells a story about the data.
@@ -1638,7 +1625,7 @@ By using the query bar, field filters, and time filters, search results
 can be filtered. The dashboard reflects those changes via the changes to
 the embedded visualizations. For example, you might be only interested
 in knowing the top user agents and top devices by country when the
-response code is [**404**]. Usage of the query bar, field
+response code is **404**. Usage of the query bar, field
 filters, and time filters is explained in the [*Discover*] 
 section.
 
@@ -1664,7 +1651,7 @@ share/reopen the dashboard in its current state, as follows:
 
 
 
-Using the [**Clone**] feature, you can copy the current dashboard, along with its queries and
+Using the **Clone** feature, you can copy the current dashboard, along with its queries and
 filters, and create a new dashboard. For example, you might want to
 create new dashboards for continents or countries, as follows:
 
@@ -1685,7 +1672,7 @@ theme.
 
 
 
-Using the [**Share**] feature, you can either share a direct link to a Kibana dashboard with
+Using the **Share** feature, you can either share a direct link to a Kibana dashboard with
 another user or embed the dashboard in a web page as aniframe:
 
 ![](./images/12.PNG)
@@ -1697,7 +1684,7 @@ Timelion
 
 
 
-[**Timelion**] visualizations are special type of
+**Timelion** visualizations are special type of
 visualization for analyzing time-series data
 in Kibana. They enable you to combine totally independent data sources
 within the same visualization. Using its simple expression language, you
@@ -1712,8 +1699,8 @@ visualize the results of these calculations.
 
 
 **`Timelion`** is available just like any other
-visualization in the [**New
-Visualization**] window, as follows:
+visualization in the **New
+Visualization** window, as follows:
 
 
 ![](./images/ddb108d6-691c-4480-bea2-712c4c8a49b5.png)
@@ -1856,7 +1843,7 @@ Using plugins
 
 
 
-[**Plugins**] are a way to enhance the
+**Plugins** are a way to enhance the
 functionality of Kibana. All the plugins that
 are installed will be placed in the `$KIBANA_HOME/plugins`
 folder. Elastic, the company behind Kibana, provides many plugins that

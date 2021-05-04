@@ -1,3 +1,5 @@
+<img align="right" src="./images/logo.png">
+
 
 
 Lab 2. Getting Started with Elasticsearch
@@ -20,7 +22,7 @@ We will cover the following topics in this lab:
 
 -   Using the Kibana Console UI
 -   Core concepts of Elasticsearch
--   CRUD[** **]operations
+-   CRUD operations
 -   Creating indexes and taking control of mapping
 -   REST API overview
 
@@ -42,8 +44,8 @@ formatting of queries as you write them.
 
 ### Note
 
-What is a REST API? [**REST**] stands for [**Representational
-State Transfer**]. It is an architectural style that\'s used to
+What is a REST API? **REST** stands for **Representational
+State Transfer**. It is an architectural style that\'s used to
 make systems inter operate and interact with each other. REST has
 evolved along with the HTTP protocol, and almost all REST-based systems
 use HTTP as their protocol. HTTP supports different methods,
@@ -149,7 +151,7 @@ The following is the curl version of the previous Kibana Console UI
 command:
 
 ```
-curl -XPUT http://localhost:9200/catalog/_doc/1 -d '{ "sku": "SP000001", "title": "Elasticsearch for Hadoop", "description": "Elasticsearch for Hadoop", "author": "Vishal Shukla", "ISBN": "1785288997", "price": 26.99}'
+curl -XPUT http://localhost:9200/catalog/_doc/1 -H 'content-type: application/json' -d '{ "sku": "SP000001", "title": "Elasticsearch for Hadoop", "description": "Elasticsearch for Hadoop", "author": "Vishal Shukla", "ISBN": "1785288997", "price": 26.99}'
 ```
 
 We will use this example to understand the following concepts: indexes,
@@ -161,10 +163,10 @@ In the previous code block, the first line
 is `PUT /catalog/_doc/1`, which is followed by a JSON
 document.
 
-`PUT`[** **]is the `HTTP` method that\'s
+`PUT` is the `HTTP` method that\'s
 used to index a new document. `PUT` is among the other
 `HTTP` methods we covered earlier. Here,
-`catalog`[** **]is the name of the index,
+`catalog` is the name of the index,
 `_doc` is the name of the type where the document will be
 indexed (more on this later; each index in Elasticsearch 7.0 should
 create just one type), and `1` is the ID[* *] to be
@@ -178,10 +180,10 @@ The following sections explain each concept in depth.
 
 
 
-An [**index**] is a container that
+An **index** is a container that
 stores and manages documents of a single type
 in Elasticsearch. We will look at type in the next section. An index can
-contain documents of a single [**Type**], as depicted in the
+contain documents of a single **Type**, as depicted in the
 following diagram:
 
 
@@ -335,8 +337,8 @@ Elasticsearch configuration file, `config/elasticsearch.yml`.
 
 Every Elasticsearch node or instance has a main configuration file,
 which is located in the `config` subdirectory. The file is in
-YML format (which stands for [**YAML Ain\'t Markup
-Language**]). This configuration file can be used to change
+YML format (which stands for **YAML Ain\'t Markup
+Language). This configuration file can be used to change
 defaults such as the node name, port, and cluster name.
 
 
@@ -382,7 +384,7 @@ types of documents.
 
 
 The process of dividing the data among shards
-is called [**sharding**]. Sharding is inherent in Elasticsearch
+is called **sharding**. Sharding is inherent in Elasticsearch
 and is a way of scaling and parallelizing, as follows:
 
 
@@ -405,7 +407,7 @@ on a three-node cluster:
 
 Figure 2.4: Organization of shards across the nodes of a cluster
 
-The shards are named [**P1**] to [**P5**] in the
+The shards are named **P1** to **P5** in the
 preceding diagram. Each shard contains roughly one fifth of the total
 data stored in the index. When a query is made against this index,
 Elasticsearch takes care of going through all the shards and
@@ -413,9 +415,9 @@ consolidating the result.
 
  
 
-Now, imagine that one of the nodes ([**Node 1**]) goes down.
-With [**Node 1**], we also lose the share of data, which
-was stored in shards [**P1**] and [**P2**]:
+Now, imagine that one of the nodes (Node 1) goes down.
+With **Node 1**, we also lose the share of data, which
+was stored in shards **P1** and **P2**:
 
 
 ![](./images/305e823c-7908-4775-826f-7a34c3f11428.png)
@@ -424,8 +426,8 @@ was stored in shards [**P1**] and [**P2**]:
 Figure 2.5: Failure of one node, along with the loss of its shards
 
 Distributed systems such as Elasticsearch are expected to run in spite of hardware failure. This issue is addressed
-by [**replica
-shards**][* *] or [**replicas**]. Each shard
+by **replica
+shards**[* *] or **replicas**. Each shard
 in an index can be configured to have zero or
 more replica shards. Replica shards are extra copies of the original or
 primary shard and provide a high availability of data.
@@ -441,9 +443,9 @@ with one replica of each shard:
 Figure 2.6: Organization of shards with replicas on cluster nodes
 
 Primary shards are depicted in green and replica shards are depicted in
-yellow. With the replicas in place, if [**Node 1**] goes down,
-we still have all the shards available in [**Node 2**] and
-[**Node 3**][*. *] Replica shards may be promoted to
+yellow. With the replicas in place, if **Node 1** goes down,
+we still have all the shards available in **Node 2** and
+**Node 3**[*. *] Replica shards may be promoted to
 primary shards when the corresponding primary shard fails.
 
 Apart from providing high availability and failover, replica shards also
@@ -509,7 +511,7 @@ The core datatypes supported by Elasticsearch
 are as follows:
 
 
--   [**String data**][**types**]:
+-   **String data****types**:
     
     -   `text`: The `text` datatype is useful for
         supporting full-text search for fields that contain a
@@ -520,7 +522,7 @@ are as follows:
         analytics on string fields. Fields of this type support sorting,
         filtering, and aggregations.
     
--   [**Numeric data**][**types**]: 
+-   **Numeric data****types**: 
     
     -   `byte`, `short`, `integer`, and
         `long`: Signed integers
@@ -533,24 +535,24 @@ are as follows:
     -   `scaled_float`: Floating-point number backed by a long
         and fixed scaling factor
     
--   [**Date data**][**type**]:
+-   **Date data****type**:
     
     -   `date`: Date with an optional[]{#id326263577
         .indexterm} timestamp component that\'s capable of storing
         precision timestamps down to the millisecond
     
--   [**Boolean data**][**type**]:
+-   **Boolean data****type**:
     
     -   `boolean`: The `boolean` datatype
         that is common in all programming
         languages
     
--   [**Binary data**][**type**]:
+-   **Binary data****type**:
     
     -   `binary`: Allows you to store arbitrary[]{#id326263629
         .indexterm} binary values after performing Base64 encoding
     
--   [**Range data**][**types**]: 
+-   **Range data****types**: 
     
     -   `integer_range`, `float_range`,
         `long_range`, `double_range`,
@@ -562,7 +564,7 @@ are as follows:
 
 ### Note
 
-`scaled_float`[** **]is a very useful datatype for
+`scaled_float` is a very useful datatype for
 storing something such as price, which always has a precision of a
 limited number of decimal places. Price can be stored with a scaling
 factor of 100, so a price of \$10.98 would be internally stored as 1,098
@@ -581,13 +583,13 @@ The complex datatypes supported by
 Elasticsearch are as follows:
 
 
--   [**Array datatype**]:[** **]Arrays of the
+-   **Array datatype**: Arrays of the
     same types of instances. For example,
     arrays of strings, integers, and more. Doesn\'t allow for the mixing
     of datatypes in arrays.
--   [**Object datatype**]:[** **]Allows inner
+-   **Object datatype**: Allows inner
     objects within JSON documents.
--   [**Nested datatype**]:[** **]Useful for
+-   **Nested datatype**: Useful for
     supporting arrays of inner objects, where
     each inner object needs to be independently queriable.
 
@@ -600,17 +602,17 @@ The other datatypes supported by
 Elasticsearch are as follows:
 
 
--   [**Geo-point
-    data**][**type**]:[** **]Allows the
+-   **Geo-point
+    data****type**: Allows the
     storing of geo-points as longitude and latitude. The geo-point
     datatype enables queries such as searching across all ATMs within a
     distance of 2 km from a point[*.*] 
--   [**Geo-shape
-    data**][**type**]:[** **]Allows you
+-   **Geo-shape
+    data****type**: Allows you
     to store geometric shapes such as
     polygons, maps, and more. Geo-shape enables queries such as
     searching for all items within a shape.
--   [**IP data**][**type**]:[** **]Allows you
+-   **IP data****type**: Allows you
     to store IPv4 and IPv6 addresses.
 
 
@@ -639,7 +641,7 @@ and execute it.
 As you can see, the product has many different fields, as it is of a
 completely different category. Yet, there are some fields that are
 common in all products. The common fields are the reason why all of these documents are called
-[**products**][*.*]  
+**products**[*.*]  
 
  
 
@@ -675,8 +677,8 @@ the following tasks were performed by Elasticsearch:
 The first step involves creating an index, because the
 index doesn\'t exist already. The index is
 created using the default number of shards. We will look at a
-concept called [**index
-templates**] -- you can create templates for any new indexes.
+concept called **index
+templates** -- you can create templates for any new indexes.
 Sometimes, an index needs to be created on the fly, just like in this
 case, where the insertion of the first document triggers the creation of
 a new index. The index template kicks in and provides the matching
@@ -698,15 +700,15 @@ The second step involves defining the mappings for the type of product.[* *] T
 executed because the type catalog did not exist before the first
 document was indexed. Remember the analogy of type with a relational
 database table.[* *] The table needs to exist before any row
-can be inserted. When a table is created in an [**RDBMS**]
-([**Relational Database Management System**]), we define the
+can be inserted. When a table is created in an **RDBMS**
+(Relational Database Management System), we define the
 fields (columns) and their datatypes in the `CREATE TABLE`
 statement.
 
 When the first document is indexed within a type that doesn\'t exist
-yet, Elasticsearch tries to infer[**[* *] **]the
-datatypes of all the fields. This feature is called the [**dynamic
-mapping**] of types. By default, the dynamic mapping of types
+yet, Elasticsearch tries to infer**[* *] **the
+datatypes of all the fields. This feature is called the **dynamic
+mapping** of types. By default, the dynamic mapping of types
 is enabled in Elasticsearch.
 
 To see the mappings of the product[* *] type in the
@@ -845,7 +847,7 @@ in the upcoming labs of this book.
 
 
 
-An [**inverted index**] is the core
+An **inverted index** is the core
 data structure of Elasticsearch and any other system supporting
 full-text search. An inverted index is similar to the
 index that you see at the end of any book. It
@@ -857,8 +859,8 @@ For example, you may build an inverted index from the following strings:
 
  
 Elasticsearch builds a data structure from the three documents that have
-been indexed. The following data structure is called an [**inverted
-index**]:
+been indexed. The following data structure is called an **inverted
+index**:
 
 ![](./images/2.PNG)
  
@@ -869,7 +871,7 @@ Notice the following things:
 -   Documents were broken down into terms after removing punctuation and
     placing them in lowercase.
 -   Terms are sorted alphabetically.
--   The [**Frequency**] column captures how many times the term
+-   The **Frequency** column captures how many times the term
     appears in the entire document set.
 -   The third column captures the documents in which the term was found.
     Additionally, it may also contain the exact locations (offsets
@@ -879,15 +881,15 @@ Notice the following things:
 When searching for terms in the documents, it is blazingly fast to
 locate the documents in which the given term appears. If the user
 searches for the term `sunday`, then looking up
-`sunday` from the [**Term**] column will be really
+`sunday` from the **Term** column will be really
 fast, because the terms are sorted in the index. Even if there were
 millions of terms, it is quick to look up terms when they are sorted.
 
 Subsequently, consider a scenario in which the user searches for two
 words, for example, `last sunday`. The inverted index can be
 used to individually search for the occurrence of `last` and
-`sunday`; document [**2**] contains both terms, so it
-is a better match than document [**1**], which contains only
+`sunday`; document **2** contains both terms, so it
+is a better match than document **1**, which contains only
 one term.
 
 The inverted index is the building block for
@@ -929,11 +931,11 @@ document APIs, which deal with documents:
 
 In Elasticsearch terminology, adding (or creating) a
 document to a type within an index of
-Elasticsearch is called an [**indexing operation**].
+Elasticsearch is called an **indexing operation**.
 Essentially, it involves adding the document to the index by parsing all
 the fields within the document and building
 the inverted index. This is why this operation is known as
-an [**indexing operation**].
+an **indexing operation**.
 
 There are two ways we can index a document:
 
@@ -1103,7 +1105,7 @@ the document existed beforehand. If the document with the given
 ID[* *] did not exist, Elasticsearch will return an error
 saying that the document is missing. Let\'s understand how to do an
 `upsert` operation using the update API. The term
-[**upsert**] loosely means update or
+**upsert** loosely means update or
 insert, that is, update the document if it exists, otherwise, insert the
 new document.
 
@@ -1624,11 +1626,11 @@ Clearly, this is not a very useful operation, but let\'s use it to
 understand the search response:
 
 
--   `took`:[** **]The number of milliseconds taken by
+-   `took`: The number of milliseconds taken by
     the cluster to return the result.
 -   `timed_out`: `false`: This means that the
     operation completed successfully without timing out.
--   `_shards`:[** **]Shows the summary of how many
+-   `_shards`: Shows the summary of how many
     shards across the entire cluster were searched for successfully, or
     failed.
 -   `hits`: Contains the actual documents that matched. It

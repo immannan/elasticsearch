@@ -1,11 +1,15 @@
 
+<img align="right" src="./images/logo.png">
+
+
+
 
 Lab 8. Elastic X-Pack
 ----------------------------------
 
 
 
-[**X-Pack**] is an Elastic Stack extension that bundles
+**X-Pack** is an Elastic Stack extension that bundles
 security, alerting, monitoring, reporting, machine learning, and graph
 capabilities into one easy-to-install package. It adds essential
 features to make Elastic Stack production-ready. Unlike the components
@@ -401,7 +405,7 @@ imposing security, such as running Elastic Stack behind a firewall and
 securing via reverse proxies (such as nginx, HAProxy, and so on), are
 employed. Elastic.co offers a commercial product to secure Elastic
 Stack. This offering is part of X-Pack and the module is called
-[**Security**].
+**Security**.
 
 The X-Pack security module provides the following ways to secure Elastic
 Stack:
@@ -419,7 +423,7 @@ User authentication is the process of
 validating the user and thus preventing unauthorized access to the
 Elastic Cluster. In the X-Pack security module, the
 authentication process is handled by one or
-more authentication services called [**realms**].
+more authentication services called **realms**.
 The `Security` module provides two types of realms, namely
 internal realms and external realms.
 
@@ -429,7 +433,7 @@ The `native` realm is the default realm, and the user
 credentials are stored in a special index
 called `.security-7` on Elasticsearch itself. These
 users are managed using
-the [**User**][**Management API**] or the
+the **User****Management API** or the
 **`Management`** page of the Kibana UI. We will be exploring this in
 more detail later in this lab.
 
@@ -456,8 +460,8 @@ consulted one by one based on the order defined until the authentication
 is successful. Once one of the realms successfully authenticates the
 request, the authentication is considered to be successful. If none of
 the realms are able to authenticate the user, then the authentication is
-considered unsuccessful and an authentication error ([**HTTP
-401**]) will be returned to the caller. The default realm chain
+considered unsuccessful and an authentication error (HTTP
+401) will be returned to the caller. The default realm chain
 consists of internal realm types, that
 is, `native` and `file`.
 
@@ -506,8 +510,8 @@ process kicks in. Authorization determines whether the user behind the
 request has enough permissions to execute a
 particular request.
 
-In X-Pack security, [**secured
-resources**] are the foundation of
+In X-Pack security, **secured
+resources** are the foundation of
 user-based security. A secured resource is a resource that needs access,
 such as indexes, documents, or fields, to perform Elasticsearch cluster
 operations. X-Pack security enables authorization by assigning
@@ -525,7 +529,7 @@ in all its roles, as shown in the following diagram:
 The X-Pack security module provides three types of privileges:
 
 
--   [**Cluster privileges**]: Cluster privileges provide privileges for performing various operations
+-   **Cluster privileges**: Cluster privileges provide privileges for performing various operations
     on the cluster:
     
     -   `all`: Allows you to execute cluster administration
@@ -538,7 +542,7 @@ The X-Pack security module provides three types of privileges:
         cluster operations that can update the cluster, such as
         rerouting and updating cluster settings
     
--   [**Index privileges**]: Index privileges provide
+-   **Index privileges**: Index privileges provide
     privileges for performing various
     operations on indexes:
     
@@ -551,7 +555,7 @@ The X-Pack security module provides three types of privileges:
     -   `create`: This privilege allows you to index new
         documents into an index
     
--   [**Run As privilege**]:[** **]This provides
+-   **Run As privilege**: This provides
     the ability to perform user
     impersonation; that is, it allows an authenticated user to test out
     another users\' access rights without knowing their credentials.
@@ -565,7 +569,7 @@ at <https://www.elastic.co/guide/en/elastic-stack-overview/7.0/security-privile
 
 
 
--   [**Node/client authentication and channel encryption**]:[** **]By encrypting the communication, X-Pack security prevents
+-   **Node/client authentication and channel encryption**: By encrypting the communication, X-Pack security prevents
     network-based attacks. It provides you with the ability to encrypt
     traffic to and from the Elasticsearch cluster to outside
     applications, as well as encrypt the communication between nodes in
@@ -574,7 +578,7 @@ at <https://www.elastic.co/guide/en/elastic-stack-overview/7.0/security-privile
     authenticate as they join the cluster using SSL certificates. X-Pack
     security IP filtering can prevent unintended application clients,
     node clients, or transport clients from joining the cluster.
--   [**Auditing**]: Auditing allows you
+-   **Auditing**: Auditing allows you
     to capture suspicious activity in your
     cluster. You can enable auditing to keep track of security-related
     events, such as authentication failures and refused connections.
@@ -691,7 +695,7 @@ Response:
 
 
 To delete a role, navigate to **`Users`** UI, select the custom `user2 `that you created, and click on
-the [**Delete**] button. You cannot delete built-in users:
+the **Delete** button. You cannot delete built-in users:
 
 
 ![](./images/3f0bcac9-571c-4728-8fe6-67637c2043bc.png)
@@ -771,8 +775,8 @@ Users with the superuser role can create custom roles
 and assign them to the users using the Kibana
 UI.
 
-Let\'s create a new role with a [**Cluster
-privilege**] called `monitor` and assign it
+Let\'s create a new role with a **Cluster
+privilege** called `monitor` and assign it
 to `user1` so that the user can cluster read-only operations
 such as cluster state, cluster health, nodes info, nodes stats, and
 more.
@@ -850,7 +854,7 @@ curl -u user2:password "http://localhost:9200/_cluster/health?pretty"
 
 To delete a role, navigate to
 the **`Roles `**UI/tab, select the custom
-role that we created, and click on [**Delete**]. You cannot
+role that we created, and click on **Delete**. You cannot
 delete built-in roles:
 
 
@@ -884,7 +888,7 @@ indexes: `employee` and `department`. Let\'s use
 these indexes and understand the document-level security with two use
 cases.
 
-[**Use case 1**]: When a user searches for employee details,
+**Use case 1**: When a user searches for employee details,
 the user should not be able to find the salary/address details contained
 in the documents belonging to the `employee` index.
 
@@ -905,8 +909,8 @@ and click the **`Create role`** button:
 When creating a role, you can specify the same set of privileges on
 multiple indexes by adding one or more index names to
 the **`Indices`** field, or you can specify different privileges for
-different indexes by clicking on the [**Add index
-privilege**] button that\'s found in
+different indexes by clicking on the **Add index
+privilege** button that\'s found in
 the **`Index privileges`** section.
 
 
@@ -979,7 +983,7 @@ curl -u user2:password "http://localhost:9200/employee/_search?pretty"
 }
 ```
 
-[**Use case 2**]: We want to have a multi-tenant index and
+**Use case 2**: We want to have a multi-tenant index and
 restrict certain documents to certain users. For
 example, `user1` should be able to search in the department
 index and retrieve only documents belonging to
@@ -989,7 +993,7 @@ Let\'s create a role, `department_IT_role`, and provide
 the `read` privilege for the `department` index. To
 restrict the documents, specify the query in
 the `Granted Documents Query` section. The query should be in
-the [**Elasticsearch Query DSL**] format:
+the **Elasticsearch Query DSL** format:
 
 
 ![](./images/f4f62650-7f60-42f7-9fa0-b1593bbc9bef.png)
@@ -1084,7 +1088,7 @@ against which the operation is carried out. The body of the request
 accepts parameters such as `email`, `full_name`,
 and `password` as strings and `roles` as list.
 
-[**Example 1**]: Create a new user, `user3`,
+**Example 1**: Create a new user, `user3`,
 with `monitor_role` assigned to it:
 
 ```
@@ -1101,14 +1105,14 @@ Response:
 user":{"created":true}}
 ```
 
- [**Example 2**]: Get the list of
+ **Example 2**: Get the list of
 all users:
 
 ```
 curl -u elastic:elastic -XGET http://localhost:9200/_xpack/security/user?pretty
 ```
 
-[**Example 3**]: Delete `user3`:
+**Example 3**: Delete `user3`:
 
 ```
 curl -u elastic:elastic -XDELETE http://localhost:9200/_xpack/security/user/user3
@@ -1116,7 +1120,7 @@ Response:
 {"found":true}
 ```
 
-[**Example 4**]: Change the
+**Example 4**: Change the
 password:
 
 ```
@@ -1170,7 +1174,7 @@ Let\'s take a look at a few examples of managing different roles using
 APIs:
 
 
--   [**Example 1**]: Create a new role with field-level
+-   **Example 1**: Create a new role with field-level
     security imposed on the employee index:
 
 
@@ -1205,7 +1209,7 @@ starting with the `address` text/string. 
 
 
 
--   [**Example 2**]: Get the details of a specific role:
+-   **Example 2**: Get the details of a specific role:
 
 
 ```
@@ -1243,7 +1247,7 @@ Response:
 ```
 
 
--   [**Example 3**]: Delete a role:
+-   **Example 3**: Delete a role:
 
 
 ```
@@ -1272,7 +1276,7 @@ Monitoring Elasticsearch
 
 
 Elasticsearch exposes a rich set of APIs,
-known as [**stats**] APIs, to monitor
+known as **stats** APIs, to monitor
 Elasticsearch at the cluster, node, and
 indices levels. Some of these APIs are `_cluster/stats`,
 `_nodes/stats`, and `myindex/stats`. These APIs
@@ -1309,10 +1313,10 @@ metrics. A dedicated cluster for monitoring has the following benefits:
 -   Allows you to monitor multiple clusters from a central location
 -   Reduces the load and storage on your production clusters since the
     metrics are stored in a dedicated monitoring cluster
--   There is access to [**Monitoring**], even when some
+-   There is access to **Monitoring**, even when some
     clusters are unhealthy or down
--   Separate security levels from [**Monitoring**] and
-    [**Production Cluster**] can be enforced:
+-   Separate security levels from **Monitoring** and
+    **Production Cluster** can be enforced:
 
 
 
@@ -1348,13 +1352,13 @@ system-level index that has the `.monitoring-*` index pattern.
 
 
 
-To access the Monitoring UI, log in to Kibana and click on Stack Monitoring[** **]from the side navigation.
+To access the Monitoring UI, log in to Kibana and click on Stack Monitoring from the side navigation.
 If the monitoring data collection is not enabled, you will be taken to
 the following screen, where you can enable monitoring by clicking on
 the **`Turn on monitoring`** button. By default, monitoring would be
 enabled but data collection would be disabled. These settings can be
-dynamic and can be updated using the [**cluster update
-settings**] API, which doesn\'t require a restart to occur. If
+dynamic and can be updated using the **cluster update
+settings** API, which doesn\'t require a restart to occur. If
 the same settings were set in `elasticsearch.yml` or
 `kibana.yml`, a restart would be required:
 
@@ -1405,7 +1409,7 @@ on the page are automatically refreshed every 10 seconds, and by
 default, you can view the data of the past 1 hour, which can be changed
 in the **`Time Filter`** that\'s found toward the top left of the
 screen. You can also see the cluster name, which in this case
-is [****`elasticsearch`****].
+is ****`elasticsearch`****.
 
 
 ### Note
@@ -1523,8 +1527,8 @@ status of all the indexes created by X-Pack can be seen.
 
 
 The node **`Advanced`** tab provides visualizations of
-other metrics, such as [**garbage
-collection**] ([**GC**]) count and duration, detailed
+other metrics, such as **garbage
+collection** (GC) count and duration, detailed
 Index Memory usage at Lucene and Elasticsearch levels, Indexing Time (in
 ms), Request rate, Indexing, Read Threads, and Cgroup stats. 
 
@@ -1578,11 +1582,11 @@ documents. **`Shard Legend`** displays the status of shards belonging to
 the index and the information for the nodes the shards are assigned to.
 
 The Index **`Advanced`** tab provides visualizations of other metrics,
-such as detailed [**Index Memory**] usage at Lucene and
-Elasticsearch levels, [**Indexing Time**] ([**in
-ms**]), [**Request Rate**] and [**Time**],
-[**Refresh Time**] ([**in ms**]), [**Disk
-usage**], and [**Segment counts**]:
+such as detailed **Index Memory** usage at Lucene and
+Elasticsearch levels, **Indexing Time** (in
+ms), **Request Rate** and **Time**,
+**Refresh Time** (in ms), **Disk
+usage**, and **Segment counts**:
 
 
 ![](./images/15d4e365-a6e8-4583-9269-e8180ee14762.png)
@@ -1592,7 +1596,7 @@ usage**], and [**Segment counts**]:
 ### Note
 
 From the landing page of the **`Monitoring`** UI, by clicking on
-[**Overview**] or [**Instances**] under the Kibana
+**Overview** or **Instances** under the Kibana
 section, the metrics of Kibana can be visualized/monitored in a similar
 way.
 
@@ -1625,7 +1629,7 @@ Elasticsearch and take the required action. X-Pack Alerting is enabled
 by default as part of the X-Pack default installation. 
 
 `Watcher` provides a set of REST APIs for creating, managing,
-and testing watches. Kibana also provides a [**Watcher**] UI for creating, managing, and
+and testing watches. Kibana also provides a **Watcher** UI for creating, managing, and
 testing. The Watcher UI internally makes use of Watcher REST APIs for
 the management of watches.
 
@@ -1635,7 +1639,7 @@ the management of watches.
 
 
 
-A [**Watch**] is made of the following components:
+A **Watch** is made of the following components:
 
 
 -   `schedule`: This is used to specify the time interval for scheduling/triggering the watch.
@@ -1685,7 +1689,7 @@ interval, hourly, daily, weekly, monthly, yearly, and cron. 
 In the preceding code snippet, a trigger was specified with a schedule
 of 30 seconds, which means that the watch is executed every 30 seconds.
 
-[**Example to specify hourly trigger**]: The following snippet
+**Example to specify hourly trigger**: The following snippet
 shows how to specify an hourly trigger that triggers the watch every
 45th minute of an hour:
 
@@ -1732,7 +1736,7 @@ to be triggered hourly at the 45th minute:
 
 -   `input`: This section is used to specify the input to load the data into the
     `Watcher` execution context. This data is referred to
-    as [**Watcher Payload**] and will be available/accessible
+    as **Watcher Payload** and will be available/accessible
     in subsequent phases of the watcher execution so that it can be used
     to create conditions on it or used when
     generating actions. The payload can be accessed using
@@ -1819,7 +1823,7 @@ to prevent too many executions of the same action for the same watch.
 Watcher supports two types of throttling:
 
 
--   [**Time-based Throttling**]: You can define a throttling period by using
+-   **Time-based Throttling**: You can define a throttling period by using
     the `throttle_period` parameter as part of the action
     configuration or at the watch level (which applies to all actions)
     to limit how often the action is
@@ -1828,7 +1832,7 @@ Watcher supports two types of throttling:
 
 
 
--   [**ACK-based Throttling**]: Using ACK Watch APIs,
+-   **ACK-based Throttling**: Using ACK Watch APIs,
     you can prevent watch actions from being
     executed again while the watch condition remains `true`.
 
@@ -1851,7 +1855,7 @@ watch history.
 
 
 Now that we know what
-a [**Watch**] is made up of, in this section, we will explore
+a **Watch** is made up of, in this section, we will explore
 how to create, delete, and manage watches.
 
 You can create/delete/manage watches using the following software:
@@ -1861,7 +1865,7 @@ You can create/delete/manage watches using the following software:
 -   X-Pack Watcher REST APIs
 
 
-The [**Watcher**] UI internally makes use of Watcher REST APIs
+The **Watcher** UI internally makes use of Watcher REST APIs
 for the management of watches. In this section, we will explore the
 creation, deletion, and management of watches using the Kibana Watcher
 UI.

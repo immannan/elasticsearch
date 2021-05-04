@@ -1,15 +1,12 @@
 
+<img align="right" src="./images/logo.png">
+
+
 
 Lab 3. Searching - What is Relevant
 ------------------------------------------------
 
 
-
-One of the core strengths of Elasticsearch is its search capabilities.
-In the previous lab, we gained a good understanding of
-Elasticsearch\'s core concepts, its REST API, and its basic
-operations. With all that knowledge at hand, we will further our journey
-by learning about the Elastic Stack.
 
 We will cover the following topics in this lab:
 
@@ -22,45 +19,6 @@ We will cover the following topics in this lab:
 
 
 
-The basics of text analysis
----------------------------------------------
-
-
-
-The analysis of text data is different from other types of data analysis, such as numbers, dates, and times.
-The analysis of numeric and date/time datatypes can be done in a very
-definitive way. For example, if you are looking for all records with a
-price greater than, or equal to, 50, the result is a simple yes or no
-for each record. Either the record in question qualifies or doesn\'t
-qualify for inclusion in the query\'s result. Similarly, when querying
-something by date or time, the criteria for searching through records is
-very clearly defined -- a record either falls into the date/time range
-or it doesn\'t.
-
-However, the analysis of text/string data can be different. Text data
-can be of a different nature, and it can be used for structured or
-unstructured analysis.
-
-Some examples of structured types of string fields are as follows:
-country codes, product codes, non-numeric serial numbers/identifiers,
-and so on. The datatype of these fields may be a string, but often you
-may want to do exact-match queries on these fields. 
-
-We will first cover the analysis of unstructured text, which is also
-known as [**full-text search**].
-
-From the previous lab, we already understand the concepts of
-Elasticsearch indexes, types, and mappings within a type. All fields
-that are of the text type are analyzed[* *] by what is
-known as
-an [**analyzer**][*.*] 
-
-In the following sections, we will cover the following topics:
-
-
--   Understanding Elasticsearch analyzers
--   Using built-in analyzers
--   Implementing autocomplete with a custom analyzer
 
 ### Understanding Elasticsearch analyzers
 
@@ -96,9 +54,9 @@ Elasticsearch uses analyzers to analyze text data. An analyzer has the
 following components:
 
 
--   [**Character filters**]: Zero or more
--   [**Tokenizer**]: Exactly one
--   [**Token filters**]: Zero or more
+-   **Character filters**: Zero or more
+-   **Tokenizer**: Exactly one
+-   **Token filters**: Zero or more
 
 
 The following diagram depicts the components of an analyzer:
@@ -286,12 +244,12 @@ filters, and they can be used to compose your own custom analyzers.
 Some examples of built-in token filters are the following:
 
 
--   [**Lowercase token
-    filter**]:[*[** **]*] Replaces all
+-   **Lowercase token
+    filter**:[* *] Replaces all
     tokens in the input with their lowercase
     versions.
--   [**Stop token
-    filter**]:[*[** **]*] Removes stopwords,
+-   **Stop token
+    filter**:[* *] Removes stopwords,
     that is, words that do not add more meaning to the context. For
     example, in English sentences, words
     like [*is*], [*a*], [*an*], and
@@ -322,18 +280,18 @@ Some analyzers come packaged with Elasticsearch. Some popular analyzers
 are the following:
 
 
--   [**Standard analyzer**]: This is the default analyzer in Elasticsearch. If not
+-   **Standard analyzer**: This is the default analyzer in Elasticsearch. If not
     overridden by any other field-level,
     type-level, or index-level analyzer, all fields are analyzed using
     this analyzer.
--   [**Language analyzers**]:[** **]Different
+-   **Language analyzers**: Different
     languages have different
     grammatical rules. There are differences
     between some languages as to how a stream of characters is tokenized
     into words or tokens. Additionally, each language has its own set of
     stopwords, which can be configured while configuring language
     analyzers.
--   [**Whitespace analyzer**]: The whitespace
+-   **Whitespace analyzer**: The whitespace
     analyzer breaks down input into tokens wherever it finds a whitespace token such as
     a space, a tab, a new line, or a carriage return. 
 
@@ -353,23 +311,23 @@ languages and situations. It can also be customized for the underlying
 language or situation. Standard analyzer comprises of the
 following components:
 
-[**Tokenizer**]:
+**Tokenizer**:
 
 
--   [**Standard tokenizer**]: A tokenizer that splits tokens at
+-   **Standard tokenizer**: A tokenizer that splits tokens at
     whitespace characters
 
 
-[**Token filters**]:
+**Token filters**:
 
 
--   [**Standard token filter**]: Standard token filter is used
+-   **Standard token filter**: Standard token filter is used
     as a placeholder token filter within the Standard Analyzer. It does
     not change any of the input tokens but may be used in future to
     perform some tasks.
--   [**Lowercase token filter**]: Makes all tokens in the input
+-   **Lowercase token filter**: Makes all tokens in the input
     lowercase.
--   [**Stop token filter**]: Removes specified stopwords. The
+-   **Stop token filter**: Removes specified stopwords. The
     default setting has a stopword list set to `_none_`, which
     doesn\'t remove any stopwords by default.
 
@@ -769,7 +727,7 @@ also has a field with the name `raw`[*.*]  The
 ways, as `text`, and `manufacturer.raw` is stored as
 a `keyword`. All fields of the `keyword`
 type internally use the keyword analyzer. The keyword analyzer consists
-of just the keyword tokenizer, which is a [**noop**] tokenizer,
+of just the keyword tokenizer, which is a **noop** tokenizer,
 simply returning the whole input as one token. Remember, in an analyzer,
 character filters and token filters are optional. Thus, by using
 the `keyword` type on the field, we are choosing a noop
@@ -819,7 +777,7 @@ are relevance-based. Such relevance-based queries also return a score
 against each document to say how well that document fits the query. Most
 structured queries do not need relevance-based scoring, and the answer
 is a simple yes/no for any item to be included or excluded from the
-result. These structured search queries are also referred to as [**term-level queries**].
+result. These structured search queries are also referred to as **term-level queries**.
 
 Let\'s understand the flow of a term-level query\'s execution:
 
@@ -964,7 +922,7 @@ Please take a note of the following:
     returns the first 10 records. If you wish to scroll through all
     results, you can do so easily by issuing multiple queries, as we
     will see later.
--   The `price`[** **]field in all search hits would
+-   The `price` field in all search hits would
     be within the requested range, that is,
     10: `<= price <= 20`.
 
@@ -1049,7 +1007,7 @@ time of exactly 1 year ago until this moment. It is possible to round
 time into different units. For example, to round the interval by day,
 inclusive of both the start and end interval day, use
 `"gte": "now - 7d/d"` or`"lte": "now/d"`.
-Specifying `/d`[** **]rounds time by days.
+Specifying `/d` rounds time by days.
 
 
 The `range` query runs in filter context by default. It
@@ -1084,7 +1042,7 @@ similar to the `range` query where the scores don\'t matter. 
 
 ### Note
 
-What is a [**Filter Context**]? When the query is just about
+What is a **Filter Context**? When the query is just about
 filtering our documents, that is, deciding whether to include the
 document in the result or not, it is sufficient to skip the scoring
 process. Elasticsearch can skip the scoring process for certain types of
@@ -1201,8 +1159,8 @@ defined, it tries the analyzer defined at the index level.
 Full-text queries are thus aware of the analysis process on the
 underlying field and apply the right analysis process before forming
 actual search queries. These analysis-aware queries are
-also called [**high-level
-queries**]. Let\'s understand how the high-level query flow
+also called **high-level
+queries**. Let\'s understand how the high-level query flow
 works.
 
  
@@ -1213,7 +1171,7 @@ definition earlier that the `title` field is of
 the `text` type. At indexing time, the value is analyzed using
 the analyzer for the field. In this case, it was a Standard Analyzer,
 and hence the inverted index contains all of the broken down terms, such
-as [**gods**], [**heroes**], [**rome**], and
+as **gods**, **heroes**, **rome**, and
 so on, as depicted in the following figure:
 
 
@@ -1224,7 +1182,7 @@ Figure 3.3: High-level query flow
 
  
 
-[**At query time**] (see the right-hand half of the figure), we
+**At query time** (see the right-hand half of the figure), we
 issue a `match` query, which is a high-level query. We will
 cover `match` queries later in this section. The search terms
 passed to a `match` query are analyzed using standard
@@ -1232,11 +1190,11 @@ analyzer. The individual terms after applying standard analyzer are then
 used to generate individual term-level queries.
 
 The example here results in multiple term queries---one for each term
-after applying the analyzer. The original search term was [**gods
-heroes**], resulting in two terms, [**gods**] and
-[**heroes**], which are used as individual terms in their own
+after applying the analyzer. The original search term was **gods
+heroes**, resulting in two terms, **gods** and
+**heroes**, which are used as individual terms in their own
 term queries. The two term queries are then combined using
-a `bool`[** **]query, which is a compound query. We
+a `bool` query, which is a compound query. We
 will also look at different compound queries in the next section.
 
 We will cover the following full-text queries in the following sections:
@@ -1420,7 +1378,7 @@ take one of the following values: `0`, `1`,
 `2`, or `AUTO`.
 
 For example, the following query has a misspelled
-word, `victor`[** **]instead of `victory`.
+word, `victor` instead of `victory`.
 Since we are using a `fuzziness` of `1`, it will
 still be able to find all `victory multimedia` records:
 
@@ -2053,10 +2011,10 @@ had partly structured data and partly textual data. What if we also had
 detailed features of the products available to us? We may have many
 different types of products and each product may have completely
 different types of detailed features. For example, for products that
-fall into the [**Laptops**] category, we would have features
+fall into the **Laptops** category, we would have features
 such as screen size, processor type, and processor clock speed.
 
-At the same time, products in the [**Automobile GPS Systems**]
+At the same time, products in the **Automobile GPS Systems**
 category may have features such as screen size, whether GPS can speak
 street names, or whether it has free lifetime map updates
 available.[] 
@@ -2070,10 +2028,10 @@ data would look very sparse if we tried to show it in tabular format:
 ![](./images/3.PNG)
 
 
-As you can see, products in the [**Laptops**] category have a
+As you can see, products in the **Laptops** category have a
 different set of columns populated (those columns are the features
-related to that category) and products in the [**GPS Navigation
-Systems**] category have a different set of columns populated.
+related to that category) and products in the **GPS Navigation
+Systems** category have a different set of columns populated.
 If we were to model all products of all
 categories like this, we may end up with tens of thousands of fields
 (imagine tens of thousands of columns to make it a very wide table). If
@@ -2134,7 +2092,7 @@ PUT /amazon_products_with_features
 
 The highlighted `product_or_feature`field is of
 type `join` and it defines the relationship
-between `product` and `feature`[*[**.**]*] 
+between `product` and `feature`[***.***] 
 The product is on the left-hand side, which is analogous to conveying
 that the `product` is the parent of the feature(s).
 
@@ -2261,7 +2219,7 @@ Please note the following points about the query:
     is used will be run against the child type that we specified. We are
     using a `bool` query because we want to filter by all features
     where---`feature_key` =
-    `processor_series`[* *] [**AND **]`feature_value`
+    `processor_series`[* *] **AND **`feature_value`
     = `Core i7`[*.*] 
 -   We have used a `bool` query, as explained in the previous
     point. The first of the conditions is included as a `term`

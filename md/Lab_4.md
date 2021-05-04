@@ -1,4 +1,7 @@
 
+<img align="right" src="./images/logo.png">
+
+
 
 Lab 4. Analytics with Elasticsearch
 ------------------------------------------------
@@ -260,11 +263,11 @@ following objectives:
 
 ### Note
 
-[**What are metrics and dimensions**]?
-[**M**][**etric**] is a common term used in the
+**What are metrics and dimensions**?
+**M****etric** is a common term used in the
 analytics world to represent a numerical measure. A common example of a
 metric is the amount of data downloaded or uploaded in a given time
-period. The term [**dimension**] is usually used to refer to
+period. The term **dimension** is usually used to refer to
 extra/auxiliary information, usually of the string datatype. In this
 example, we are using a MAC address to look up auxiliary information
 related to that MAC address, namely the username of the user that the
@@ -464,7 +467,7 @@ SELECT sum(downloadTotal) FROM usageReport;
 ```
 
 The preceding query will calculate the sum of the
-`downloadTotal`[** **]field across all the records in
+`downloadTotal` field across all the records in
 the table. This requires going through all the records of the table or
 all the records in the given context and adding the values of the given
 fields.
@@ -503,7 +506,7 @@ explained in the following points:
     level should wrap any aggregation.
 -   Give a name to the aggregation; here, we are doing the sum
     aggregation on the `downloadTotal` field, and hence, the
-    name we chose was `download_sum`.[** **]You can
+    name we chose was `download_sum`. You can
     name it anything. This field will be useful while looking up this
     particular aggregation\'s result in the response.
 -   We are doing a sum aggregation; hence, we have
@@ -543,7 +546,7 @@ Let\'s go over the key aspects of the response. The key parts are
 numbered 1, 2, 3, and so on, and are explained in the following points:
 
 
--   The`hits.total`[** **]element shows the number of
+-   The`hits.total` element shows the number of
     documents that were considered or were in
     the context of the query. If there was no additional query or filter
     specified, it will include all of the documents in the type or
@@ -588,7 +591,7 @@ The only notable differences from the sum aggregation are as follows:
 
 
 -   We chose a different
-    name, `download_average`,[** **]to make it
+    name, `download_average`, to make it
     apparent that the aggregation is trying to compute the average.
 -   The type of aggregation that we are doing is `avg`,
     instead of the `sum` aggregation that we were doing
@@ -900,7 +903,7 @@ in the network traffic data example that we have loaded, we have the
 following question:
 
 Which are the
-top categories[*,*] [**[* *] **]that
+top categories[*,*] **[* *] **that
 is, [*categories that are surfed the most by users?*] 
 
 We are interested in the most surfed categories -- not in terms of the
@@ -934,7 +937,7 @@ different parts of the query:
 
 
 -   The `aggs` or
-    `aggregations`[** **]element at the top level
+    `aggregations` element at the top level
     should wrap any aggregation.
 -   Give a name to the aggregation. Here, we are doing `terms`
     aggregation by the category field, and hence, the name we chose is
@@ -1018,7 +1021,7 @@ well:
 
 
 -   The `total` element
-    under `hits`[** **](we will refer to this as
+    under `hits` (we will refer to this as
     `hits.total`, navigating the path from the top JSON
     element) is greater than `10000`. This is the total number
     of documents considered in this aggregation. As we mentioned
@@ -1100,7 +1103,7 @@ This returns a response like the following:
 ```
 
 Note
-that `sum_other_doc_count`[**[* *] **]has a
+that `sum_other_doc_count`**[* *] **has a
 big value, `129191`. This is a big number that\'s relative to
 the total hits; as we saw in the previous query, there are around
 242,000 documents in the index. The reason for this is that the
@@ -1108,7 +1111,7 @@ the total hits; as we saw in the previous query, there are around
 the current setting, the top 10 buckets with the highest
 documents are returned in descending order.
 The remaining documents that are not covered in the top 10 buckets are
-indicated in `sum_other_doc_count`.[** **]There are
+indicated in `sum_other_doc_count`. There are
 actually 30 different applications for which we have
 network traffic data. The number in
 `sum_other_doc_count` is the sum of the counts for the
@@ -1198,11 +1201,11 @@ The preceding aggregation query will slice all the data into the
 following buckets:
 
 
--   [**0 to 999**]: All records that have usage \>= 0 and \<
+-   **0 to 999**: All records that have usage \>= 0 and \<
     1,000 will fall into this bucket
--   [**1,000 to 1,999**]: All records that have usage \>= 1,000
+-   **1,000 to 1,999**: All records that have usage \>= 1,000
     and \< 2,000 will fall into this bucket
--   [**2,000 to 2,999**]: All records that have usage \>= 2,000
+-   **2,000 to 2,999**: All records that have usage \>= 2,000
     and \< 3,000 will fall into this bucket
 
 
@@ -1447,7 +1450,7 @@ by considering the following question, which we may want to get an
 answer for:
 
 [*What is the total bandwidth consumed by each user, or a specific
-customer, on a given day?[** **]*] 
+customer, on a given day? *] 
 
 We have to take the following steps:
 
@@ -1735,17 +1738,17 @@ GET bigginsight/_search?size=0
 We created three filters for the three buckets that we want, as follows:
 
 
--   [**Bucket with**]`chat`[**key**]: Here,
+-   **Bucket with**`chat`**key**: Here,
     we specify the `category = Chat` filter. Remember that the
     `match` query that we have used is a high-level query that
     understands the mapping of the underlying field. The underlying
     field category is a keyword field, and hence, the `match`
     query looks for the exact term, that is, `Chat`.
--   [**Bucket with**]`skype`[**key**]: Here,
+-   **Bucket with**`skype`**key**: Here,
     we specify the `application = Skype` filter and
     only include Skype traffic.
--   [**Bucket
-    with **]`other_than_skype`[**key**]:
+-   **Bucket
+    with **`other_than_skype`**key**:
     Here, we use a `bool` query to filter documents that are
     in the `Chat` category, but not Skype.
 
@@ -2296,10 +2299,10 @@ they are still experimental. At a high level, there are two types of
 pipeline aggregation:
 
 
--   [**Parent pipeline**] aggregations have the
+-   **Parent pipeline** aggregations have the
     pipeline aggregation nested inside other
     aggregations
--   [**Sibling**] [**pipeline**] aggregations have the
+-   **Sibling pipeline** aggregations have the
     pipeline aggregation as the sibling of
     the original aggregation from which pipelining is done
 
