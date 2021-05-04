@@ -62,8 +62,8 @@ In Lab 1, we successfully
 installed Kibana and launched the UI at
 `http://localhost:5601`. As we mentioned previously, Kibana is
 the window into the Elastic Stack. It not only provides insight into the
-data through visualizations, but it also has developer tools such as the **`Console`**. The following diagram shows
-the **`Console`** UI:
+data through visualizations, but it also has developer tools such as the `Console`. The following diagram shows
+the `Console` UI:
 
 
 ![](./images/9a735f8f-2aed-4403-aada-58e796ec3bc7.png)
@@ -71,8 +71,8 @@ the **`Console`** UI:
 
 Figure 2.1: Kibana Console
 
-In Kibana 7.0, you can navigate to the **`Console`** by first clicking
-on **`Console`** under **`Manage and Administer the Elastic Stack`**.
+In Kibana 7.0, you can navigate to the `Console` by first clicking
+on `Console` under `Manage and Administer the Elastic Stack`.
 The Console is divided into two parts: the editor pane and the results
 pane. You can type the REST API command and press the green
 triangle-like icon, which sends the query to the Elasticsearch instance
@@ -89,7 +89,7 @@ more concise than the `curl` command. You don\'t need to type
 `http` followed by the host and port of the Elasticsearch
 node, that is, `http://localhost:9200`. However, as we
 mentioned earlier, there is much more to it than just skipping the host
-and port with every request. As you start typing in the **`Console`**
+and port with every request. As you start typing in the `Console`
 editor, you will get an autosuggestion dropdown, as displayed
 in the following screenshot:
 
@@ -220,8 +220,8 @@ more than one type in Elasticsearch 6.0 and above.
 
 With Elasticsearch 7.0, one index can strictly contain only one type by
 default. Attempting to create a second type would result in the
-following error: **`Rejecting mapping update to [index1]`** as the final
-mapping would have more than 1 type: **`[type1, type2]`**. 
+following error: `Rejecting mapping update to [index1]` as the final
+mapping would have more than 1 type: `[type1, type2]`. 
 
 ### Types
 
@@ -511,7 +511,7 @@ The core datatypes supported by Elasticsearch
 are as follows:
 
 
--   **String data****types**:
+-   **String data types**:
     
     -   `text`: The `text` datatype is useful for
         supporting full-text search for fields that contain a
@@ -522,7 +522,7 @@ are as follows:
         analytics on string fields. Fields of this type support sorting,
         filtering, and aggregations.
     
--   **Numeric data****types**: 
+-   **Numeric data types**: 
     
     -   `byte`, `short`, `integer`, and
         `long`: Signed integers
@@ -535,24 +535,24 @@ are as follows:
     -   `scaled_float`: Floating-point number backed by a long
         and fixed scaling factor
     
--   **Date data****type**:
+-   **Date data type**:
     
     -   `date`: Date with an optional[]{#id326263577
         .indexterm} timestamp component that\'s capable of storing
         precision timestamps down to the millisecond
     
--   **Boolean data****type**:
+-   **Boolean data type**:
     
     -   `boolean`: The `boolean` datatype
         that is common in all programming
         languages
     
--   **Binary data****type**:
+-   **Binary data type**:
     
     -   `binary`: Allows you to store arbitrary[]{#id326263629
         .indexterm} binary values after performing Base64 encoding
     
--   **Range data****types**: 
+-   **Range data types**: 
     
     -   `integer_range`, `float_range`,
         `long_range`, `double_range`,
@@ -602,17 +602,15 @@ The other datatypes supported by
 Elasticsearch are as follows:
 
 
--   **Geo-point
-    data****type**: Allows the
+-   **Geo-point data type**: Allows the
     storing of geo-points as longitude and latitude. The geo-point
     datatype enables queries such as searching across all ATMs within a
     distance of 2 km from a point[*.*] 
--   **Geo-shape
-    data****type**: Allows you
+-   **Geo-shape data type**: Allows you
     to store geometric shapes such as
     polygons, maps, and more. Geo-shape enables queries such as
     searching for all items within a shape.
--   **IP data****type**: Allows you
+-   **IP data type**: Allows you
     to store IPv4 and IPv6 addresses.
 
 

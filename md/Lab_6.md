@@ -365,7 +365,7 @@ which helps build `grok` patterns that match the log.
 
 X-Pack 5.5 onward contains the Grok Debugger utility and is
 automatically enabled when you install X-Pack in Kibana. It is located
-under the **`DevTools `**tab in Kibana.
+under the `DevTools `tab in Kibana.
 
 
 #### Date filter

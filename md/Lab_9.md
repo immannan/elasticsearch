@@ -94,12 +94,12 @@ available on Elastic Cloud. You have the option of choosing either
 Architecture** deployment. Different types of clusters are
 suitable for different use cases.
 
-When you click the the **`Create deployment`** button, your cluster will
+When you click the the `Create deployment` button, your cluster will
 be created and started with production-grade configuration. The cluster
 will be secured. It will also start with a Kibana instance. At this
 point, it should provide you with a username/password to be used for
 logging into your Elasticsearch and Kibana nodes. Please note it down.
-It also provides a **`Cloud ID`**, which is a helpful string when
+It also provides a `Cloud ID`, which is a helpful string when
 connecting to your cloud cluster from your Beats agents and Logstash
 servers.
 
@@ -156,7 +156,7 @@ and monitor your Elasticsearch cluster from this Kibana UI.
 
 
 It is possible to override the configuration
-of your Elasticsearch nodes via the **`Edit`** menu in the navigation
+of your Elasticsearch nodes via the `Edit` menu in the navigation
 panel on the left side under the **Deployments**. Elastic
 Cloud doesn\'t allow you to edit the `elasticsearch.yml` file
 directly. However, it provides a section called **User
@@ -174,7 +174,7 @@ Elastic Cloud automatically creates a snapshot of
 all indexes in your cluster periodically
 (every 30 minutes) and keeps them for recovery purposes, if required.
 This happens automatically without doing any additional setup or code.
-You can visit the **`Snapshots`** link under your
+You can visit the `Snapshots` link under your
 **Deployments** \> **Elasticsearch** to view the
 available list of **Snapshots**, as follows:
 

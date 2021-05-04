@@ -98,9 +98,9 @@ $>cd metricbeat
 To install using dep/rpm, execute the appropriate commands in the
 Terminal as follows:
 
-**deb:**`curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.0.0-amd64.deb``sudo dpkg -i metricbeat-7.0.0-amd64.deb`
+**deb:`curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.0.0-amd64.deb``sudo dpkg -i metricbeat-7.0.0-amd64.deb`
 
-**rpm:**`curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.0.0-x86_64.rpm``sudo rpm -vi metricbeat-7.0.0-x86_64.rpm`
+**rpm:`curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.0.0-x86_64.rpm``sudo rpm -vi metricbeat-7.0.0-x86_64.rpm`
 
 Metricbeat will be installed in the `/usr/share/metricbeat`
 directory. The configuration files will be present
@@ -987,10 +987,10 @@ execute the following steps:
 
 
 1.  Navigate to `http://localhost:5601` and open up Kibana.
-2.  Click on the **`Dashboard`** link found in the left navigation menu
+2.  Click on the `Dashboard` link found in the left navigation menu
     and select either
-    **`[Metricbeat System] Overview` **`ECS`**** or
-    **`[Metricbeat System] Host Overview ECS`** from the dashboard, as
+    `[Metricbeat System] Overview ECS`  or
+    `[Metricbeat System] Host Overview ECS` from the dashboard, as
     shown in the following screenshot:
 
 
@@ -1024,8 +1024,7 @@ follows:
 
 Since the `diskio` and`load` metricsets were
 disabled in the system module configuration, we will see empty
-visualizations for the **Disk IO** and **System
-L****oad** visualizations, as shown in the
+visualizations for the **Disk IO** and **System Load** visualizations, as shown in the
 following screenshot:
 
 
@@ -1035,7 +1034,7 @@ following screenshot:
 To see the dashboard refresh in real time, in
 the top right corner select the time and
 enter the appropriate refresh interval. Then, click
-the **`Start `**button as shown in the following screenshot:
+the `Start `button as shown in the following screenshot:
 
 
 ![](./images/308abb94-3636-4abb-a29b-5f798fbb8fee.png)
@@ -1045,9 +1044,9 @@ the **`Start `**button as shown in the following screenshot:
 ### Note
 
 To view the dashboard in full-screen mode, click
-the **`Full screen`** button on the top left navigation bar. This hides
+the `Full screen` button on the top left navigation bar. This hides
 the browser and the top navigation bar. To exit full-screen mode, hover
-over and click the **`Kibana`** button on the lower left-hand side of
+over and click the `Kibana` button on the lower left-hand side of
 the page, or simply press the [*Esc*]  key.
 
 

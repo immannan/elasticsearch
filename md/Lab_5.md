@@ -154,7 +154,7 @@ The Elastic developer community is quite vibrant, and newer releases
 with new features/fixes get released quite often. By the time you are
 reading this book, the latest Logstash version might have changed.
 Instructions in this book are based on Logstash version (logstash-oss)
-7.0.0. You can click on the **`past releases`** link and download
+7.0.0. You can click on the `past releases` link and download
 version 7.0.0 if you want to follow this as is. The
 instructions/explanations in this book should hold good for any 7.x or
 6.7.x release.

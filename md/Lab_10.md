@@ -339,7 +339,7 @@ in the index template mapping are as follows:
     have a look at the `customer` field.
 -   The latitude and longitude fields that we had in the enriched data
     are now mapped to a `geo_point` type of field with the
-    field name of `location`**.**
+    field name of `location`.**
 
 
 At this point, we have defined an index template that will trigger the
@@ -849,7 +849,7 @@ pipeline into Elasticsearch. It is time to explore the data and build a
 dashboard that will help us gain some insights into the data.
 
 Let\'s start by doing a sanity check to see if the data is loaded
-correctly. We can do so by going to Kibana **`Dev Tools`** and executing
+correctly. We can do so by going to Kibana `Dev Tools` and executing
 the following query:
 
 ```
@@ -885,7 +885,7 @@ potentially have for the Sensor Data Analytics application. We need to
 do this because our index names are dynamic. We will have one index per
 day, but we want to be able to create visualizations and dashboards that work across multiple indices of sensor data
 even when there are multiple indices. To do this, click on the **Index Patterns** link under
-the **`Manage and Administer the Elastic Stack`** section, as follows:
+the `Manage and Administer the Elastic Stack` section, as follows:
 
 
 ![](./images/a03e33a5-9526-45fe-9ac2-cad6e848f926.png)
@@ -893,9 +893,9 @@ the **`Manage and Administer the Elastic Stack`** section, as follows:
 
 Figure 10.2: Creating an index pattern
 
-In the **`Index pattern`** field, type
+In the `Index pattern` field, type
 in  `sensor_data*` index pattern, as shown in the following
-screenshot, and click **`Next step`**:
+screenshot, and click `Next step`:
 
 
 ![](./images/17af4d56-63a8-4be2-bac4-ff7f62dff2db.png)
@@ -904,9 +904,9 @@ screenshot, and click **`Next step`**:
 Figure 10.3: Creating an index pattern
 
 On the next screen,
-in **`Time Filter Field Name`**, choose the **time** field as
+in `Time Filter Field Name`, choose the **time** field as
 follows and click
-on **`Create index pattern`**:
+on `Create index pattern`:
 
 
 ![](./images/6a69a36b-e2f4-44ce-abcf-5a099ff27f1b.png)
@@ -951,10 +951,10 @@ Here, we are just looking for an aggregate statistic. We want to know
 the average temperature across all temperature sensors regardless of
 their location or any other criteria. As we saw in Lab
 7, [*Visualizing Data with Kibana*], we should go to
-the **`Visualize`** tab to create new visualizations and click on the button with
-a ****`+ Create a Visualization`**** button.
+the `Visualize` tab to create new visualizations and click on the button with
+a  `+ Create a Visualization`  button.
 
-Choose **`Line Chart`**, and then choose
+Choose `Line Chart`, and then choose
 the `sensor_data*` index pattern as the source for the new
 visualization. On the next screen, to configure the line chart, follow
 steps 1 to 5, as shown in the following screenshot:
@@ -975,11 +975,11 @@ time
 
 
 
-2.  Click on **`Add a filter`** as shown in Figure-10.5 and choose
+2.  Click on `Add a filter` as shown in Figure-10.5 and choose
     the **Filter** as follows:
     **sensorType:Temperature**. Click on
-    the **`Save`** button. We have two types of sensors,
-    **`Temperature`** and **`Humidity`**. In the current
+    the `Save` button. We have two types of sensors,
+    `Temperature` and `Humidity`. In the current
     visualization that we are building, we
     are only interested in the temperature readings. This is why we\'ve
     added this filter.
@@ -990,7 +990,7 @@ time
 4.  From the **Buckets** section, choose the **Date
     Histogram** aggregation and the **time** field,
     with the other options left as they are.
-5.  Click on the triangular **`Apply changes`** button.
+5.  Click on the triangular `Apply changes` button.
 
 
 The result is the average temperature across all temperature sensors
@@ -1001,7 +1001,7 @@ became unusually high. The time may be different on your machine. We may
 want to find out which underlying sensors reported the
 higher-than-normal temperatures that caused this peak.
 
-We can click on the **`Save`** link at the top bar and give this
+We can click on the `Save` link at the top bar and give this
 visualization a name. Let\'s call it
 `Average temperature over time`. Later, we will use this
 visualization in a dashboard.
@@ -1024,14 +1024,14 @@ Execute the steps as follows to update the visualization:
 1.  Click on the filter with the  **sensorType:
     Temperature** label and click on the **Edit
     Filter** action.
-2.  Change the **`Filter`** value
+2.  Change the `Filter` value
     from **Temperature** to **Humidity** and
-    click on **`Save.`**
+    click on `Save.`
 
 
 
-3.  Modify **`Custom Label`** from `Average Temperature` to `Average Humidity` and
-    click on the **`Apply changes`** button, as shown in the following
+3.  Modify `Custom Label` from `Average Temperature` to `Average Humidity` and
+    click on the `Apply changes` button, as shown in the following
     screenshot.
 
 
@@ -1045,7 +1045,7 @@ As you will see, the chart gets updated for the Humidity sensors. You
 can click on the **Save** link at the top navigation bar. You
 can give a new name to the visualization, such
 as `Average humidity over time`, check
-the **`Save as a new visualization`** box, and click on **`Save`**. This
+the `Save as a new visualization` box, and click on `Save`. This
 completes our second visualization and answers our second question.
 
 #### How do temperature and humidity change at each location over time?
@@ -1056,8 +1056,8 @@ This time, we are looking to get more details than the first two questions. We
 humidity vary at each location over time. We will solve it for
 temperature. 
 
-Go to the **`Visualizations`** tab in Kibana and create a
-new **`Line`** chart visualization, the same as before:
+Go to the `Visualizations` tab in Kibana and create a
+new `Line` chart visualization, the same as before:
 
 
 ![](./images/5cbcf11a-3364-4382-88b8-a1c4797bfe5f.png)
@@ -1075,9 +1075,9 @@ over time
     the `reading`[* *] field.
 3.  Since we are aggregating the data over
     the **time** field, we need to choose the **Date
-    Histogram** aggregation in the **`Buckets`** section.
+    Histogram** aggregation in the `Buckets` section.
     Here, we should choose the **time** field and leave the
-    aggregation **`Interval`** as **Auto****`. `**
+    aggregation `Interval` as **Auto `. `
 4.  Up to this point, this visualization is the same
     as `Average temperature over time`. We don\'t just want to
     see the average temperature over time; we want to see it
@@ -1086,7 +1086,7 @@ over time
     series using the **Terms** aggregation on the
      **locationOnFloor** in this step. We select **Order
     By** as **metric: Average Temperature**, keep
-    **`Order`** as **Descend**, and **Size** to
+    `Order` as **Descend**, and **Size** to
     be `5` to retain only the top five locations.
 
 
@@ -1108,7 +1108,7 @@ but just replacing `Temperature with Humidity`.
 
 
 We can visualize temperature and humidity over the map using the **Coordinate Map** visualization.
-Create a new **`Coordinate Map`** visualization by going to the
+Create a new `Coordinate Map` visualization by going to the
 **Visualize** tab and clicking the **+** icon to
 create a new visualization, and perform the following steps as shown in
 the following screenshot:
@@ -1122,15 +1122,15 @@ Figure 10.8: Creating a visualization to view sensor locations over a map
 
 1.  As in previous visualizations, add a
     filter for the **sensorType: Temperature**.
-2.  In the **`Metrics`** section,
-    choose **Average** aggregation on the **`reading`** field
+2.  In the `Metrics` section,
+    choose **Average** aggregation on the `reading` field
     as done previously.
 
 
 
-3.  Since this is a **`Coordinate Map`**, we need to choose
+3.  Since this is a `Coordinate Map`, we need to choose
     the **GeoHash** grid aggregation and then select
-    the **`geo_point`** field that we have in our data.
+    the `geo_point` field that we have in our data.
     The **location** is the field to aggregate.
 
 
@@ -1153,7 +1153,7 @@ enriching the data using the `sensor_id`. Pie charts are
 particularly useful to visualize how data is distributed across multiple
 values of a `keyword` type field, such
 as `department`. We will start by creating a
-new **`pie`** chart visualization. 
+new `pie` chart visualization. 
 
 Follow the steps as shown in the following screenshot:
 
@@ -1164,17 +1164,17 @@ Follow the steps as shown in the following screenshot:
 Figure 10.9: Creating a visualization for locations across departments
 
 
-1.  In the **`Metrics`** section, choose **Unique
+1.  In the `Metrics` section, choose **Unique
     Count** aggregation and 
     the **locationOnFloor** field. You may modify
-    the **`Custom Label`** to `Number of locations`.
-2.  In the **`Buckets`** section, we need to
+    the `Custom Label` to `Number of locations`.
+2.  In the `Buckets` section, we need to
     choose **Terms** aggregation on the
     `department` field as we want to aggregate the data across
     different departments.
 
 
-Click on **`Apply changes`** and save this visualization
+Click on `Apply changes` and save this visualization
 as `Locations across departments`. You can also create another
 similar visualization to visualize locations across different buildings.
 Let\'s call that visualization `Locations across buildings`.
@@ -1197,9 +1197,9 @@ uncover some powerful insights. It can also answer more complex
 questions.
 
 Let us build a dashboard from the visualizations that we have created so
-far. Please click on the **`Dashboard`** tab from the left-hand-side
+far. Please click on the `Dashboard` tab from the left-hand-side
 navigation bar in Kibana. Click on
-the **`+ Create new dashboard`** button to create a new dashboard.
+the `+ Create new dashboard` button to create a new dashboard.
 
 Click on the **Add** link to add visualizations to your newly
 created dashboard. As you click, you will see all the visualizations we

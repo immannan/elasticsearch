@@ -264,7 +264,8 @@ following objectives:
 ### Note
 
 **What are metrics and dimensions**?
-**M****etric** is a common term used in the
+
+**Metric** is a common term used in the
 analytics world to represent a numerical measure. A common example of a
 metric is the amount of data downloaded or uploaded in a given time
 period. The term **dimension** is usually used to refer to
@@ -1103,7 +1104,7 @@ This returns a response like the following:
 ```
 
 Note
-that `sum_other_doc_count`**[* *] **has a
+that `sum_other_doc_count`[* *] **has a
 big value, `129191`. This is a big number that\'s relative to
 the total hits; as we saw in the previous query, there are around
 242,000 documents in the index. The reason for this is that the
@@ -1738,17 +1739,17 @@ GET bigginsight/_search?size=0
 We created three filters for the three buckets that we want, as follows:
 
 
--   **Bucket with**`chat`**key**: Here,
+-   **Bucket with`chat`key**: Here,
     we specify the `category = Chat` filter. Remember that the
     `match` query that we have used is a high-level query that
     understands the mapping of the underlying field. The underlying
     field category is a keyword field, and hence, the `match`
     query looks for the exact term, that is, `Chat`.
--   **Bucket with**`skype`**key**: Here,
+-   **Bucket with`skype`key**: Here,
     we specify the `application = Skype` filter and
     only include Skype traffic.
 -   **Bucket
-    with **`other_than_skype`**key**:
+    with `other_than_skype`key**:
     Here, we use a `bool` query to filter documents that are
     in the `Chat` category, but not Skype.
 

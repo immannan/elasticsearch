@@ -173,27 +173,27 @@ time, you will see the following screen:
 ![](./images/32e487fd-8950-47e9-9437-d8d32047d247.png)
 
 
-You can click on the **`Try our sample data`** button to get started
+You can click on the `Try our sample data` button to get started
 quickly with Kibana by loading predefined data, or you can configure
 existing indexes present in Elasticsearch and analyze existing data by
-clicking on the **`Explore on my own`** button.
+clicking on the `Explore on my own` button.
 
-Clicking on the **`Try our sample data`** button will take you to the
+Clicking on the `Try our sample data` button will take you to the
 following screen:
 
 
 ![](./images/437cd832-47ab-4351-bb0a-515115ff3740.jpg)
 
 
-Clicking on **`Add data`** on any of the three widgets/panels will add
+Clicking on `Add data` on any of the three widgets/panels will add
 some default data to Elasticsearch as well as
 sample visualizations and dashboards that you can readily explore.
 Don\'t worry what visualizations and dashboards are now; we will be
 covering them in detail in the subsequent sections.
 
-Go ahead and click on **`Add data`** for **`Sample eCommerce orders`**.
+Go ahead and click on `Add data` for `Sample eCommerce orders`.
 It should load data, visualizations, and dashboards in the background.
-Once ready, you can click on **`View data`**, which will take you to the
+Once ready, you can click on `View data`, which will take you to the
 eCommerce dashboard: 
 
 
@@ -221,14 +221,14 @@ green open kibana_sample_data_ecommerce 4fjYoAkMTOSF8MrzMObaXg 1 0 4675 0 4.8mb 
 
 ### Note
 
-If you click on the **`Remove`** button, all the dashboards and data
-will be deleted. Similarly, you can click on the **`Add data`** button
+If you click on the `Remove` button, all the dashboards and data
+will be deleted. Similarly, you can click on the `Add data` button
 for the other two widgets if you want to explore sample flight and
 sample logs data.
 
 
 If you want to navigate back to the home page, you can always click on
-the **`Kibana`** icon
+the `Kibana` icon
 
 
 ![](./images/c20e47c9-78f3-4761-ba4d-5c353e3c3d99.png)
@@ -237,14 +237,14 @@ the **`Kibana`** icon
  at the top-left corner, which will take you to the home screen, which
 will be the default screen once you load Kibana in the browser again.
 This is in same screen you would have been taken to if you had clicked
-on the **`Explore on my own`** button when Kibana was loaded for the
+on the `Explore on my own` button when Kibana was loaded for the
 first time:
 
 
 ![](./images/cb1298d6-9d1d-492f-a5e6-aea968d052dc.png)
 
 
-Clicking on the link in section 1 will take you to the **`Sample data`**
+Clicking on the link in section 1 will take you to the `Sample data`
 page that we just saw. Similarly, if you want to configure Kibana
 against your own index and use it for data exploration and
 visualization, you can click on the link in section 2, in the previous
@@ -415,7 +415,7 @@ UI consists of the following components:
 -   **Dev Tools**: This page consists of a set of plugins,
     each of which assists in performing
     different functionalities. By default, this page contains only a
-    single plugin, called **`Console`**, which provides a UI to interact
+    single plugin, called `Console`, which provides a UI to interact
     with the REST API of Elasticsearch.
 -   **Management**: This page assists in the configuring and managing of indexes. It also
     assists in the management (deleting, exporting, and importing) of
@@ -453,21 +453,21 @@ types of index exist within Elasticsearch:
 Open up Kibana from the browser using
 the [http://localhost:5601](http://localhost:5601/) URL. In the
 landing page, click on
-the**`Connect to your Elasticsearch instance`** link and type in
-`logstash-*` in the **`Index pattern`** text field and click
-on the **`Next step`** button, as shown in the following screenshot:
+the`Connect to your Elasticsearch instance` link and type in
+`logstash-*` in the `Index pattern` text field and click
+on the `Next step` button, as shown in the following screenshot:
 
 
 ![](./images/f94ce1a0-921b-4a50-bdb9-b52c51f07cb8.png)
 
 
-On the **`Create Index Pattern`** screen, during the configuration of an
+On the `Create Index Pattern` screen, during the configuration of an
 index pattern, if the index has a datetime field (that is, it is a
-time-series index), the **`Time Filter field name`** dropdown is visible
+time-series index), the `Time Filter field name` dropdown is visible
 and allows the user to select the appropriate datetime field; otherwise,
 the field is not visible. As the data that we loaded in the previous
-section contains time-series data, in the **`Time Filter field name`**,
-select `@timestamp` and click **`Create`**, as follows:
+section contains time-series data, in the `Time Filter field name`,
+select `@timestamp` and click `Create`, as follows:
 
 
 ![](./images/4a525814-6462-46d7-81f1-f324fa537318.jpg)
@@ -490,21 +490,21 @@ search queries, filter search results, and view document data. It also
 allows the user to save the search, or filter criteria so that it can be
 reused or used to create visualizations on top of the filtered results.
 Clicking on the third icon from the top-left takes you to the
-**`Discover`** page.
+`Discover` page.
 
-By default, the **`Discover`** page displays the events of the last 15
+By default, the `Discover` page displays the events of the last 15
 minutes. As the log events are from the period May 2014 to June 2014,
 set the appropriate date range in the time filter. Navigate to
-**`Time Filter`** \| **`Absolute Time Range`** and set **`From`** as
-`2014-05-28 00:00:00.000` and \>**`To `**to
-`2014-07-01 00:00:00.000`. Click **`Update`**, as shown in the
+`Time Filter` \| `Absolute Time Range` and set `From` as
+`2014-05-28 00:00:00.000` and \>`To `to
+`2014-07-01 00:00:00.000`. Click `Update`, as shown in the
 following screenshot:
 
 
 ![](./images/103d7059-34fc-4dfc-a84c-f98c288be45f.jpg)
 
 
-The **`Discover`** page contains the sections shown in the following
+The `Discover` page contains the sections shown in the following
 screenshot:
 
 
@@ -527,7 +527,7 @@ Let\'s look at each one of them:
     pattern for data exploration.
 -   **Fields List**: All the fields that are
     part of the document are shown in this section. Clicking on the
-    field shows **`Quick Count`**, that is, how many of the documents in
+    field shows `Quick Count`, that is, how many of the documents in
     the documents table contain a particular field, what the top five
     values are, and what percentage of documents contain each value, as
     shown in the following screenshot:
@@ -541,7 +541,7 @@ Let\'s look at each one of them:
 -   **Document Table**: This section shows the actual
     document data. The table shows the **500** most recent
     documents that match the user-entered query/filters, sorted by
-    timestamp (if the field exists). By clicking the **`Expand`** button
+    timestamp (if the field exists). By clicking the `Expand` button
     found to the left of the document\'s table entry, data can be
     visualized in table format or JSON format, as follows:
 
@@ -554,7 +554,7 @@ During data exploration, we are often interested in a subset of fields
 rather than the whole of a document. In order to add fields to the
 document table, either hover over the field on the fields list and click
 its add button, or expand the document and click the
-field\'s **`Toggle column in table`** button:
+field\'s `Toggle column in table` button:
 
 
 ![](./images/2c9b8d05-3ecc-4a0f-87b0-0a6653e0fcba.png)
@@ -605,7 +605,7 @@ This provides the ability to perform various
 types of queries ranging from simple to complex queries that adhere to
 the Lucene query syntax. In the query bar, by default, KQL will be the
 query language. Go ahead and disable it as shown in the following
-screenshot. Once you disable it, **`KQL`** changes to **`Lucene`** in
+screenshot. Once you disable it, `KQL` changes to `Lucene` in
 the query bar, as follows:
 
 
@@ -802,8 +802,8 @@ queries.
 
 The user can refer to existing stored searches later and modify the
 query, and they can either overwrite the existing search or save it as a
-new search (by toggling the **`Save as new search`** option in the
-**`Save Search`** window), as follows:
+new search (by toggling the `Save as new search` option in the
+`Save Search` window), as follows:
 
 
 ![](./images/5ec1c4be-72be-4952-ab88-f553efe9230e.png)
@@ -818,8 +818,8 @@ shown in the following screenshot:
 
 In Kibana, the state of the current page/UI is stored in the URL itself,
 thus allowing it to be easily shareable. Clicking the
-**S**`hare `****button allows you to share the
-**`Saved Search`**, as shown in the following screenshot:
+`Share` button allows you to share the
+`Saved Search`, as shown in the following screenshot:
 
 
 ![](./images/91a0ee8d-deeb-4f7c-a41b-dc67f74cda24.png)
@@ -838,12 +838,12 @@ ES query, as shown in the following screenshot:
 **Time Picker**: This section is only visible if a time field is configured for the selected index
 pattern. The Time Filter restricts the search results to a specific time
 period, thus assisting in analyzing the data belonging to the period of
-interest. When the **`Discover`** page is opened, by default, the Time
+interest. When the `Discover` page is opened, by default, the Time
 Filter is set to `Last 15 minutes`.
 
 **Time Filter** provides the following options to
 select time periods. Click
-on **`Time Filter`** (**`calendar icon`**)/ **Date fields**
+on `Time Filter` (`calendar icon`)/ **Date fields**
 to access the following options:
 
 
@@ -910,10 +910,10 @@ You can add field filters from **Fields list** or
 addition to creating positive and negative filters, **Documents
 table** enables you to determine whether a field is present. 
 
-To add a positive or negative filter, in **`Fields List`** or
-**`Documents Table`**, click on the positive icon or negative icon
+To add a positive or negative filter, in `Fields List` or
+`Documents Table`, click on the positive icon or negative icon
 respectively. Similarly, to filter a search according to whether a field
-is present, click on the ****`*`**** icon (the exists
+is present, click on the  `*`  icon (the exists
 filter), as follows:
 
 
@@ -921,9 +921,9 @@ filter), as follows:
 
 
 You can also add filters manually by clicking the
-**`Add a Filter`** button found below the query bar. Clicking on the
+`Add a Filter` button found below the query bar. Clicking on the
 button will launch a popup in which filters can be specified and applied
-by clicking the **`Save`** button, as follows:
+by clicking the `Save` button, as follows:
 
 
 ![](./images/49e497d6-98c0-4c30-a247-6807f91c1510.png)
@@ -1149,9 +1149,9 @@ The following are the steps to create
 visualizations:
 
 
-1.  Navigate to the **`Visualize`** page and click
-    the **`Create a new Visualization`** button or the
-    ****`+`**** button
+1.  Navigate to the `Visualize` page and click
+    the `Create a new Visualization` button or the
+     `+`  button
 2.  Select a visualization type
 3.  Select a data source
 4.  Build the visualization
@@ -1337,7 +1337,7 @@ appropriate date range in the time filter. Navigate to **Time
 Filter** \| **Absolute Time Range** and set
 **From** as `2014-05-28 00:00:00.000` and
 **To** to `2014-07-01 00:00:00.000`; click
-**`Go`**.
+`Go`.
 
 #### Response codes over time
 
@@ -1349,15 +1349,15 @@ graph.
 Create a new visualization:
 
 
-1.  Click on **`New`** and select **`Vertical Bar`**
-2.  Select `Logstash-*` under **`From a New Search`**,
-    **`Select Index`**
-3.  On the [*x*]  axis, select **`Date Histogram`** and
-    **`@timestamp`** as the field
-4.  Click **`Add sub-buckets`** and select **`Split Series`**
-5.  Select **Terms** as the **`Sub Aggregation`**
+1.  Click on `New` and select `Vertical Bar`
+2.  Select `Logstash-*` under `From a New Search`,
+    `Select Index`
+3.  On the [*x*]  axis, select `Date Histogram` and
+    `@timestamp` as the field
+4.  Click `Add sub-buckets` and select `Split Series`
+5.  Select **Terms** as the `Sub Aggregation`
 6.  Select **response.keyword** as the field
-7.  Click the **`Play`** (Apply Changes) button
+7.  Click the `Play` (Apply Changes) button
 
 
 The following screenshot displays the steps to create a new
@@ -1372,8 +1372,8 @@ Save the visualization as`Response Codes By Time`.
 As seen in the visualization, on a few days, such as June 9, June 16,
 and so on, there is a significant amount of **404**. Now, to
 analyze just the **404** events, from the
-**labels**/**keys** panel, click on **`404 `**and
-then click **`positive filter`**:
+**labels**/**keys** panel, click on `404 `and
+then click `positive filter`:
 
 
 ![](./images/db6f026b-3e25-4a00-bab3-002497d85b64.png)
@@ -1391,7 +1391,7 @@ screenshot:
 
 You can expand the labels/keys and choose the colors from the color
 palette, thus changing the colors in the visualization. Pin the filter
-and navigate to the **`Discover`** page to see the requests resulting in
+and navigate to the `Discover` page to see the requests resulting in
 **404**s.
 
  
@@ -1408,17 +1408,17 @@ The steps are as follows:
 
 
 1.  Create a new visualization
-2.  Click on **`New`** and select **`Data Table`**
+2.  Click on `New` and select `Data Table`
 3.  Select `Logstash-*` under
-    **`From a New Search, Select Index`**
-4.  Select **Buckets** type as **`Split Rows`**
-5.  Select **`Aggregation`** as **Terms**
+    `From a New Search, Select Index`
+4.  Select **Buckets** type as `Split Rows`
+5.  Select `Aggregation` as **Terms**
 
 
 
 6.  Select the **request.keyword** field
-7.  Set the **`Size`** to `10`
-8.  Click the **`Play`** (Apply Changes) button
+7.  Set the `Size` to `10`
+8.  Click the `Play` (Apply Changes) button
 
 
 The following screenshot displays the steps to create a new
@@ -1436,7 +1436,7 @@ Save the visualization as`Top 10 URLs`.
 `Custom Label` fields can be used to provide meaningful names
 for aggregated results. Most of the visualizations support custom
 labels. Data table visualizations can be exported as a `.csv`
-file by clicking the **`Raw`** or **`Formatted`** links found under the
+file by clicking the `Raw` or `Formatted` links found under the
 data table visualization.
 
 
@@ -1448,17 +1448,17 @@ The steps to demonstrate this are as follows:
 
 
 1.  Create a new visualization
-2.  Click on **`New`** and select **`Area Chart`**
+2.  Click on `New` and select `Area Chart`
 3.  Select `Logstash-*` under
-    **`From a New Search, Select Index`**
-4.  In **`Y axis`**, select **Aggregation** type and **Sum
+    `From a New Search, Select Index`
+4.  In `Y axis`, select **Aggregation** type and **Sum
     of bytes** as the field
-5.  In **`X axis`**, select **`Date Histogram`** and **`@timestamp`** as
+5.  In `X axis`, select `Date Histogram` and `@timestamp` as
     the field
-6.  Click **`Add sub-buckets`** and select **`Split Series`**
-7.  Select **Terms** as the **`Sub Aggregation`**
+6.  Click `Add sub-buckets` and select `Split Series`
+7.  Select **Terms** as the `Sub Aggregation`
 8.  Select **geoip.country\_name.keyword** as the field
-9.  Click the **`Play`** (Apply Changes) button
+9.  Click the `Play` (Apply Changes) button
 
 
 The following screenshot displays the steps to create a new
@@ -1473,7 +1473,7 @@ Save the visualization
 as `Top 5 Countries by Bandwidth Usage`.
 
 What if we were not interested in finding only the top five countries?
-Rearrange the aggregation and click **`Play`**, as follows:
+Rearrange the aggregation and click `Play`, as follows:
 
 
 ![](./images/a1163f50-2eb1-4ea8-8925-4112cf35394e.png)
@@ -1496,18 +1496,18 @@ The steps are as follows:
 
 
 1.  Create a new visualization
-2.  Click on **`New`** and select **`Coordinate Map`**
+2.  Click on `New` and select `Coordinate Map`
 3.  Select `logstash-*` under
-    **`From a New Search, Select Index`**
-4.  Set the bucket type as**` Geo Coordinates`**
+    `From a New Search, Select Index`
+4.  Set the bucket type as` Geo Coordinates`
 
 
 
 5.  Select the **Aggregation** as **Geohash**
 6.  Select the **geoip.location** field
-7.  In the **Options** tab, select **`Map Type`** as
-    **`Heatmap`**
-8.  Click the **`Play`** (**`Apply Changes`**) button:
+7.  In the **Options** tab, select `Map Type` as
+    `Heatmap`
+8.  Click the `Play` (`Apply Changes`) button:
 
 
 
@@ -1519,7 +1519,7 @@ Save the visualization as `Traffic By Country`.
 Based on this visualization, most of the traffic is originating from
 California.
 
-For the same visualization, if the metric is changed to **`bytes`**, the
+For the same visualization, if the metric is changed to `bytes`, the
 resulting visualization is as follows:
 
 
@@ -1529,11 +1529,11 @@ resulting visualization is as follows:
 
 ### Note
 
-You can click on the **`+/-`** button found at the top-left of the map
-and zoom in/zoom out. Using the **`Draw Rectangle`** button found at the
+You can click on the `+/-` button found at the top-left of the map
+and zoom in/zoom out. Using the `Draw Rectangle` button found at the
 top-left, below the zoom in and zoom out buttons, you can draw a region
 for filtering the documents. Then, you can pin the filter and navigate
-to the **`Discover`** page to see the documents belonging to that
+to the `Discover` page to see the documents belonging to that
 region.
 
 
@@ -1548,17 +1548,17 @@ The steps are as follows:
 
 
 1.  Create a new visualization
-2.  Click on **`New`** and select **`Tag Cloud`**
+2.  Click on `New` and select `Tag Cloud`
 3.  Select `logstash-*` under
-    **`From a New Search, Select Index`**
+    `From a New Search, Select Index`
 
 
 
-4.  Set the bucket type to**` `****Tags**
+4.  Set the bucket type to **Tags**
 5.  Select the **Terms** aggregation
 6.  Select the **useragent.name.keyword** field
-7.  Set the **`Size`** to `10` and click
-    the **`Play`** (**`Apply Changes`**) button:
+7.  Set the `Size` to `10` and click
+    the `Play` (`Apply Changes`) button:
 
 
 
@@ -1594,17 +1594,17 @@ Let\'s see how we can build a dashboard for our log analysis use case.
 
 
 In order to create a new dashboard, navigate
-to the **`Dashboard`** page and click the **`Create a Dashboard`**
+to the `Dashboard` page and click the `Create a Dashboard`
 button:
 
 
 ![](./images/d0716f25-4915-43dc-8ad1-4a9afc0eb3bb.png)
 
 
-On the resulting page, the user can click the **`Add`** button, which
+On the resulting page, the user can click the `Add` button, which
 shows all the stored visualizations and saved searches that are
 available to be added. Clicking on
-**`Saved search`**/**`Visualization`** will result in them getting added
+`Saved search`/`Visualization` will result in them getting added
 to the page, as follows:
 
 
@@ -1636,10 +1636,10 @@ section.
 
 Once the required visualizations are added to
 the dashboard, make sure to save the dashboard by clicking the
-**`Save`** button available on the toolbar and provide a title. When a
+`Save` button available on the toolbar and provide a title. When a
 dashboard is saved, all the query criteria and filters get saved, too.
 If you want to save the time filters, then, while saving the dashboard,
-select the **`Store time with dashboard`** toggle button. Saving the
+select the `Store time with dashboard` toggle button. Saving the
 time along with the dashboard might be useful when you want to
 share/reopen the dashboard in its current state, as follows:
 
@@ -1663,8 +1663,8 @@ create new dashboards for continents or countries, as follows:
 ### Note
 
 The dashboard background theme can be changed from light to dark. When
-you click the **`Edit`** button in the toolbar, it provides a button
-called **`Options`**, which provides the feature to change the dashboard
+you click the `Edit` button in the toolbar, it provides a button
+called `Options`, which provides the feature to change the dashboard
 theme.
 
 
@@ -1698,7 +1698,7 @@ visualize the results of these calculations.
 
 
 
-**`Timelion`** is available just like any other
+`Timelion` is available just like any other
 visualization in the **New
 Visualization** window, as follows:
 
@@ -1707,7 +1707,7 @@ Visualization** window, as follows:
 
 
 The main components/features of Timelion visualization
-are **`Timelion expressions,`** which allow you to define expressions
+are `Timelion expressions,` which allow you to define expressions
 that influence the generation of graphs. They allow you to define
 multiple expressions separated by commas, and also allow you to chain
 functions.
@@ -1757,10 +1757,10 @@ Let\'s see some examples in action to understand Timelion better. 
 ### Note
 
 As the log events are from the period May 2014 to June 2014, set the
-appropriate date range in the time filter. Navigate to **`Time Filter`**
-\| **`Absolute Time Range`** and set **`From`** to
-`2014-05-28 00:00:00.000` and **`To`** to
-`2014-07-01 00:00:00.000`; click **`Go.`**
+appropriate date range in the time filter. Navigate to `Time Filter`
+\| `Absolute Time Range` and set `From` to
+`2014-05-28 00:00:00.000` and `To` to
+`2014-07-01 00:00:00.000`; click `Go.`
 
 
 Let\'s find the average bytes usage over time for the US. The expression

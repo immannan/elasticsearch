@@ -155,15 +155,15 @@ In order to activate all the X-Pack paid
 features, we need to enable the trial account, which is valid for 30
 days. Let\'s go ahead and activate it.
 
-Click on the **`Management`** icon on the left-hand side menu and click
-on **`License Management`**. Then, click on **`Start Trial`**, as
+Click on the `Management` icon on the left-hand side menu and click
+on `License Management`. Then, click on `Start Trial`, as
 follows:
 
 
 ![](./images/0e20554b-4200-4a3e-a39c-529f823be507.png)
 
 
-Click on the **`Start my Trial`** button in the resultant popup, as follows:
+Click on the `Start my Trial` button in the resultant popup, as follows:
 
  
 
@@ -172,9 +172,9 @@ Click on the **`Start my Trial`** button in the resultant popup, as follows:
 
 
 On successful activation, you should see the status of the license as
-**`Active`**. At any point in time before the trial ends, you can go
+`Active`. At any point in time before the trial ends, you can go
 ahead and revert back to the basic license by clicking on
-the **`Revert to Basic`** button:
+the `Revert to Basic` button:
 
 
 ![](./images/a4b9e186-cf18-4a2f-a328-150b1de5fcff.png)
@@ -433,8 +433,8 @@ The `native` realm is the default realm, and the user
 credentials are stored in a special index
 called `.security-7` on Elasticsearch itself. These
 users are managed using
-the **User****Management API** or the
-**`Management`** page of the Kibana UI. We will be exploring this in
+the **User Management API** or the
+`Management` page of the Kibana UI. We will be exploring this in
 more detail later in this lab.
 
 If the realm is of the `file` type, then the user credentials
@@ -643,8 +643,8 @@ this section. Log in to Kibana (`http://locahost:5601`) as
 the `elastic` user:
 
 
-1.  To create a new user, navigate to the **`Management`** UI and
-    select **`Users`** in the **`Security`** section:
+1.  To create a new user, navigate to the `Management` UI and
+    select `Users` in the `Security` section:
 
 
 
@@ -652,7 +652,7 @@ the `elastic` user:
 
 
 
-2.  The **`Users`** screen displays the available users and their roles.
+2.  The `Users` screen displays the available users and their roles.
     By default, it displays the default/reserved users that are part of
     the native X-Pack security realm:
 
@@ -662,9 +662,9 @@ the `elastic` user:
 
 
 
-3.  To create a new user, click on the **`Create new user`** button and
+3.  To create a new user, click on the `Create new user` button and
     enter the required details, as shown in
-    the following screenshot. Then, click on **`Create user`**:
+    the following screenshot. Then, click on `Create user`:
 
 
 
@@ -694,7 +694,7 @@ Response:
 
 
 
-To delete a role, navigate to **`Users`** UI, select the custom `user2 `that you created, and click on
+To delete a role, navigate to `Users` UI, select the custom `user2 `that you created, and click on
 the **Delete** button. You cannot delete built-in users:
 
 
@@ -705,13 +705,13 @@ the **Delete** button. You cannot delete built-in users:
 
 
 
-Navigate to the **`Users`** UI and select the custom
+Navigate to the `Users` UI and select the custom
 user for which the password needs to be
-changed. This will take you to the **`User Details`** page. You can edit
+changed. This will take you to the `User Details` page. You can edit
 the user\'s details, change their password, or delete the user from the
 user details screen. To change the user\'s password, click on
-the **`Change password`** link and enter the new password details. Then,
-click on the **`Update user`** button:
+the `Change password` link and enter the new password details. Then,
+click on the `Update user` button:
 
 
 ![](./images/785e4562-b615-4c85-b089-f807fc3ff0a3.png)
@@ -729,10 +729,10 @@ The passwords must be a minimum of 6 characters long.
 
 
 To create a new user, navigate to
-the **`Management`** UI and select **`Roles `**in
-the **`Security`** section, or if you are currently on
-the **`Users`** screen, click on the **`Roles`** tab.
-The **`Roles`** screen displays all the roles that are
+the `Management` UI and select `Roles `in
+the `Security` section, or if you are currently on
+the `Users` screen, click on the `Roles` tab.
+The `Roles` screen displays all the roles that are
 defined/available. By default, it displays the built-in/reserved roles
 that are part of the X-Pack security native realm:
 
@@ -781,7 +781,7 @@ to `user1` so that the user can cluster read-only operations
 such as cluster state, cluster health, nodes info, nodes stats, and
 more.
 
-Click on the **`Create role`** button in the **`Roles`** page/tab and
+Click on the `Create role` button in the `Roles` page/tab and
 fill in the details that are shown in the following screenshot:
 
 
@@ -789,10 +789,10 @@ fill in the details that are shown in the following screenshot:
 
 
 To assign the newly created role to `user1`, click on
-the **`Users`** tab and select `user1`. In
-the **`User Details`** page, from the roles dropdown, select
+the `Users` tab and select `user1`. In
+the `User Details` page, from the roles dropdown, select
 the `monitor_role` role and click
-on the **`Save`** button, as shown in the following screenshot:
+on the `Save` button, as shown in the following screenshot:
 
 
 ![](./images/b4e84c0c-d816-402c-9287-7a4697e2b816.png)
@@ -853,7 +853,7 @@ curl -u user2:password "http://localhost:9200/_cluster/health?pretty"
 
 
 To delete a role, navigate to
-the **`Roles `**UI/tab, select the custom
+the `Roles `UI/tab, select the custom
 role that we created, and click on **Delete**. You cannot
 delete built-in roles:
 
@@ -861,10 +861,10 @@ delete built-in roles:
 ![](./images/ceca0adb-38b2-4ec0-a84b-55dc7f46b535.png)
 
 
-To edit a role, navigate to the **`Roles`** UI/tab and click on the
+To edit a role, navigate to the `Roles` UI/tab and click on the
 custom role that needs to be edited. The user is taken to
-the **`Roles Details`** page. Make the required changes in the
-**`Privileges`** section and click on the **`Update role`** button.
+the `Roles Details` page. Make the required changes in the
+`Privileges` section and click on the `Update role` button.
 
 You can also delete the role from this page:
 
@@ -896,8 +896,8 @@ This is where field-level security helps. Let\'s create a new role
 (`employee_read`) with `read` index privileges on
 the `employee` index. To restrict the fields, type the actual
 field names that are allowed to be accessed by the user in
-the **`Granted Fields`** section, as shown in the following screenshot,
-and click the **`Create role`** button:
+the `Granted Fields` section, as shown in the following screenshot,
+and click the `Create role` button:
 
 
 ![](./images/609deccc-d339-48d4-80e6-121d972633ca.png)
@@ -908,10 +908,10 @@ and click the **`Create role`** button:
 
 When creating a role, you can specify the same set of privileges on
 multiple indexes by adding one or more index names to
-the **`Indices`** field, or you can specify different privileges for
+the `Indices` field, or you can specify different privileges for
 different indexes by clicking on the **Add index
 privilege** button that\'s found in
-the **`Index privileges`** section.
+the `Index privileges` section.
 
 
 Assign the newly created role to `user2`:
@@ -1355,7 +1355,7 @@ system-level index that has the `.monitoring-*` index pattern.
 To access the Monitoring UI, log in to Kibana and click on Stack Monitoring from the side navigation.
 If the monitoring data collection is not enabled, you will be taken to
 the following screen, where you can enable monitoring by clicking on
-the **`Turn on monitoring`** button. By default, monitoring would be
+the `Turn on monitoring` button. By default, monitoring would be
 enabled but data collection would be disabled. These settings can be
 dynamic and can be updated using the **cluster update
 settings** API, which doesn\'t require a restart to occur. If
@@ -1366,7 +1366,7 @@ the same settings were set in `elasticsearch.yml` or
 ![](./images/be75967b-77f2-493d-89e4-03251796f8fb.png)
 
 
-Once you click on **`Turn on monitoring`**, the cluster settings will
+Once you click on `Turn on monitoring`, the cluster settings will
 update, which can be verified by using the following API:
 
 ```
@@ -1403,13 +1403,13 @@ icon on the left-hand side menu. You will see the following screen:
 
 This page provides a summary of the metrics that are available for
 Elasticsearch and Kibana. By clicking on links such
-as **`Overview`**, **`Nodes`**, **`Indices`**, or **`Instances`**, you
+as `Overview`, `Nodes`, `Indices`, or `Instances`, you
 can get additional/detailed information. The metrics that are displayed
 on the page are automatically refreshed every 10 seconds, and by
 default, you can view the data of the past 1 hour, which can be changed
-in the **`Time Filter`** that\'s found toward the top left of the
+in the `Time Filter` that\'s found toward the top left of the
 screen. You can also see the cluster name, which in this case
-is ****`elasticsearch`****.
+is  `elasticsearch` .
 
 
 ### Note
@@ -1427,9 +1427,9 @@ appropriate value to the
 You can monitor the Elasticsearch performance data at a cluster level, node level, or index level. The
 Elasticsearch Monitoring UI provides three tabs, each displaying the
 metrics at the cluster, node, and index levels. The three tabs
-are **`Overview`**, **`Nodes`**, and **`Indices`**, respectively. To
+are `Overview`, `Nodes`, and `Indices`, respectively. To
 navigate to the Elasticsearch Monitoring UI, click on one of the links
-(**`Overview`**, **`Nodes`**, and **`Indices`**) under the Elasticsearch
+(`Overview`, `Nodes`, and `Indices`) under the Elasticsearch
 section.
 
 
@@ -1440,11 +1440,11 @@ section.
 
 Cluster-level metrics provide aggregated information across all the nodes and is the first place one should look
 when monitoring an Elasticsearch cluster. Cluster-level metrics are
-displayed in the **`Overview`** tab and can be navigated to by clicking
-on the **`Overview`** link under the Elasticsearch section found in the
+displayed in the `Overview` tab and can be navigated to by clicking
+on the `Overview` link under the Elasticsearch section found in the
 landing page of the Monitoring UI.
 
-The **`Overview`** tab provides key metrics that indicate the overall health of an Elasticsearch cluster:
+The `Overview` tab provides key metrics that indicate the overall health of an Elasticsearch cluster:
 
 
 ![](./images/cd352043-3fd3-48d4-9cc9-f5db0acfb337.png)
@@ -1454,7 +1454,7 @@ The key metrics that are displayed are cluster status, number of nodes
 and number of indices present, memory used, total number of shards
 present, total number of unassigned shards, total number of documents
 present in the indices, the disk space used for storing the documents,
-uptime, and version of Elasticsearch. The **`Overview`** tab also
+uptime, and version of Elasticsearch. The `Overview` tab also
 displays charts that show the search and indexing performance over time,
 while the table at the bottom shows information about any shards that
 are being recovered.
@@ -1466,20 +1466,20 @@ Clicking on the Information icon present at the top right of each chart
 provides a description of the metrics.
 
 
-In the **`Overview`** tab, the metrics are aggregated at the cluster
+In the `Overview` tab, the metrics are aggregated at the cluster
 level; so, when you\'re monitoring the Elasticsearch cluster, you might
 miss out some vital parameters that may eventually affect the cluster\'s
-overall state. For example, the **`Memory Used`** metric showcases the
+overall state. For example, the `Memory Used` metric showcases the
 average memory used by combining the memory used across all nodes.
 However, one node might be running with full memory utilization and
 another node\'s memory might have hardly been used. Hence, as an
-administrator, you should always monitor at the **`Node`** level too. 
+administrator, you should always monitor at the `Node` level too. 
 
 ##### Nodes tab
 
 
 
-Clicking on the **`Nodes`** tab displays the
+Clicking on the `Nodes` tab displays the
 summary details of each node present in the cluster, as shown in the
 following screenshot:
 
@@ -1487,25 +1487,25 @@ following screenshot:
 ![](./images/0220491c-8292-42c2-9fa4-d70faa21d9a8.png)
 
 
-For each node, information is provided, such as the **`Name`** of the
-node, **`Status`** of the node, **`CPU Usage`** (average, min, and max
-usage), **`Load Average`** (average, min, and max usage),
-**`JVM Memory`** (average, min, and max
-usage), **`Disk Free Space`** (average, min, and max usage), and total
-number of assigned **`Shards`**. It also provides information such as
-whether a node is a **`Master node`** or not (indicated by a star next
+For each node, information is provided, such as the `Name` of the
+node, `Status` of the node, `CPU Usage` (average, min, and max
+usage), `Load Average` (average, min, and max usage),
+`JVM Memory` (average, min, and max
+usage), `Disk Free Space` (average, min, and max usage), and total
+number of assigned `Shards`. It also provides information such as
+whether a node is a `Master node` or not (indicated by a star next
 to the node name) and details about the transport host and port. 
 
-Clicking on the **`Node`** name provides detailed information about the
+Clicking on the `Node` name provides detailed information about the
 node. This detailed information is displayed in two tabs,
-namely **`Overview`** and **`Advanced`**. The node **`Overview`** tab
+namely `Overview` and `Advanced`. The node `Overview` tab
 looks like this:
 
 
 ![](./images/c3888699-b0f7-40e6-8e84-e49d2106ab87.png)
 
 
-The node **`Overview`** tab provides information in the top pane, such
+The node `Overview` tab provides information in the top pane, such
 as the status of the node, transport IP address of the node, JVM Heap
 Utilization in percent, free disk space available, total number of
 documents present on the node (this number includes documents present in
@@ -1513,26 +1513,26 @@ both replica and primary shards), total disk space used, total number of
 indices in the node, total number of shards, and type of node (master,
 data, ingest, or coordinating node).
 
-The node **`Overview`** tab also provides visualizations
-for **`JVM Heap`** usage, **`Index Memory`**, **`CPU Utilization`** in
-percent, **`System Load`** average, **`Latency (ms)`**,
-and **`Segment Count`**. The statuses of shards of various indices are
-provided under the **`Shard Legend`** section.
+The node `Overview` tab also provides visualizations
+for `JVM Heap` usage, `Index Memory`, `CPU Utilization` in
+percent, `System Load` average, `Latency (ms)`,
+and `Segment Count`. The statuses of shards of various indices are
+provided under the `Shard Legend` section.
 
 
 ### Note
 
-If the **`Show system indices`** checkbox is checked, then the shard
+If the `Show system indices` checkbox is checked, then the shard
 status of all the indexes created by X-Pack can be seen.
 
 
-The node **`Advanced`** tab provides visualizations of
+The node `Advanced` tab provides visualizations of
 other metrics, such as **garbage
 collection** (GC) count and duration, detailed
 Index Memory usage at Lucene and Elasticsearch levels, Indexing Time (in
 ms), Request rate, Indexing, Read Threads, and Cgroup stats. 
 
-The following is a screenshot of the Node **`Advanced`** tab:
+The following is a screenshot of the Node `Advanced` tab:
 
 
 ![](./images/1e212a98-67dc-4128-90a3-56a620d9a8dc.png)
@@ -1542,7 +1542,7 @@ The following is a screenshot of the Node **`Advanced`** tab:
 
 
 
-Clicking on the **`Indices`** tab displays the summary details of each index present in the cluster, as
+Clicking on the `Indices` tab displays the summary details of each index present in the cluster, as
 shown in the following screenshot:
 
 
@@ -1552,7 +1552,7 @@ shown in the following screenshot:
 
 ### Note
 
-If the **`Show system indices`** checkbox is checked, then the shard
+If the `Show system indices` checkbox is checked, then the shard
 status of all indexes created by X-Pack can be seen.
 
 
@@ -1561,9 +1561,9 @@ status of the index, total count of documents present, disk space used,
 index rate per second, search rate per second, and number of unassigned
 shards. 
 
-Clicking on an **`Index`** name provides detailed information about that
+Clicking on an `Index` name provides detailed information about that
 index. The detailed information is displayed in two tabs,
-namely **`Overview`** and **`Advanced`**. The Index **`Overview`** tab
+namely `Overview` and `Advanced`. The Index `Overview` tab
 looks like this:
 
 
@@ -1575,13 +1575,13 @@ the index, total number of documents present in the index, disk space
 used, total number of shards (primary and replicas), and unassigned
 shards.
 
-The Index **`Overview`** tab also provides visualizations for Index
+The Index `Overview` tab also provides visualizations for Index
 Memory (in KB), Index size (in MB), Search rate per second, Indexing
 rate per second, total count of segments, and total count of
-documents. **`Shard Legend`** displays the status of shards belonging to
+documents. `Shard Legend` displays the status of shards belonging to
 the index and the information for the nodes the shards are assigned to.
 
-The Index **`Advanced`** tab provides visualizations of other metrics,
+The Index `Advanced` tab provides visualizations of other metrics,
 such as detailed **Index Memory** usage at Lucene and
 Elasticsearch levels, **Indexing Time** (in
 ms), **Request Rate** and **Time**,
@@ -1595,7 +1595,7 @@ usage**, and **Segment counts**:
 
 ### Note
 
-From the landing page of the **`Monitoring`** UI, by clicking on
+From the landing page of the `Monitoring` UI, by clicking on
 **Overview** or **Instances** under the Kibana
 section, the metrics of Kibana can be visualized/monitored in a similar
 way.
@@ -1878,27 +1878,27 @@ UI.
 
 To create a watch, log in to Kibana
 (`http://localhost:5601`) as elastic/elastic and navigate
-to the **`Management`** UI; click on **`Watcher`** in
-the **`Elasticsearch`** section. Two options are available for creating
+to the `Management` UI; click on `Watcher` in
+the `Elasticsearch` section. Two options are available for creating
 alerts:
 
 
--   **`Create threshold alert`**
--   **`Create advanced watch`**:
+-   `Create threshold alert`
+-   `Create advanced watch`:
 
 
 
 ![](./images/9701ad22-59f0-4ffb-9818-4a9bdd15a7b8.png)
 
 
-By using the **`Threshold alert`** option, you can create a
+By using the `Threshold alert` option, you can create a
 threshold-based alert to get notified when a metric goes above or below
 a given threshold. Using this UI, users can easily create
 threshold-based alerts without worrying about directly working with raw
 JSON requests. This UI provides options for creating alerts on
 time-based indices only (that is, the index has a timestamp).
 
-Using the **`Advanced watch`** options, you can create watches by
+Using the `Advanced watch` options, you can create watches by
 directly working with the raw `.json` required for the watches
 API.
 
@@ -1913,12 +1913,12 @@ deactivate a watch.
 
 
 
-Click on **`Create New Watch`** and choose the **`Threshold Alert`** option. This brings up the
-**`Threshold Alert`** UI.
+Click on `Create New Watch` and choose the `Threshold Alert` option. This brings up the
+`Threshold Alert` UI.
 
 Specify the name of the alert; choose the index to be used to query
 against, the time field, and the trigger frequency in
-the **`Threshold Alert`** UI:
+the `Threshold Alert` UI:
 
 
 ![](./images/fc40a7f1-97da-4bf0-aba1-d48c3b3c76e1.png)
@@ -1934,7 +1934,7 @@ blue lines, respectively:
 
 
 Finally, specify the action that needs to be triggered when the action
-is met by clicking on the **`Add new action`** button. It provides three
+is met by clicking on the `Add new action` button. It provides three
 types of actions, that is, email, slack, and logging actions. One or
 more actions can be configured:
 
@@ -1942,9 +1942,9 @@ more actions can be configured:
 ![](./images/26bd0f0b-9c4a-4a84-82da-15b8d529f909.png)
 
 
-Then, click on the **`Save`** button to create the watch.
+Then, click on the `Save` button to create the watch.
 
-Clicking on **`Save`** will save the watch in
+Clicking on `Save` will save the watch in
 the `watches` index and can be validated using the following
 query:
 
@@ -1957,11 +1957,11 @@ curl -u elastic:elastic -XGET http://localhost:9200/.watches/_search?q=metadata.
 
 
 
-Click on the **`Create New Watch`** button and choose the **`Advanced Watch`** option. This brings up
-the **`Advanced Watch`** UI.
+Click on the `Create New Watch` button and choose the `Advanced Watch` option. This brings up
+the `Advanced Watch` UI.
 
-Specify the watch **`ID`** and watch **`name`**, and then paste the JSON
-to create a watch in the **`Watch JSON`** box; click on **`Save`** to
+Specify the watch `ID` and watch `name`, and then paste the JSON
+to create a watch in the `Watch JSON` box; click on `Save` to
 create a watch. Watch ID refers to the identifier used by Elasticsearch
 when creating a Watch, whereas name is the more user-friendly way to
 identify the watch:
@@ -1970,7 +1970,7 @@ identify the watch:
 ![](./images/7ffc9ff7-65e4-4b0e-9408-8eba57a34e39.png)
 
 
-The **`Simulate`** tab provides a UI to override parts of the watch and
+The `Simulate` tab provides a UI to override parts of the watch and
 then run a simulation of it.
 
 
@@ -1981,7 +1981,7 @@ can use the metadata section when creating the watch to store custom
 metadata, tags, or information to represent/identify a watch.
 
 
-Clicking on **`Save`** will save the watch in
+Clicking on `Save` will save the watch in
 the `watches` index and can be validated using the following
 query:
 
@@ -2001,25 +2001,25 @@ triggered, the same can be seen in `elasticsearch.log`:
 
 
 
-To delete a watch, navigate to the **`Management`** UI and click on **`Watcher`** in
-the **`Elasticsearch`** section. From the **`Watches`** list, select one
+To delete a watch, navigate to the `Management` UI and click on `Watcher` in
+the `Elasticsearch` section. From the `Watches` list, select one
 or more watches that need to be
-deleted and click on the **`Delete`** button:
+deleted and click on the `Delete` button:
 
 
 ![](./images/4c1824da-23d2-49de-97dd-a2f4242e50a2.png)
 
 
-To edit a watch, click on the **`Edit`** link, modify the watch details,
-and click on the **`Save`** button to save your changes. To deactivate a
+To edit a watch, click on the `Edit` link, modify the watch details,
+and click on the `Save` button to save your changes. To deactivate a
 watch (that is, to temporarily disable watch execution), navigate to
-the **`Management`** UI and click on **`Watcher`** in
-the **`Elasticsearch`** section. From the **`Watches`** list, click on
-the custom watch. The **`Watch History`** will be displayed. Click on
-the **`Deactivate`** button. You can also delete a watch from this
+the `Management` UI and click on `Watcher` in
+the `Elasticsearch` section. From the `Watches` list, click on
+the custom watch. The `Watch History` will be displayed. Click on
+the `Deactivate` button. You can also delete a watch from this
 screen.
 
-Clicking on an execution time (link) in the **`Watch History`** displays
+Clicking on an execution time (link) in the `Watch History` displays
 the details of a particular `watch_record`:
 
 

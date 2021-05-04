@@ -2219,7 +2219,7 @@ Please note the following points about the query:
     is used will be run against the child type that we specified. We are
     using a `bool` query because we want to filter by all features
     where---`feature_key` =
-    `processor_series`[* *] **AND **`feature_value`
+    `processor_series`[* *] **AND `feature_value`
     = `Core i7`[*.*] 
 -   We have used a `bool` query, as explained in the previous
     point. The first of the conditions is included as a `term`
