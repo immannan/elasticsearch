@@ -379,27 +379,29 @@ PUT /amazon_products
     }
   },
   "mappings": {
-    "properties": {
-      "id": {
-        "type": "keyword"
-      },
-      "title": {
-        "type": "text"
-      },
-      "description": {
-        "type": "text"
-      },
-      "manufacturer": {
-        "type": "text",
-        "fields": {
-          "raw": {
-            "type": "keyword"
+    "products": {
+      "properties": {
+        "id": {
+          "type": "keyword"
+        },
+        "title": {
+          "type": "text"
+        },
+        "description": {
+          "type": "text"
+        },
+        "manufacturer": {
+          "type": "text",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
           }
+        },
+        "price": {
+          "type": "scaled_float",
+          "scaling_factor": 100
         }
-      },
-      "price": {
-        "type": "scaled_float",
-        "scaling_factor": 100
       }
     }
   }
@@ -1303,8 +1305,7 @@ filtering out certain clauses using
 the `must_not` clause in the `bool` filter. For
 example, find all of the products in the price range `10` to
 `20`, but they must not be manufactured
-by `encore`[*. *] The following query will do just
-that:
+by `encore`. The following query will do just that:
 
 ```
 GET /amazon_products/_search

@@ -731,7 +731,7 @@ curl -XPUT 'http://localhost:9200/_snapshot/backups/backup_201905271530?pretty' 
 
 In this command, we specified that we want a snapshot to be taken in the
 repository `backups` with the
-name `backup_201905271530`[*. *] The name of the
+name `backup_201905271530`. The name of the
 snapshot could be anything, but it should help you identify the snapshot
 at a later stage. One typical strategy would be to take a snapshot every
 30 minutes and set snapshot names with prefixes such
@@ -839,7 +839,7 @@ POST /_aliases
 
 Before the call, the alias `current_index` was referring to
 the index `index1`[*, *] and after the call, the
-alias will refer to the index `index2`[*. *] 
+alias will refer to the index `index2`.
 
 ### How index aliases can help
 
