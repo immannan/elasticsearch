@@ -669,7 +669,7 @@ included):
         "_index": "amazon_products",
         "_type": "products",
         "_id": "AV5rBfPNNI_2eZGciIHC",
-"_score": 5.965414,
+        "_score": 5.965414,
    ...
 ```
 
@@ -792,11 +792,7 @@ Let\'s look at some typical options that you would specify:
 #### Operator
 
 
-
-By default, if the search term specified
-results in multiple terms after applying the analyzer, we need a way to
-combine the results from individual terms. As we saw in the preceding
-example, the default behavior of
+The default behavior of
 the `match` query is to combine the results
 using the [*or*]  operator, that is, one of the terms has to
 be present in the document\'s field.
@@ -853,17 +849,7 @@ to at least three of the terms matching in the document.
 
 #### Fuzziness
 
-
-
-With the `fuzziness` parameter, we can turn the`match` query into a `fuzzy` query. This
-fuzziness is based on the Levenshtein edit distance, to turn one term
-into another by making a number of edits to the original text. Edits can
-be insertions, deletions, substitutions, or the transposition of
-characters in the original term. The `fuzziness` parameter can
-take one of the following values: `0`, `1`,
-`2`, or `AUTO`.
-
-For example, the following query has a misspelled
+The following query has a misspelled
 word, `victor` instead of `victory`.
 Since we are using a `fuzziness` of `1`, it will
 still be able to find all `victory multimedia` records:
@@ -1359,27 +1345,10 @@ Notice that we do not need to wrap the query in a
 `must_not` to negate a query. The `must_not` query
 is always executed in a filter context.
 
-This concludes our understanding of the different types of compound
-queries. There are more compound queries supported by Elasticsearch.
-They include the following:
-
-
--   Dis Max query
--   Function Score query
--   Boosting query
--   Indices query
-
-
-Besides the full-text search capabilities of Elasticsearch, we can also
-model relationships within Elasticsearch. Due to the flat structure of
-documents, we can easily model a one-to-one type of relationship within
-a document. Let\'s see how to model a one-to-many type of relationship
-in Elasticsearch in the next section.
-
 
 
 Modeling relationships
-----------------------------------------
+-------------------------
 
 
 In Elasticsearch, we can use the `join` datatype to model relationships. To import the data,
@@ -1417,44 +1386,42 @@ PUT /amazon_products_with_features
     }
   },
   "mappings": {
-    "doc": {
-      "properties": {
-        "id": {
-          "type": "keyword"
-        },
-        "product_or_feature": {
-          "type": "join",
-          "relations": {
-            "product": "feature"
-          }
-        },
-        "title": {
-          "type": "text"
-        },
-        "description": {
-          "type": "text"
-        },
-        "manufacturer": {
-          "type": "text",
-          "fields": {
-            "raw": {
-              "type": "keyword"
-            }
-          }
-        },
-        "price": {
-          "type": "scaled_float",
-          "scaling_factor": 100
-        },
-        "feature_key": {
-          "type": "keyword"
-        },
-        "feature": {
-          "type": "keyword"
-        },
-        "feature_value": {
-          "type": "keyword"
+    "properties": {
+      "id": {
+        "type": "keyword"
+      },
+      "product_or_feature": {
+        "type": "join",
+        "relations": {
+          "product": "feature"
         }
+      },
+      "title": {
+        "type": "text"
+      },
+      "description": {
+        "type": "text"
+      },
+      "manufacturer": {
+        "type": "text",
+        "fields": {
+          "raw": {
+            "type": "keyword"
+          }
+        }
+      },
+      "price": {
+        "type": "scaled_float",
+        "scaling_factor": 100
+      },
+      "feature_key": {
+        "type": "keyword"
+      },
+      "feature": {
+        "type": "keyword"
+      },
+      "feature_value": {
+        "type": "keyword"
       }
     }
   }
@@ -1476,117 +1443,16 @@ logstash -f files/logstash_products_with_features_features.conf
 ```
 
 
-Here, we want to establish a relationship between
-products and features. When using the `join`
-datatype, we still need to index everything into a single Elasticsearch
-index within a single Elasticsearch type. Remember, we can\'t have more
-than one type within a single index. The `join` datatype
-mapping that establishes the relationship is defined as follows:
-
-```
-PUT /amazon_products_with_features
-{
-  ...
-  "mappings": {
-    "doc": {
-      "properties": {
-        ...
-"product_or_feature": {
-          "type": "join",
-          "relations": {
-            "product": "feature"
-          }
-        },
-        ...
-       }
-     }
-   }
-}
-```
-
-The highlighted `product_or_feature`field is of
-type `join` and it defines the relationship
-between `product` and `feature`[***.***] 
-The product is on the left-hand side, which is analogous to conveying
-that the `product` is the parent of the feature(s).
-
-When indexing `product` records, we use the following syntax:
-
-```
-PUT /amazon_products_with_features/doc/c0001
-{
-  "description": "The Lenovo ThinkPad X1 Carbon 20K4002UUS has a 14 inch IPS Full HD LED display which makes each image and video appear sharp and crisp. The Thinkpad has an Intel Core i5 6200U 2.3 GHz Dual-core processor with Intel HD 520 graphics and 8 GB LPDDR3 SDRAM that gives lag free experience. It has a 180 GB SSD which makes all essential data and entertainment files handy. It supports 802.11ac and Bluetooth 4.1 and runs on Windows 7 Pro 64-bit downgrade from Windows 10 Pro 64-bit operating system. The ThinkPad X1 Carbon has two USB 3.1 Gen 1 ports which enables 10 times faster file transfer and has Gigabit ethernet for network communication. This notebook comes with 3 cell Lithium ion battery which gives upto 15.5 hours of battery life.",
-  "price": "699.99",
-  "id": "c0001",
-  "title": "Lenovo ThinkPad X1 Carbon 20K4002UUS",
-  "product_or_feature": "product",
-  "manufacturer": "Lenovo"
-}
-```
-
-The value of `product_or_feature`, which is set
-to `product` suggests that this document is referring to a `product`.
-
-A `feature` record is indexed as follows:
-
-```
-PUT amazon_products_with_features/doc/c0001_screen_size?routing=c0001
-{
-  "product_or_feature": {
-    "name": "feature",
-    "parent": "c0001"
-  },
-  "feature_key": "screen_size",
-  "feature_value": "14 inches",
-  "feature": "Screen Size"
-}
-```
-
-Notice that, while indexing a `feature`, we need to set which
-is the parent of the document
-within `product_or_feature`. We also need to
-set a routing parameter that is equal to the document ID of the parent
-so that the child document gets indexed in the same shard as the
-parent.
-
 We already populated products and features earlier in the lab, we can query from
 products while joining the data from features. For example, you may want
 to get all of the products that have a certain feature. 
 
 
-
 ### has\_child query
 
 
-If you want to get products based on some condition on the features, you can use `has_child` queries.
-
-The outline of a `has_child` query is as follows:
-
-```
-GET <index>/_search
-{
-  "query": {
-    "has_child": {
-      "type": <the child type against which to run the following query>,
-      "query": {
-        <any elasticsearch query like term, bool, query_string to be run against the child type>
-      }
-    }
-  }
-}
-```
-
-As you can see in the preceding code, we mainly need to specify only two
-things:
-
-
-1.  The type of the child against which to execute the query
-2.  The actual query to be run against the child to get their parents
-
-
 Let\'s learn about this through an example. We want to get all of the products where
-`processor_series` is `Core i7` from the example
-dataset that we loaded:
+`processor_series` is `Core i7` from the example dataset that we loaded:
 
 ```
 GET amazon_products_with_features/_search
@@ -1668,15 +1534,6 @@ have used the `join` type in Elasticsearch.
 ### has\_parent query
 
 
-
-In the previous type of query, `has_child`, we
-wanted to get records of the `parent_type` query based on a
-query that we executed against the child type. The
-`has_parent` query is useful for exactly the opposite purpose,
-that is, when we want to get all child type of records based on a query
-executed against the `parent_type`. Let\'s learn about this
-through an example.
-
 We want to get all the features of a specific product that has the
 product id = `c0003`. We can use a `has_parent`
 query as follows:
@@ -1711,81 +1568,6 @@ Please note the following points, marked with the numbers in the query:
     `c0001`.
 
 
-The result is all the features of that product:
-
-```
-{
-  "took" : 0,
-  "timed_out" : false,
-  "_shards" : {
-    "total" : 1,
-    "successful" : 1,
-    "skipped" : 0,
-    "failed" : 0
-  },
-  "hits" : {
-    "total" : {
-      "value" : 3,
-      "relation" : "eq"
-    },
-    "max_score" : 1.0,
-    "hits" : [
-      {
-        "_index" : "amazon_products_with_features",
-        "_type" : "doc",
-        "_id" : "c0001_screen_size",
-        "_score" : 1.0,
-        "_routing" : "c0001",
-        "_source" : {
-          "product_or_feature" : {
-            "name" : "feature",
-            "parent" : "c0001"
-          },
-          "feature_key" : "screen_size",
-          "parent_id" : "c0001",
-          "feature_value" : "14 inches",
-          "feature" : "Screen Size"
-        }
-      },
-      {
-        "_index" : "amazon_products_with_features",
-        "_type" : "doc",
-        "_id" : "c0001_processor_series",
-        "_score" : 1.0,
-        "_routing" : "c0001",
-        "_source" : {
-          "product_or_feature" : {
-            "name" : "feature",
-            "parent" : "c0001"
-          },
-          "feature_key" : "processor_series",
-          "parent_id" : "c0001",
-          "feature_value" : "Core i5",
-          "feature" : "Processor Series"
-        }
-      },
-      {
-        "_index" : "amazon_products_with_features",
-        "_type" : "doc",
-        "_id" : "c0001_clock_speed",
-        "_score" : 1.0,
-        "_routing" : "c0001",
-        "_source" : {
-          "product_or_feature" : {
-            "name" : "feature",
-            "parent" : "c0001"
-          },
-          "feature_key" : "clock_speed",
-          "parent_id" : "c0001",
-          "feature_value" : "2.30 GHz",
-          "feature" : "Clock Speed"
-        }
-      }
-    ]
-  }
-}
-```
-
 
 ### parent\_id query
 
@@ -1810,13 +1592,6 @@ GET /amazon_products_with_features/_search
 }
 ```
 
-The response of this query will be exactly the same as
-the `has_parent` query we wrote earlier. The
-key difference between the `has_parent` query
-and the `parent_id` query is that the former is used to get
-all children based on an arbitrary Elasticsearch query executed against
-the `parent_type` query, whereas the latter
-(`parent_id` query) is useful if you know the ID.
 
 
 
@@ -1833,9 +1608,3 @@ solid background on analyzers, we learned about two main types of
 queries --- term-level queries and full-text queries. We also learned how
 to compose different queries in more complex queries using one of the
 compound queries.
-
-This lab provided you with sound knowledge to get a foothold on
-querying Elasticsearch data. There are many more types of queries
-supported by Elasticsearch, but we have covered the most essential ones.
-This should help you get started and enable you to understand other
-types of queries from the Elasticsearch reference documentation.
