@@ -356,14 +356,14 @@ Here is how to write a simple sum aggregation:
 ```
 GET bigginsight/_search?track_total_hits=true
 {
- "aggregations": {                     1
-    "download_sum": {                  2
-      "sum": {                         3
-        "field": "downloadTotal"       4
+ "aggregations": {                     
+    "download_sum": {                  
+      "sum": {                         
+        "field": "downloadTotal"       
       }      
     }
   },
-  "size": 0                            5
+  "size": 0                            
 }
 ```
 
@@ -422,8 +422,8 @@ The average aggregation finds an average across all the documents in the queryin
 GET bigginsight/_search
 {
  "aggregations": {                     
-    "download_average": {                  1
-      "avg": {                             2
+    "download_average": {                
+      "avg": {                           
         "field": "downloadTotal"       
       }      
     }
@@ -691,14 +691,14 @@ be written as follows:
 ```
 GET /bigginsight/_search
 {
-  "aggs": {                           1
-    "byCategory": {                   2
-      "terms": {                      3
-        "field": "category"           4
+  "aggs": {                           
+    "byCategory": {                   
+      "terms": {                      
+        "field": "category"           
       }
     }
   },
-  "size": 0                           5
+  "size": 0                           
 }
 ```
 
@@ -1117,9 +1117,9 @@ numbers, which correspond to the three main objectives of the the
 following query:
 
 ```
-GET /bigginsight/usageReport/_search?size=0
+GET /bigginsight/_search?size=0
 {
-  "query": {                                      1
+  "query": {                                      
     "bool": {
       "must": [
         {"term": {"customer": "Linkedin"}}, 
@@ -1128,12 +1128,12 @@ GET /bigginsight/usageReport/_search?size=0
     }
   },
   "aggs": {
-    "by_users": {                                 2
+    "by_users": {                                 
       "terms": {
         "field": "username"
       },
       "aggs": {
-        "total_usage": {                          3
+        "total_usage": {                          
           "sum": { "field": "usage" }
         }
       }
@@ -1212,9 +1212,9 @@ bandwidth consumed by each user?*]
 The following query will help us get that answer:
 
 ```
-GET /bigginsight/usageReport/_search?size=0
+GET /bigginsight/_search?size=0
 {
-  "query": {                                                  1
+  "query": {                                                  
     "bool": {
       "must": [
         {"term": {"customer": "Linkedin"}}, 
@@ -1223,17 +1223,17 @@ GET /bigginsight/usageReport/_search?size=0
     }
   },
   "aggs": {
-    "by_departments": {                                       2
+    "by_departments": {                                       
       "terms": { "field": "department" },               
       "aggs": {
-        "by_users": {                                         3
+        "by_users": {                                         
           "terms": {
             "field": "username",
             "size": 2,                                        
             "order": { "total_usage": "desc"}
           },
           "aggs": {
-            "total_usage": {"sum": { "field": "usage" }}      4
+            "total_usage": {"sum": { "field": "usage" }}      
           }
         }
       }
