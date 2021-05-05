@@ -7,199 +7,23 @@ Lab 4. Analytics with Elasticsearch
 ------------------------------------------------
 
 
-
-On our journey of learning about Elastic Stack 7.0, we have gained a
-strong understanding of Elasticsearch. We learned about the strong
-foundations of Elasticsearch in the previous two labs and gained an
-in-depth understanding of its search use cases.
-
-The underlying technology, Apache Lucene, was originally developed for
-text search use cases. Due to innovations in Apache Lucene and
-additional innovations in Elasticsearch, it has also emerged as a very
-powerful analytics engine. In this lab, we will look at how
+In this lab, we will look at how
 Elasticsearch can serve as our analytics engine. We will cover the
 following topics:
 
 
--   The basics of aggregations
 -   Preparing data for analysis
 -   Metric aggregations
 -   Bucket aggregations
 -   Pipeline aggregations
 
 
-We will learn about all of this by using a real-world dataset. Let\'s
-start by looking at the basics of aggregations.
-
-
-
-The basics of aggregations
---------------------------------------------
-
-
-
-In contrast to searching, analytics deals
-with the bigger picture. Searching addresses the need for zooming in to
-a few records, whereas analytics address the need for zooming out and
-slicing the data in different ways.
-
-While learning about searching, we used the following API:
-
-```
-POST /<index_name>/_search
-{
-  "query": 
-  {
-    ... type of query ...
-  }
-}
-```
-
-All aggregation queries take a common form. Let\'s go over the
-structure.
-
-The aggregations, or `aggs`, element allows us to aggregate
-data. All aggregation requests take the following form:
-
-```
-POST /<index_name>/_search
-{  
-  "aggs": {                                 
-    ... type of aggregation ...
-          },
-  "query": {  ... type of query ... },              //optional query part
-  "size": 0                                         //size typically set to 0
-}
-```
-
-The `aggs` element should contain the actual
-aggregation query. The body depends on the
-type of aggregation that we want to do. We will cover these aggregations
-later in this lab. 
-
-The optional `query` element defines the context of the
-aggregation. The aggregation considers all of the documents in the given
-index and type if the `query` element is not specified (you
-can imagine it as equivalent to the `match_all` query when no
-query is present). If we want to limit the context of the aggregation,
-it can be done by specifying the `query`. For example, we may
-not want to consider all the data for aggregation, but only certain
-documents that satisfy a particular condition. This query filters the
-documents to be fed to the actual `aggs` query.
-
-The `size` element specifies how many of the search hits
-should be returned in the response. The default value
-of `size` is 10. If `size` is not specified, the
-response will contain 10 hits from the context under the query.
-Typically, if we are only interested in getting aggregation results, we
-should set the `size` element to `0`, to avoid
-getting any results, along with the aggregation result.
-
-Broadly, there are four types of aggregations that Elasticsearch
-supports:
-
-
--   Bucket aggregations
--   Metric aggregations
--   Matrix aggregations
--   Pipeline aggregations
-
-### Bucket aggregations
-
-
-
-Bucket aggregations segment the data in
-question (defined by the `query` context) into various buckets
-that are identified by the buckets key. Bucket aggregation
-evaluates each document in the context by
-deciding which bucket it falls into. At the end, bucket aggregation has
-a set of distinct buckets with their respective bucket keys and
-documents that fall into those buckets.
-
-For people who are coming from an SQL background, a query that has
-`GROUP BY`, such as the following query,does the following
-withbucket aggregations:
-
-```
-SELECT column1, count(*) FROM table1 GROUP BY column1;
-```
-
-This query divides the table by the different values of
-`column 1` and returns a count of documents within each value
-of `column 1`. This is an example of bucket aggregation. There
-are many different types of bucket aggregation supported by
-Elasticsearch, all of which we will go through in this lab.
-
-Bucket aggregations can be present on the top or outermost level in an
-aggregation query. Bucket aggregations can also be nested inside other
-bucket aggregations. 
-
-### Metric aggregations
-
-
-
-Metric aggregations work on numerical fields.
-They compute the aggregate value of a numerical field in the given
-context. For example, let\'s suppose that we have a table containing the results of a student\'s examination. Each
-record contains marks obtained by the student. A metric aggregation can
-compute different aggregates of that numerical score column. Some
-examples are sum, average, minimum, maximum, and so on.
-
-In SQL terms, the following query gives a rough analogy of what a metric
-aggregation may do:
-
-```
-SELECT avg(score) FROM results;
-```
-
-This query computes the average score in the given context. Here, the
-context is the whole table, that is, all students.
-
-Metric aggregation can be placed on the top or outermost level in the
-aggregations query. Metric aggregations can also be nested inside bucket
-aggregations. Metric aggregations cannot nest other types of
-aggregations inside of them.
-
-### Matrix aggregations
-
-
-
-Matrix aggregations were introduced with
-Elasticsearch version 5.0. Matrix aggregations work on multiple fields
-and compute matrices across all the documents
-within the query context.
-
-### Pipeline aggregations
-
-
-
-Pipeline aggregations are higher order
-aggregations that can aggregate the output of other aggregations. These
-are useful for computing something, such as derivatives. We will look at
-some pipeline aggregations later in this
-lab.
-
-This was an overview about the different types of aggregations supported
-by Elasticsearch at a high level. Pipeline aggregations and matrix
-aggregations are relatively new and have fewer use cases compared to
-metric and bucket aggregations. We will look at metric and bucket
-aggregations in greater depth later in this lab.
-
-In the next section, we will load and prepare data so that we can look
-at these aggregations in more detail.
-
+We will learn about all of this by using a real-world dataset.
 
 
 Preparing data for analysis
 ---------------------------------------------
 
-
-
-We will consider an example of network
-traffic data generated from Wi-Fi routers.
-Throughout this lab, we will analyze the data from this example. It
-is important to understand what the records in the underlying system
-look like, and what they represent.
 
 We will cover the following topics while we prepare and load the data
 into the local Elasticsearch instance:
@@ -219,59 +43,7 @@ problem and the structure of the data that\'s collected:
 
 ![](./images/f6bf8cf9-3daf-4940-a216-98771bd69871.png)
 
-
-Fig 4.1: Network traffic and bandwidth usage data for Wi-Fi traffic and
-storage in Elasticsearch
-
-The data is collected by the system with the
-following objectives:
-
-
--   On the left half of the diagram, there are multiple squares,
-    representing one customer\'s premises as well as the Wi-Fi routers
-    deployed on that site, along with all of the devices connected to
-    those Wi-Fi routers. The connected devices include laptops, mobile
-    devices, desktop computers, and so on. Each device has a unique MAC
-    address and a user associated with it.
--   The right half of the diagram represents the centralized system,
-    which collects and stores data from multiple customers into a
-    centralized Elasticsearch cluster. Our focus will be on how to
-    design this centralized Elasticsearch cluster and the index to gain
-    meaningful insight.
--   The routers at each customer site collect additional metrics for
-    each connected device, such as data downloaded, data uploaded, and
-    URLs or domain names accessed by the client in a specific time
-    interval. The Wi-Fi routers collect such metrics and send them to
-    the centralized API server periodically, for long-term storage and
-    analysis.
--   When the data is sent by the Wi-Fi routers, it contains fewer
-    fields: mainly the metrics captured by the Wi-Fi routers and the MAC
-    address of the end device for which those metrics are collected. The
-    API server looks up and enriches the records with more information,
-    which is useful for analytics, before storing it in Elasticsearch.
-    The MAC address is looked up to find out the username of the user
-    that the device is assigned to. It
-    also looks up additional dimensions, such
-    as the department of the user. 
-
-
-
-### Note
-
-**What are metrics and dimensions**?
-
-**Metric** is a common term used in the
-analytics world to represent a numerical measure. A common example of a
-metric is the amount of data downloaded or uploaded in a given time
-period. The term **dimension** is usually used to refer to
-extra/auxiliary information, usually of the string datatype. In this
-example, we are using a MAC address to look up auxiliary information
-related to that MAC address, namely the username of the user that the
-device is assigned to in the system. The name of the department the user
-belongs to is another example of a dimension.
-
-
-Finally, the enriched records are stored in Elasticsearch in a flat data
+The enriched records are stored in Elasticsearch in a flat data
 structure. One record looks as follows:
 
 ```
@@ -317,22 +89,22 @@ realistic, the data was generated using a simulator. The data doesn\'t
 belong to any real customers.
 
 
-Now that we know what our data represents and what each record
-represents, let\'s load the data in our local instance.
+Now that we know what our data represents and what each record represents, let\'s load the data in our local instance.
+
 
 ### Loading the data using Logstash
 
 To import the data, please follow these instructions:
 
-# Import network traffic data to learn Analytics capabilities of Elasticsearch
+**Import network traffic data to learn Analytics capabilities of Elasticsearch**
 
 1. Switch user from terminal: `su elasticsearch`
 2. Logstash has been already downloaded at following path: `/elasticstack/logstash-7.12.1`.
 3. Files have been already copied at path `/elasticstack/logstash-7.12.1/files_lab4` . The structure of files should look like -
 
 ```
-/elasticstack/logstash-7.12.1/files_lab4/network_traffic_data.zip
 /elasticstack/logstash-7.12.1/files_lab4/network_traffic_data.json
+/elasticstack/logstash-7.12.1/files_lab4/logstash_network_traffic_data.conf
 ```
 
 6. Create the following index by executing the command in the your Kibana - Dev Tools.
@@ -529,44 +301,17 @@ You should see a response similar to the following:
 
 Now that we have the data that we want, we can get started and learn
 about different types of aggregations from the data that we just loaded.
-You can find all the queries that are used in this lab in
-the accompanying source code in the GitHub
-repository, at the location
-[lab-04/queries.txt](https://github.com/fenago/elasticsearch/blob/master/lab-04/queries.txt).
-The queries can be run directly in Kibana Dev Tools, as we have seen
-previously in this book.
+You can find all the queries that are used in this lab in following directory:
 
-One thing to note here is the `hits.total` in
-the response. It has values of
-`10,000` and `"relation"="gte"`. There are
-actually 242,835 documents in the index, all of which we have
-created. Before version 7.0 was released, `hits.total` always
-used to represent the actual count of documents that matched the query
-criteria. With Elasticsearch version 7.0, `hits.total` is not
-calculated if the `hits` are greater than `10,000`.
-This is to avoid the unnecessary overhead of calculating the exact
-matching documents for the given query. We can force the calculation of
-exact `hits` by passing `track_total_hits=true` as a
-request parameter. 
+```
+/root/Desktop/elasticsearch/Lab04/queries.txt
+```
 
 
 
 Metric aggregations
 -------------------------------------
 
-
-
-Metric aggregations work with numerical data, computing one or more
-aggregate metrics within the given context. The context can be a query,
-filter, or no query, to include the whole
-index/type. Metric aggregations can also be nested inside other bucket
-aggregations. In this case, these metrics will be computed for each
-bucket in the bucket aggregations.
-
-We will start with simple metric aggregations, without nesting them
-inside bucket aggregations. When we learn about bucket aggregations
-later in this lab, we will also learn how to use metric aggregations
-inside bucket aggregations.
 
 In this section, we will go over the following metric aggregations:
 
@@ -2057,8 +1802,7 @@ library that can render the data on a map.
 
 
 
-While discussing Date Histogram aggregation, in the [*Focusing on a
-specific day and changing intervals*]  section,
+While discussing Date Histogram aggregation,
 we looked at the aggregation that\'s used to compute hourly bandwidth usage for one particular day. After
 completing that exercise, we had data for September 24, with hourly
 consumption between 12:00 am to 1:00 am, 1:00 am to 2:00 am, and so on.
