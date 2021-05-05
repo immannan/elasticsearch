@@ -46,32 +46,10 @@ on your operating system, download the ZIP/TAR file, as shown in the following
 
 
 
-### Installing on Windows
-
-
-
-Unzip the downloaded file. Once unzipped,
-navigate to the newly created folder, as
-shown in the following line of code:
-
-```
-E:\>cd kibana-7.0.0-windows-x86_64
-```
-
-To start Kibana, navigate to the `bin` folder, type
-`kibana.bat`, and press [*Enter*] .
-
 ### Installing on Linux
 
 
 
-Unzip the `tar.gz` package and navigate to the newly created folder, shown as
-follows:
-
-```
-$> tar -xzf kibana-oss-7.0.1-linux-x86_64.tar.gz
-$> cd kibana-7.0.1-linux-x86_64/
-```
 
 To start Kibana, navigate to the `bin` folder, type
 `./kibana` (in the case of Linux) or
@@ -111,18 +89,6 @@ the server\'s resource usage and lists the installed plugins, as shown in the f
 
 ![](./images/adc252fb-443b-4999-8123-851bc67ab164.png)
 
-
-
-### Note
-
-Kibana should be configured to run against an Elasticsearch node of the
-same version. Running different patch version releases of Kibana and
-Elasticsearch (for example, Kibana 7.0.0 and Elasticsearch 7.0.1) is
-generally supported, but not highly encouraged. Running different major
-version releases of Kibana and Elasticsearch (for example, Kibana 7.x
-and Elasticsearch52.x) is not supported, nor is running minor versions
-of Kibana that are newer than the version of Elasticsearch (for example,
-Kibana 7.1 and Elasticsearch 7.0).
 
 
 ### Configuring Kibana

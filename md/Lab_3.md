@@ -496,34 +496,35 @@ The response of this query looks like the following:
 
 ```
 {
-  "took": 1,
-  "timed_out": false,
-  "_shards": {
-    "total": 1,
-    "successful": 1,
-    "failed": 0
+  "took" : 5,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
   },
-  "hits": {
+  "hits" : {
     "total" : {
-"value" : 201,                                   1
+      "value" : 201,
       "relation" : "eq"
-    },                                     
-"max_score": 1.0,                                  2
-    "hits": [
+    },
+    "max_score" : 1.0,
+    "hits" : [
       {
-        "_index": "amazon_products",
-        "_type": "_doc",
-        "_id": "AV5lK4WiaMctupbz_61a",
-"_score": 1,                                   3
-        "_source": {
-"price": "19.99",                            4
-          "description": "reel deal casino championship edition (win 98 me nt 2000 xp)",
-          "id": "b00070ouja",
-          "title": "reel deal casino championship edition",
-          "manufacturer": "phantom efx",
-          "tags": []
+        "_index" : "amazon_products",
+        "_type" : "_doc",
+        "_id" : "q737OXkBtKf3dShzkvIb",
+        "_score" : 1.0,
+        "_source" : {
+          "id" : "b0000dbykm",
+          "title" : "mia's math adventure: just in time",
+          "manufacturer" : "kutoka",
+          "price" : "19.99",
+          "description" : "in mia's math adventure: just in time children will help mia save her house by using their math skills!"
         }
       },
+...
 ```
 
 
@@ -551,7 +552,7 @@ GET /amazon_products/_search
       "price": {
         "gte": 10,
         "lte": 20,
-"boost": 2.2
+        "boost": 2.2
       }
     }
   }
@@ -572,12 +573,14 @@ to date fields since dates are also inherently ordered. You can specify
 the date format while querying a date range:
 
 ```
-GET /orders/_search
+GET /amazon_products/_search
 {"query":{"range":{"orderDate":{"gte":"01/09/2017","lte":"30/09/2017","format":"dd/MM/yyyy"}}}}
 ```
 
-The preceding query will filter all the orders that were placed in the
-month of September 2017.
+The preceding query will filter all the orders that were placed in the month of September 2017.
+
+**Note:** We will get `"hits" : []` because no record is matched.
+
 
 Elasticsearch allows us to use dates with or without the time in its
 queries. It also supports the use of special terms,
@@ -587,7 +590,7 @@ is, data from exactly 24 x 7 hours ago till now with a precision of
 milliseconds:
 
 ```
-GET /orders/_search
+GET /amazon_products/_search
 {"query":{"range":{"orderDate":{"gte":"now-7d","lte":"now"}}}}
 ```
 
@@ -705,58 +708,6 @@ them when we examine compound queries.
 Searching from the full text
 ----------------------------------------------
 
-
-
-Full-text queries can work on unstructured
-text fields. These queries are aware of the analysis process. Full-text
-queries apply the analyzer on the search terms before performing the
-actual search operation. That determines the right analyzer to be
-applied by first checking whether a field-level
-`search_analyzer` is defined, and then by checking whether a
-field-level analyzer is defined. If analyzers at the field level are not
-defined, it tries the analyzer defined at the index level.
-
-Full-text queries are thus aware of the analysis process on the
-underlying field and apply the right analysis process before forming
-actual search queries. These analysis-aware queries are
-also called **high-level
-queries**. Let\'s understand how the high-level query flow
-works.
-
- 
-
-Here, we can see how one high-level query on the
-`title`field will be executed. Remember from our index
-definition earlier that the `title` field is of
-the `text` type. At indexing time, the value is analyzed using
-the analyzer for the field. In this case, it was a Standard Analyzer,
-and hence the inverted index contains all of the broken down terms, such
-as **gods**, **heroes**, **rome**, and
-so on, as depicted in the following figure:
-
-
-![](./images/b43def01-15c4-4e0d-b6f5-ec81be749142.png)
-
-
-Figure 3.3: High-level query flow
-
- 
-
-**At query time** (see the right-hand half of the figure), we
-issue a `match` query, which is a high-level query. We will
-cover `match` queries later in this section. The search terms
-passed to a `match` query are analyzed using standard
-analyzer. The individual terms after applying standard analyzer are then
-used to generate individual term-level queries.
-
-The example here results in multiple term queries---one for each term
-after applying the analyzer. The original search term was **gods
-heroes**, resulting in two terms, **gods** and
-**heroes**, which are used as individual terms in their own
-term queries. The two term queries are then combined using
-a `bool` query, which is a compound query. We
-will also look at different compound queries in the next section.
-
 We will cover the following full-text queries in the following sections:
 
 
@@ -766,15 +717,7 @@ We will cover the following full-text queries in the following sections:
 
 ### Match query
 
-
-
-A `match` query is the default
-query for most full-text search requirements. It is one of the
-high-level queries that is aware of the analyzer used for
-the underlying field. Let\'s get an
-understanding of what this means under the hood.
-
-For example, when you use the `match` query on
+When you use the `match` query on
 a `keyword` field, it knows that the underlying field is
 a `keyword` field, and hence, the search terms are not
 analyzed at the time of querying:
@@ -831,22 +774,6 @@ GET /amazon_products/_search
 }
 ```
 
-When we execute the `match` query, we expect it to do the
-following things:
-
-
--   Search for the terms `victory` and
-    `multimedia` across all documents within the
-    `manufacturer` field.
--   Find the best matching documents sorted by score in descending
-    order.
--   If both terms appear in the same order, right next to each other in
-    a document, the document should get a higher score than other
-    documents that have both terms but not in the same order, or not
-    next to each other.
--   Include documents that have either `victory` or
-    `multimedia` in the results, but give them a lower score.
-
 
 The `match` query with default parameters does all of these
 things to find the best matching documents in order, according to their
@@ -874,8 +801,7 @@ the `match` query is to combine the results
 using the [*or*]  operator, that is, one of the terms has to
 be present in the document\'s field.
 
-This can be changed to use the `and` operator using the
-following query:
+This can be changed to use the `and` operator using the following query:
 
 ```
 GET /amazon_products/_search
@@ -985,18 +911,6 @@ to 5 characters have `fuzziness` = `1`, and terms
 with more than five characters have `fuzziness` =
 `2`.
 
-Fuzziness comes at its own cost because Elasticsearch has to generate extra terms to match against. To control the
-number of terms, it supports the following additional parameters:
-
-
--   `max_expansions`: The maximum number of terms after
-    expanding.
--   `prefix_length`: A number, such as 0, 1, 2, and so on. The
-    edits for introducing `fuzziness` will not be done on the
-    prefix characters as defined by the `prefix_length`
-    parameter.
-
-
 
 ### Match phrase query
 
@@ -1090,42 +1004,13 @@ with `real video aquarium` or
 contains the exact phrase `real video saltware aquarium`. The
 default value of `slop` is zero.
 
-### Multi match query
-
-
-
-The `multi_match` query is an extension of
-the `match` query. The `multi_match` query
-allows us to run the `match` query
-across multiple fields, and also allows many
-options to calculate the overall score of the documents.
-
-The `multi_match` query can be used with different options. We
-will look at the following options:
-
-
--   Querying multiple fields with defaults
--   Boosting one or more fields
--   With types of `multi_match` queries
-
-
-Let\'s look at each option, one by one.
-
-
 
 #### Querying multiple fields with defaults
 
 
 
-We want to provide a product search
-functionality in our web application. When the end user searches for
-some terms, we want to query both the `title`
-and `description` fields. This can be done using
-the `multi_match` query.
-
 The following query will find all of the documents that have the terms
-`monitor` or `aquarium` in the `title` or
-the `description` fields:
+`monitor` or `aquarium` in the `title` or the `description` fields:
 
 ```
 GET /amazon_products/_search
@@ -1142,17 +1027,8 @@ GET /amazon_products/_search
 This query gives equal importance to both fields. Let\'s look at how to
 boost one or more fields.
 
+
 #### Boosting one or more fields
-
-
-
-In an e-commerce type of web application,  the user intends to search for an item, and they might search
-for some keywords. What if we want the `title` field to be
-more important than the description? If one or more of the search terms
-appears in the `title`, it is definitely a more relevant
-product than the ones that have those values only in the description. It
-is possible to boost the score of the document if a match is found in a
-particular field.
 
 Let\'s make the `title` field three times more important than
 the `description` field. This can be done by using the
@@ -1173,44 +1049,20 @@ GET /amazon_products/_search
 The `multi_match` query offers more control regarding how to
 combine the scores from different fields. Let\'s look at the options.
 
-#### With types of multi match queries
-
-
-
-In this section, we have learned about
-full-text queries, which are also known as high-level queries. These
-queries find the best matching documents according to the score.
-High-level queries internally make use of some term-level queries. In
-the next section, we will look at how to write compound queries.
-
 
 
 Writing compound queries
 ------------------------------------------
 
 
-
-This class of queries can be used to combine
-one or more queries to come up with a more complex query. Some compound
-queries convert scoring queries into non-scoring queries and combine
-multiple scoring and non-scoring queries.
-
-We will look at the following compound queries:
+In this section, we will look at the following compound queries:
 
 
 -   Constant score query
 -   Bool query
 
+
 ### Constant score query
-
-
-
-Elasticsearch supports querying both
-structured data and full text. While full-text queries need scoring mechanisms to find the best matching documents,
-structured searches don\'t need scoring. The constant score query allows
-us to convert a scoring query that normally runs in a query context to a
-non-scoring filter context[*. *] The constant score query is a
-very important tool in your toolbox.
 
 For example, a `term` query is normally run in a query
 context. This means that when Elasticsearch executes a `term`
@@ -1318,30 +1170,10 @@ GET /amazon_products/_search
 }
 ```
 
-What is the benefit of boosting the score of
-every document in this filter to `1.2`? Well, there is no
-benefit if this query is used in an isolated
-way. When this query is combined with other queries, using a query such
-as a `bool` query, the boosted score becomes important. All
-the documents that pass this filter will have higher scores compared to
-other documents that are combined from other queries.
-
-Let\'s look at the `bool` query next.
 
 ### Bool query
 
-
-
-The `bool` query in Elasticsearch is your Swiss Army knife. It can help you write many types of
-complex queries. If you are come from an SQL background, you already
-know how to filter based on
-multiple `AND` and `OR` conditions in
-the `WHERE` clause. The `bool` query
-allows you to combine multiple scoring and
-non-scoring queries.
-
-Let\'s first see how to implement simple `AND` and
-`OR` conjunctions. 
+Let\'s first see how to implement simple `AND` and `OR` conjunctions. 
 
 A `bool` query has the following sections:
 
@@ -1363,19 +1195,6 @@ The queries included in `must` and `should` clauses
 are executed in a query context unless the whole `bool` query
 is included inside a filter context.
 
-The `filter` and `must_not` queries are always
-executed in the filter context. They will always return a score of zero
-and only contribute to the filtering of documents.
-
-Let\'s look at how to form a non-scoring query that just performs a
-structured search. We will gain an understanding of how to formulate the
-following types of structured search queries using the `bool`
-query:
-
-
--   Combining `OR` conditions
--   Combining `AND` and `OR` conditions
--   Adding `NOT` conditions
 
 #### Combining OR conditions
 
@@ -1564,59 +1383,7 @@ Modeling relationships
 ----------------------------------------
 
 
-
-We saw in the previous sections how to model
-and store products and run various queries on products. The product data
-had partly structured data and partly textual data. What if we also had
-detailed features of the products available to us? We may have many
-different types of products and each product may have completely
-different types of detailed features. For example, for products that
-fall into the **Laptops** category, we would have features
-such as screen size, processor type, and processor clock speed.
-
-At the same time, products in the **Automobile GPS Systems**
-category may have features such as screen size, whether GPS can speak
-street names, or whether it has free lifetime map updates
-available.[] 
-
-Because we may have tens of thousands of products in hundreds of product
-categories, we may have tens of thousands of features. One solution
-might be to create one field for each feature. As you may remember from
-our earlier analogy between the field and database column, the resulting
-data would look very sparse if we tried to show it in tabular format:
-
-![](./images/3.PNG)
-
-
-As you can see, products in the **Laptops** category have a
-different set of columns populated (those columns are the features
-related to that category) and products in the **GPS Navigation
-Systems** category have a different set of columns populated.
-If we were to model all products of all
-categories like this, we may end up with tens of thousands of fields
-(imagine tens of thousands of columns to make it a very wide table). If
-the data was modeled in this way, it would be hard to generate certain
-types of queries, as we have many different fields.
-
-Instead, we could model this relationship between a product and its
-features as a one-to-many relationship as we would in a relational
-database. Let\'s see how we would have modeled it in a relational
-database.
-
-The product table would be modeled as follows:
-
-![](./images/4.PNG)
-
- 
-
-The features would be modeled as a separate table, where the ProductID
-and Feature may be a composite primary key:
-
-![](./images/5.PNG)
-
- 
-When we model a similar type of relationship in Elasticsearch, we can
-use the `join` datatype to model relationships. To import the data,
+In Elasticsearch, we can use the `join` datatype to model relationships. To import the data,
 follow the steps mentioned below:
 
 
@@ -1634,6 +1401,7 @@ follow the steps mentioned below:
 
 The first two files are the files containing products data and logstash configuration file for loading products data respectively.
 The third and fourth files are the files containing data for features of the products and logstash configuration file for loading features data respectively.
+
 
 4. Verify the `logstash_products_with_features_products.conf` file and ensure that it has the correct absolute path of products_with_features_products.csv file on your system. Similarly, verify the `logstash_products_with_features_features.conf` file and ensure that it has the correct absolute path of products_with_features_features.csv file on your system.
 
@@ -1705,7 +1473,7 @@ After running the second command press CTRL + C to terminate logstash. These com
 
 ```
 cd /elasticstack/logstash-7.12.1
-logstash -f files/files/logstash_products_with_features_features.conf
+logstash -f files/logstash_products_with_features_features.conf
 ```
 
 
@@ -1826,19 +1594,19 @@ GET amazon_products_with_features/_search
 {
   "query": {
     "has_child": {
-      "type": "feature",                                     1
+      "type": "feature",           
       "query": {
-        "bool": {                                            2
+        "bool": {                          
           "must": [
             {
-              "term": {                                      3
+              "term": {                     
                 "feature_key": {
                   "value": "processor_series"
                 }
               }
             },
             {
-              "term": {                                      4
+              "term": {                      
                 "feature_value": {
                   "value": "Core i7"
                 }
@@ -1919,8 +1687,8 @@ GET amazon_products_with_features/_search
 {
   "query": {
     "has_parent": {
-      "parent_type": "product",                                  1
-      "query": {                                                 2
+      "parent_type": "product",   
+      "query": {                     
         "ids": {
           "values": ["c0001"]
         }
