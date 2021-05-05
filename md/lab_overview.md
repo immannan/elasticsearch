@@ -1,11 +1,6 @@
 <img align="right" src="./logo.png">
 
-<h2><span style="color:red;"></span>Learning Elastic Stack 7.0 - Second Edition
-</h2>
-
-### Description
-
-A beginner's guide to storing, managing, and analyzing data with the updated features of Elastic 7.0
+<h2><span style="color:red;">Elastic Search 7</span></h2>
 
 
 **Key Features**

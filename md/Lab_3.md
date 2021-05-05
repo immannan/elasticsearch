@@ -275,17 +275,17 @@ Let\'s go through a practical application of creating a custom analyzer.
 
 If we were to use Standard Analyzer at indexing time, the following
 terms would be generated for the field with the
-`Learning Elastic Stack 7` value:
+`Course Elastic Search 7` value:
 
 ```
 GET /_analyze
 {
-  "text": "Learning Elastic Stack 7",
+  "text": "Course Elastic Search 7",
   "analyzer": "standard"
 }
 ```
 
-The response of this request would contain the terms Learning, Elastic, Stack, and 7. These are the terms that Elasticsearch would create and store in the index if Standard Analyzer was used. Now, what we want to support is that when the user starts typing a few characters, we should be able to match possible matching products. For example, if the user has typed elas, it should still recommend Learning Elastic Stack 7 as a product. Let's compose an analyzer that can generate terms such as el, ela, elas, elast, elasti, elastic, le, lea, and so on:
+The response of this request would contain the terms Course, Elastic, Search, and 7. These are the terms that Elasticsearch would create and store in the index if Standard Analyzer was used. Now, what we want to support is that when the user starts typing a few characters, we should be able to match possible matching products. For example, if the user has typed elas, it should still recommend Course Elastic Search 7 as a product. Let's compose an analyzer that can generate terms such as el, ela, elas, elast, elasti, elastic, le, lea, and so on:
 
 
 ```
@@ -342,7 +342,7 @@ typed `Ela` so far, the search should return both products:
 ```
 POST /custom_analyzer_index/_doc
 {
-  "product": "Learning Elastic Stack 7"
+  "product": "Course Elastic Search 7"
 }
 
 POST /custom_analyzer_index/_doc
@@ -366,8 +366,7 @@ for the next section. We are going to use product catalog data taken
 from the popular e-commerce site
 [www.amazon.com](http://www.amazon.com/).
 
-Before we start with the queries, let\'s create the required index and
-import some data:
+Before we start with the queries, let\'s create the required index and import some data:
 
 ```
 PUT /amazon_products
@@ -439,46 +438,10 @@ https://www.elastic.co/downloads/logstash
 /elasticstack/logstash-7.12.1/files/logstash_products.conf
 ```
 
-4. Create the following index by executing the command in the your Kibana - Dev Tools.
+4. Verify that index `amazon_products` is created by executing the command in the your Kibana - Dev Tools.
 
 ```
-PUT /amazon_products
-{
-  "settings": {
-    "number_of_shards": 1,
-    "number_of_replicas": 0,
-    "analysis": {
-      "analyzer": {}
-    }
-  },
-  "mappings": {
-    "products": {
-      "properties": {
-        "id": {
-          "type": "keyword"
-        },
-        "title": {
-          "type": "text"
-        },
-        "description": {
-          "type": "text"
-        },
-        "manufacturer": {
-          "type": "text",
-          "fields": {
-            "raw": {
-              "type": "keyword"
-            }
-          }
-        },
-        "price": {
-          "type": "scaled_float",
-          "scaling_factor": 100
-        }
-      }
-    }
-  }
-}
+GET /amazon_products
 ```
 
 6. Run logstash from command line, using the following commands:

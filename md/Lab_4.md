@@ -1248,22 +1248,12 @@ This is how we can nest bucket and metric aggregations to answer complex
 questions in a very fast and efficient way, regarding big data stored in
 Elasticsearch.
 
+
 ### Bucketing on custom conditions
 
 
-
-Sometimes, what we want is more control over
-how the buckets are created. The aggregations that we have looked at so
-far have dealt with a single type of field. If the given field that we
-want to slice data from is of the `string` type, we generally
-use the `terms` aggregation. If the field is of
-the `numerical` type, we have a few choices, including
-histogram, range aggregation, and others, to slice the data into
-different segments.
-
 The following aggregations allow us to create one or more buckets, based
 on the queries/filters that we choose:
-
 
 -   Filter aggregation
 -   Filters aggregation
