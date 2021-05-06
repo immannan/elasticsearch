@@ -38,9 +38,9 @@ data through visualizations, but it also has developer tools such as the `Consol
 the `Console` UI:
 
 
-![](./images/im2.PNG)
+![](./images/im2.png)
 
-![](./images/im3.PNG)
+![](./images/im3.png)
 
 
 The Console is divided into two parts: the editor pane and the results
@@ -49,7 +49,7 @@ triangle-like icon, which sends the query to the Elasticsearch instance
 (or cluster).
 
 
-![](./images/im4.PNG)
+![](./images/im4.png)
 
 Here, we have simply sent the `GET /` query. This is
 equivalent to the `curl` command that we sent to Elasticsearch
@@ -64,7 +64,7 @@ and port with every request. As you start typing in the `Console`
 editor, you will get an autosuggestion dropdown, as displayed
 in the following screenshot:
 
-![](./images/im1.PNG)
+![](./images/im1.png)
 
 
 
