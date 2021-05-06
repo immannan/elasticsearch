@@ -7,8 +7,7 @@ Lab 7. Visualizing Data with Kibana
 ------------------------------------------------
 
 
-
-**Kibana** is an open source
+Kibana is an open source
 web-based analytics and visualization tool that lets you visualize the
 data stored in Elasticsearch using a variety of tables, maps, and
 charts. Using its simple interface, users can easily explore large
@@ -25,22 +24,6 @@ We will cover the following topics in this lab:
 -   Timelion
 -   Using plugins
 
-
-
-Downloading and installing Kibana
----------------------------------------------------
-
-
-
-Just as with other components of the Elastic
-Stack, downloading and installing Kibana is
-pretty simple and straightforward.
-
-Navigate to <https://www.elastic.co/downloads/kibana-oss> and, depending
-on your operating system, download the ZIP/TAR file, as shown in the following screenshot:
-
-
-![](./images/ab0b21a5-4e36-4e2f-a719-4a46ca00fd0a.png)
 
 
 
@@ -114,8 +97,6 @@ Preparing data
 
 
 
-As Kibana is all about gaining insights from data, before we can start exploring with Kibana, we need to have data
-ingested to Elasticsearch, which is the primary data source for Kibana.
 When you launch Kibana, it comes with predefined options to enable
 loading of data to Elasticsearch with a few clicks and you can start
 exploring Kibana right away. When you launch Kibana by accessing
@@ -131,8 +112,7 @@ quickly with Kibana by loading predefined data, or you can configure
 existing indexes present in Elasticsearch and analyze existing data by
 clicking on the `Explore on my own` button.
 
-Clicking on the `Try our sample data` button will take you to the
-following screen:
+Clicking on the `Try our sample data` button will take you to the following screen:
 
 
 ![](./images/437cd832-47ab-4351-bb0a-515115ff3740.jpg)
@@ -162,11 +142,12 @@ The following screenshot shows the dashboard:
 The actual data that is powering these dashboards/visualizations can be
 verified in Elasticsearch by executing the following command. As seen,
 the sample data is loaded into
-the `kibana_sample_data_ecommerce` index, which has
-`4675` docs:
+the `kibana_sample_data_ecommerce` index, which has `4675` docs:
 
 ```
-C:\>curl localhost:9200/_cat/indices/kibana_sample*?v
+curl localhost:9200/_cat/indices/kibana_sample*?v
+
+
 health status index uuid pri rep docs.count docs.deleted store.size pri.store.size
 green open kibana_sample_data_ecommerce 4fjYoAkMTOSF8MrzMObaXg 1 0 4675 0 4.8mb 4.8mb
 ```
@@ -789,28 +770,6 @@ by clicking the `Save` button, as follows:
 ![](./images/49e497d6-98c0-4c30-a247-6807f91c1510.png)
 
 
-The applied filters are shown below the query bar. You can add
-multiple filters, and the following actions can be applied to the
-applied filters:
-
-
--   **Enable/Disable Filter**: This icon allows the
-    enabling/disabling of the filter without removing it. Diagonal
-    stripes indicate that a filter is disabled.
--   **Pin Filter**: Pin the filter. Pinned filters persist
-    when you switch contexts in Kibana. For example, you can pin a
-    filter in **Discover** and it remains in place when you
-    switch to the **Visualize**/**Dashboard**
-    page.
--   **Toggle Filter** (Include**/**Exclude
-    results): Allows you to switch from a positive filter to
-    a negative filter and vice versa.
--   **Delete Filter**: Allows you to remove the applied
-    filter.
--   **Edit Filter**: Allows you to edit the applied filter. 
--   **Expand**/**Collapse**: Clicking this icon
-    will show the labels next to the icons on the left-hand-side menu.
-
 
 The following screenshot displays the preceding actions that can be
 applied:
@@ -831,28 +790,6 @@ follows:
 ### Visualize
 
 
-
-The **Visualize** page helps to
-create visualizations in the form of graphs, tables, and charts, thus
-assisting in visualizing all the data that has been stored in
-Elasticsearch easily. By creating visualizations, the user can easily
-make sense of data and can obtain answers to the questions they might
-have formed during the data discovery process. These built
-visualizations can be used when building dashboards.
-
-For our Apache access log analysis use case, the user can easily find
-out answers to some of the typical questions raised in log analysis,
-such as the following:
-
-
--   What\'s the traffic in different regions of the world?
--   What are the top URLs requested?
--   What are the top IP addresses making requests?
--   How\'s the bandwidth usage over time?
--   Is there any suspicious or malicious activity from any region/IP
-    address?
-
-
 All visualizations in Kibana are based on the aggregation queries of
 Elasticsearch. Aggregations provide the multi-dimensional grouping of
 results---for example, finding the top user agents by device and by
@@ -860,143 +797,6 @@ country. Kibana provides a variety of visualizations, shown as follows:
 
 
 ![](./images/30b40f8a-8bb3-4781-91a9-63af2327b1e8.png)
-
-#### Kibana aggregations
-
-
-
-Kibana supports two types of aggregations:
-
-
--   Bucket aggregations
--   Metric aggregations
-
-
-As aggregation concepts are key to
-understanding how visualizations are built, let\'s get an overview of
-them before jumping into building visualizations.
-
-
-
-##### Bucket aggregations
-
-
-
-The grouping of documents by a common criteria is called **bucketing**. Bucketing is very
-similar to the `GROUP BY` functionality in SQL. Depending on
-the aggregation type, each bucket is
-associated with a criterion that determines whether a document in
-the current context belongs to the bucket.
-Each bucket provides the information about the total number of documents
-it contains.
-
-Bucket aggregations can do the following:
-
-
--   Give an employee index containing employee documents
--   Find the number of employees based on their age group or location
--   Give the Apache access logs index, and find the number of 404
-    responses by country
-
-
-Bucket aggregation supports sub aggregations, that is, given a bucket,
-all the documents present in the bucket can be further bucketed (grouped
-based on criteria); for example, finding the number of 404 responses by
-country and also by state.
-
-Depending on the type of bucket aggregation, some define a single
-bucket, some define a fixed number of multiple buckets, and others
-dynamically create buckets during the aggregation process.
-
-Bucket aggregations can be combined with metric aggregations---for
-example, finding the average age of employees per age group.
-
-Kibana supports the following types of bucket aggregations:
-
-
--   **Histogram**: This type of aggregation
-    works only on numeric fields and, given
-    the value of the numeric field and the interval, it works by
-    distributing them into fixed-size interval buckets. For example, a
-    histogram can be used to find the number of products per price
-    range, with an interval of 100.
--   **Date Histogram**: This is a type of histogram
-    aggregation that works only on date
-    fields. It works by distributing them into fixed-size date interval
-    buckets. It supports date/time-oriented intervals such as 2 hours,
-    days, weeks, and so on. Kibana provides various intervals including
-    auto, millisecond, second, minute, hour, day, week, month, year, and
-    custom, for ease of use. Using the `Custom` option,
-    date/time-oriented intervals such as 2 hours, days, weeks, and so
-    on, can be supplied. This histogram is ideal for analyzing
-    time-series data---for example, finding the total number of incoming
-    web requests per week/day.
--   **Range**: This is similar to histogram aggregations;
-    however, rather than fixed intervals, ranges can be specified. Also,
-    it not only works on numeric fields, but
-    it can work on dates and IP addresses. Multiple ranges can be
-    specified using `from` and `to` values---for
-    example, finding the number of employees falling in the age ranges
-    0-25, 25-35, 35-50, and 50 and above.
-
-
-
-### Note
-
-This type of aggregation includes the `from` value and
-excludes the `to` value for each range.
-
-
-
--   **Terms**: This type of aggregation
-    works by grouping documents based on each
-    unique term in the field. This aggregation is ideal for finding the
-    top [*n*]  values for a field---for example, finding the
-    top five countries based on the number of incoming web requests. 
-
-
-
-### Note
-
-This aggregation works on `keyword` fields only.
-
-
-
--   **Filters**: This aggregation is
-    used to create buckets based on a filter
-    condition. This aggregation allows for the comparison of specific
-    values. For example, finding the average number of web requests in
-    India compared to the US.
-
-
-
--   **GeoHash Grid**: This aggregation works with fields containing `geo_point` values.
-    This aggregation is used for plotting `geo_points` on a
-    map by grouping them into buckets---for example, visualizing web
-    request traffic over different geographies.
-
-
-##### Metric
-
-
-
-This is used to compute metrics based on values extracted from
-the fields of a document. Metrics are used in
-conjunction with buckets. The different metrics that are available are as follows:
-
-
--   **Count**: The default metric
-    in Kibana visualizations; returns the count of documents
--   **Average**: Used to compute the average value (for a field) of all the documents in the bucket
--   **Sum**: Used to compute the sum value (for a field) of all the documents in the bucket
--   **Median**: Used to compute the median value (for a field) of all the documents in the bucket
--   **Min**: Used to compute the minimum value (for a field) of all the documents in the bucket
--   **Max**: Used to compute the maximum value (for a field) of all the documents in the bucket
--   **Standard deviation**: Used to compute the standard deviation (for a field) of all the
-    documents in the bucket
--   **Percentiles**: Used to compute the number of percentile values
--   **Percentile ranks**: For a set of percentiles, this is used to compute the
-    corresponding values
 
 
 
@@ -1023,156 +823,6 @@ The **Visualize** Interface looks as follows:
 ![](./images/7125bfe0-88de-47df-b600-bf37ba76e403.png)
 
 
-The following are the components of the
-**Visualize** interface as depicted in the screenshot:
-
-
--   **Visualization designer**: This is used for choosing
-    appropriate metrics and buckets for creating visualizations.
--   **Visualization preview**: Based on the metrics, buckets,
-    queries, filters, and time frame selected, the visualization is
-    dynamically changed.
--   **Label**: This reflects the metric type and bucket keys
-    as labels. Colors in the visualization can be changed by clicking on
-    **Label** and choosing the color from the color palette.
--   **Query Bar/Field filters**: This is used to filter the
-    search results.
--   **Toolbar: **This provides the option to save, inspect
-    (ES queries), and share visualizations.
--   **Time filter**: Using the time filter, the user can
-    restrict the time to filter the search results.
-
-
-
-### Note
-
-Time filters, the query bar, and field filters are explained in the
-[*Discover*]  section.
-
-
-### Visualization types
-
-
-
-Let\'s take a look at each visualization type in detail.
-
-
-
-#### Line, area, and bar charts
-
-
-
-These charts are used for visualizing
-the data distributions by plotting them
-against an [*x*] /[*y*]  axis. These charts are also
-used for visualizing the time-series data to
-analyze trends. Bar and area charts are very useful for visualizing
-stacked data (that is, when sub aggregations are used).
-
-Kibana 5.5 onward provides the option to dynamically switch the chart
-type; that is, the user can start off with a line chart but can change
-its type to either bar or area, thus allowing for the flexibility of
-choosing the right visualizations for analysis.
-
-#### Data tables
-
-
-
-This is used to display aggregated data in a
-tabular format. This aggregation is useful for analyzing data that has a
-high degree of variance and that would be difficult to analyze using
-charts. For example, a data table is useful for finding the top 20 URLs
-or top 20 IP addresses. It helps identify the top [*n*]  types
-of aggregations.
-
-#### Markdown widgets
-
-
-
-This type of visualization is used to create
-formatted text containing general
-information, comments, and instructions pertaining to a dashboard. This
-widget accepts GitHub-flavored Markdown text
-(<https://help.github.com/categories/writing-on-github/>).
-
-#### Metrics
-
-
-
-**Metric** aggregations work only
-on numeric fields and display a single numeric value for the
-aggregations that are selected. 
-
-#### Goals
-
-
-
-**Goal** is a metric aggregation that provides visualizations that display how the metric progresses toward
-a fixed goal. It is a new visualization that was introduced in Kibana
-5.5.
-
-#### Gauges
-
-
-
-A **gauge** is a metric aggregation
-that provides visualizations that are used to
-show how a metric value relates to the predefined thresholds/ranges. For
-example, this visualization can be used to show whether a server load is
-within a normal range or instead has reached critical capacity. It is a
-new visualization that was introduced in Kibana 5.5.
-
-#### Pie charts
-
-
-
-This type of visualization is used to
-represent part-to-whole relationships. Parts are represented by slices
-in the visualization.
-
-#### Co-ordinate maps
-
-
-
-This type of visualization is used to display
-the geographical area mapped to the data determined by the specified
-buckets/aggregations. In order to make use of this visualization,
-documents must have some fields mapped to the
-`geo_point` datatype. It uses a GeoHash grid aggregation and
-groups points into buckets that represent cells in a grid. This type of
-visualization was previously called a tile map.
-
-#### Region maps
-
-
-
-**Region maps** are thematic maps on which boundary vector shapes are colored using a
-gradient; higher-intensity colors indicate higher values, and
-lower-intensity colors indicate lower values. These are
-also known as **choropleth maps**
-(<https://en.wikipedia.org/wiki/Choropleth_map>). Kibana offers two
-vector layers by default: one for countries of the world and one for US
-shapes. It is a new type of visualization that was introduced in Kibana
-5.5.
-
- 
-
- 
-
- 
-
-#### Tag clouds
-
-
-
-A **tag cloud** is a visual
-representation of text data typically used to
-visualize free-form text. Tags are usually single words, and the
-importance of each tag is shown with a font size or color. The font size
-for each word is determined by the metric aggregation. For example, if a
-count (metric) is used, then the most frequently occurring word has the
-biggest font size and the least occurring word has the smallest font
-size.
 
 
 ### Visualizations in action

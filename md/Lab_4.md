@@ -390,7 +390,7 @@ Let\'s go over the key aspects of the response. The key parts are
 numbered 1, 2, 3, and so on, and are explained in the following points:
 
 
--   The`hits.total` element shows the number of
+-   The `hits.total` element shows the number of
     documents that were considered or were in
     the context of the query. If there was no additional query or filter
     specified, it will include all of the documents in the type or

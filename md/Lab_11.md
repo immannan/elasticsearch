@@ -51,35 +51,7 @@ you come across Elasticsearch and Logstash examples, or scenarios using
 Beats in this lab, make sure that you have compatible versions of
 Elasticsearch and Logstash installed.
 
-#### Installing on Windows
 
-
-
-Unzip the downloaded file and navigate to
-the extracted location, as follows:
-
-```
-E:>cd E:\metricbeat-7.0.0-windows-x86_64
-```
-
-To install Metricbeat as a service on Windows, perform the following
-steps:
-
-
-1.  Open Windows PowerShell as an administrator and navigate to the
-    extracted location.
-2.   Run the following commands to install Metricbeat as a Windows
-    service from the PowerShell prompt as follows:
-
-
-```
-PS >cd E:\metricbeat-7.0.0-windows-x86_64
-PS >E:\metricbeat-7.0.0-windows-x86_64>.\install-service-metricbeat.ps1
-```
-
-You need to set the execution policy for the current session to allow
-the script to run if script execution is disabled.For
-example, `PowerShell.exe -ExecutionPolicy UnRestricted -File .\install-service-metricbeat.ps1`.
 
 #### Installing on Linux
 
@@ -143,31 +115,6 @@ MongoDB, as shown in the following diagram:
 ![](./images/a2b64ee4-7b3e-473e-aa3f-fe3bccb8205d.png)
 
 
-The key benefits of Metricbeat are as follows: 
-
-
--   **Metricbeat sends error events, too**: When
-    the service is not reachable or is down,
-    Metricbeat will still send events that contain full error messages
-    obtained when they are fetching information  from the host systems.
-    This is beneficial for troubleshooting or identifying the reason
-    behind the outage of the service. 
--   **Combines multiple related metrics into a single
-    event**: Metricbeat fetches all related metrics from the
-    host system, making a single request rather than making multiple
-    requests for fetching each metric one by one, thus resulting in less
-    load on the services/host systems. Fetched metrics are combined into
-    a single event and sent to the configured output.
--   **Sends metadata information**: Metrics sent by
-    Metricbeat contain both numbers as well as strings for contacting
-    the status information. It also ships basic metadata information
-    about each metric as part of each event. This is helpful for mapping
-    appropriate data types during storage and helps with
-    querying/filtering data, identifying events based on metadata
-    information, and so on.
--   **Sends raw data as it is**: Metricbeat sends obtained
-    raw data as-is without performing any processing or any aggregation
-    operations on it, thus reducing its complexity.
 
 #### Event structure
 
@@ -337,11 +284,7 @@ be stored in the `mysql.yml` file. By default, except for the
 modules that are available in Metricbeat, execute the following command:
 
 ```
-Windows:
-E:\metricbeat-7.0.0-windows-x86_64>metricbeat.exe modules list
-
-Linux:
-[locationOfMetricBeat]$./metricbeat modules list
+metricbeat modules list
 ```
 
 The `modules list` command displays all the available modules
@@ -374,11 +317,7 @@ To enable it, execute the `modules enable` command, passing
 one or more module names. For example:
 
 ```
-Windows:
-E:\metricbeat-7.0.0-windows-x86_64>metricbeat.exe modules enable redis mongodb
-
-Linux:
-[locationOfMetricBeat]$./metricbeat modules enable redis mongodb
+metricbeat modules enable redis mongodb
 ```
 
 Similar to disabling modules, execute
@@ -386,11 +325,7 @@ the `modules disable` command, passing one or more module
 names to it. For example: 
 
 ```
-Windows:
-E:\metricbeat-7.0.0-windows-x86_64>metricbeat.exe modules disable redis mongodb
-
-Linux:
-[locationOfMetricBeat]$./metricbeat modules disable redis mongodb
+metricbeat modules disable redis mongodb
 ```
 
 
@@ -1008,8 +943,7 @@ following screenshot:
 ![](./images/f4a5e370-6bf5-4155-a3f6-a40e53039dc0.png)
 
 
-**\[Metricbeat Host\] Overview
-Dashboard:** This dashboard is useful for
+**Metricbeat Host Overview Dashboard:** This dashboard is useful for
 finding the detailed metrics of individual systems/hosts. In order to
 filter metrics based on a particular host, enter the search/filter
 criterion in the search/query bar. In the following screenshot, the
@@ -1040,84 +974,6 @@ the `Start `button as shown in the following screenshot:
 ![](./images/308abb94-3636-4abb-a29b-5f798fbb8fee.png)
 
 
-
-### Note
-
-To view the dashboard in full-screen mode, click
-the `Full screen` button on the top left navigation bar. This hides
-the browser and the top navigation bar. To exit full-screen mode, hover
-over and click the `Kibana` button on the lower left-hand side of
-the page, or simply press the [*Esc*]  key.
-
-
-
-### Note
-
-Refer to Lab 7, [*Visualizing Data with Kibana,*]  to
-learn how to effectively use Kibana and the different sections of Kibana
-to gain insights into your data. 
-
-
-
-Deployment architecture
------------------------------------------
-
-
-
-The following diagram depicts the commonly
-used Elastic Stack deployment architecture:
-
-
-![](./images/5c37e3f3-120e-4f53-9bf5-2515d02e00c5.png)
-
-
-This diagram depicts three possible architectures:
-
-
--   **Ship the operation metrics directly to Elasticsearch**:
-    As seen in the preceding diagram, you will install various types of
-    **Beats**, such as **Metricbeat**,
-    **Filebeat**, **Packetbeat**, and so on, on
-    the edge servers from which you would like to ship the operation
-    metrics/logs. If no further processing is required, then the
-    generated events can be shipped directly to the Elasticsearch
-    cluster. Once the data is present in Elasticsearch, it can then be
-    visualized/analyzed using Kibana. In this architecture, the flow of
-    events would be **Beats → Elasticsearch → Kibana**. 
-
-
-
--   **Ship the operation metrics to Logstash**: The operation
-    metrics/logs that are captured by Beats and installed on edge
-    servers is sent to Logstash for further processing, such as parsing
-    the logs or enriching log events. Then, the parsed/enriched events
-    are pushed to Elasticsearch. To increase the processing capacity,
-    you can scale up Logstash instances, for example, by configuring a
-    set of Beats to send data toLogstash instance 1 and configuring
-    another set of Beats to send data to Logstash instance 2, and so on.
-    In this architecture, the flow of events would be **Beats →
-    Logstash → Elasticsearch → Kibana**. 
--   **Ship the operation metrics to a resilient queue**: If
-    the generated events are at a very high rate and if Logstash is
-    unable to cope with the load or to prevent loss of data/events when
-    Logstash is down, you can go for resilient queues such as Apache
-    Kafka so that events are queued. Then, Logstash can process them at
-    its own speed, thus avoiding the loss of operation metrics/logs
-    captured by Beats. In this architecture, the flow of events would
-    be **Beats → Kafka → Logstash → Elasticsearch →
-    Kibana**. 
-
-
-
-### Note
-
-Starting with Logstash 5.x, you can make use of the persistent queue
-settings of Logstash and make use of it as queue, too. However, it
-doesn\'t offer a high degree of resilience like Kafka. 
-
-
-In the aforementioned architectures, you can easily scale up/scale down instances of Elasticsearch, Logstash,
-and Kibana based on the use case at hand.
 
 
 

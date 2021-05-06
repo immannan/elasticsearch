@@ -17,7 +17,6 @@ In this lab, we will be covering the following topics:
 -   Installing and configuring Filebeats for shipping logs
 
 
-
 Parsing and enriching logs using Logstash
 -----------------------------------------------------------
 
@@ -28,11 +27,8 @@ Log data is typically made up of two parts, as follows:
 logdata = timestamp + data
 ```
 
-`timestamp` is the time when the event occurred and
-`data` is the information about the event.
-`data` may contain just a single piece of information or it
-may contain many pieces of information.
-
+`timestamp` is the time when the event occurred and `data` is the information about the event.
+`data` may contain just a single piece of information or it may contain many pieces of information.
 
 
 
@@ -63,7 +59,7 @@ true. In doing so, you can let the plugin know that it needs to detect column na
 #csv_file.conf
 input { 
    file{
-      path => "D:\es\logs\users.csv"
+      path => "/home/elasticsearch/Lab06/users.csv"
       start_position => "beginning"
       }
 } 
@@ -99,7 +95,7 @@ its usage. The following code block shows the use of the
 #csv_file_mutuate.conf
 input { 
    file{
-      path => "D:\es\logs\users.csv"
+      path => "/home/elasticsearch/Lab06/users.csv"
       start_position => "beginning"
       sincedb_path => "NULL"
    }
@@ -185,11 +181,6 @@ HTTPDATE %{MONTHDAY}/%{MONTH}/%{YEAR}:%{TIME} %{INT}
 ```
 
 
-### Note
-
-The complete list of patterns can be found
-at <https://github.com/logstash-plugins/logstash-patterns-core/blob/master/patterns/grok-patterns>.
-
 
 If a pattern is not available, then you can use a regular expression by
 using the following format:
@@ -209,7 +200,7 @@ Let\'s look at some examples to understand `grok` better:
 
 input { 
    file{
-      path => "D:\es\logs\msg.log"
+      path => "/home/elasticsearch/Lab06/msg.log"
       start_position => "beginning"
       sincedb_path => "NULL"
    }
@@ -236,15 +227,15 @@ then the output would be as follows:
 
 ```
 {
-          "path" => "D:\\es\\logs\\msg.log",
-    "@timestamp" => 2017-11-24T12:30:54.039Z,
-"data" => "this is a random message\r",
+      "path" => "/home/elasticsearch/Lab06/msg.log",
+      "@timestamp" => 2017-11-24T12:30:54.039Z,
+      "data" => "this is a random message\r",
       "@version" => "1",
-          "host" => "SHMN-IN",
-"messageId" => 1,
-"eventtime" => "2017-10-11T21:50:10.000+00:00",
+      "host" => "SHMN-IN",
+      "messageId" => 1,
+      "eventtime" => "2017-10-11T21:50:10.000+00:00",
        "message" => "2017-10-11T21:50:10.000+00:00 tmi_19 001 this is a random message\r",
-"userid" => "tmi_19"
+      "userid" => "tmi_19"
 }
 ```
 
@@ -253,11 +244,6 @@ then the output would be as follows:
 
 If the pattern doesn\'t match the text, it will add a
 `_grokparsefailure` tag to the `tags` field.
-
-
-There is a tool hosted at
-[http://grokdebug.herokuapp.com](http://grokdebug.herokuapp.com/)
-which helps build `grok` patterns that match the log.
 
 
 ### Note
@@ -269,16 +255,6 @@ under the `DevTools `tab in Kibana.
 
 #### Date filter
 
-
-
-This plugin is used for parsing the dates
-from the fields. This plugin is very handy
-and useful when working with time series events. By default, Logstash
-adds a `@timestamp` field for each event, representing the
-time it processed the event. But the user might be interested in the
-actual timestamp of the generated event rather than the processed
-timestamp. So, by using this filter, you can parse the date/timestamp
-from the fields and then use it as the timestamp of the event.
 
 We can use the plugin like so:
 
@@ -299,8 +275,8 @@ time processed by Logstash, too:
 filter {
     date {
     match => [ "timestamp", "dd/MMM/YYYY:HH:mm:ss Z" ]
-target => "event_timestamp"
-         }
+    target => "event_timestamp"
+    }
 }
 ```
 
@@ -322,106 +298,19 @@ match => [ "eventdate", "dd/MMM/YYYY:HH:mm:ss Z", "MMM dd yyyy HH:mm:ss","MMM d 
 ```
 
 
-#### Geoip filter
-
-
-
-This plugin is used to enrich the log
-information. Given the IP address, it adds the geographical location of
-the IP address. It finds the geographical
-information by performing a lookup against the GeoLite2 City database
-for valid IP addresses and populates fields with results. The GeoLite2
-City database is a product of the Maxmind organization and is available
-under the CCA-ShareAlike 4.0 license. Logstash comes bundled with
-the GeoLite2 City database, so when performing a lookup, it doesn\'t
-need to perform any network call; this is why the lookup is fast.
-
-The only required parameter for this plugin is `source`, which
-accepts an IP address in string format. This plugin creates a
-`geoip` field with geographical details such as country,
-postal code, region, city, and so on. A `[geoip][location]`
-field is created if the GeoIP lookup returns a latitude and longitude,
-and it is mapped to the `geo_point` type when indexing to
-Elasticsearch. `geop_point` fields can be used for
-Elasticsearch\'s geospatial query, facet, and filter functions, and can
-be used to generate Kibana\'s map visualization, as shown in the
-following screenshot:
-
-
-![](./images/c9798fbb-ffb3-4997-ba29-f46743bac3bf.png)
-
-
-
-### Note
-
-The Geoip filter supports both IPv4 and IPv6 lookups.
-
-
-#### Useragent filter
-
-
-
-This filter parses user agent strings into
-structured data based on BrowserScope
-(<http://www.browserscope.org/>) data. It adds information about
-the user agent, such as family, operating
-system, version, device, and so on. To extract the user agent details,
-this filter plugin makes use of the `regexes.yaml` database
-that is bundled with Logstash. The only required parameter for this
-plugin is the `source` parameter, which accepts strings
-containing user agent details, as shown in the following screenshot:
-
-
-![](./images/a4022d42-9077-455b-830c-45a6f11266e4.png)
 
 
 
 
+#### Setup Filebeat
 
 
 
+1. Filebeat has been already downloaded at following path: `/elasticstack/filebeat-7.12.1-linux-x86_64` and bin folder added to `PATH` variable.
+2. Important: Switch to `elasticsearch` user:
+      
+      `su elasticsearch`
 
-
-Filebeat
---------------------------
-
-
-Filebeat is an open source, lightweight log
-shipping agent that is installed as an agent to ship logs from local
-files. It monitors log directories, tails the files, and sends them to
-Elasticsearch, Logstash, Redis, or Kafka. It allows us to send logs from
-different systems to a centralized server. The logs can then be parsed
-or processed from here.
-
-
-### Downloading and installing Filebeat
-
-
-
-Navigate to <https://www.elastic.co/downloads/beats/filebeat-oss> and,
-depending on your operating system, download
-the `.zip`/`.tar` file. The installation of Filebeat
-is simple and straightforward:
-
-
-![](./images/9e1beb51-a91d-4880-a097-be6e547005db.png)
-
-
-
-
-
-#### Installing on Linux
-
-
-
-Unzip the `tar.gz` package and
-navigate to the newly created folder, as
-follows:
-
-```
-$> tar -xzf filebeat-7.0.0-linux-x86_64.tar.gz
-$> cd filebeat
-```
 
 
 
@@ -451,16 +340,14 @@ sections:
 ### Note
 
 The `filebeat.yml` file will be present in the installation
-directory if `.zip` or `.tar` files are used. If
-`dep` or `rpm` is used for installation, then it
-will be present in the `/etc/filebeat` location.
+directory: `/elasticstack/filebeat-7.12.1-linux-x86_64`
 
 
 Some of these sections are common for all
 type of Beats. Before we look into some of these, let\'s see what a
 simple configuration would look like. As we can see in the following
 configuration, when Filebeat is started, it looks for files ending with
-the `.log` extension in the `E:\fenago\logs\` path.
+the `.log` extension in the `/home/elasticsearch/logs/` path.
 It ships the log entries of each file to Elasticsearch, which is
 configured as the output, and is hosted at `localhost:9200`:
 
@@ -477,7 +364,7 @@ filebeat.inputs:
 
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
-    - E:\fenago\logs\*.log
+    - /home/elasticsearch/logs/*.log
 
 #================================ Outputs =====================================
 
@@ -494,15 +381,11 @@ Any changes made to `filebeat.yml` require restarting Filebeat
 to pick up the changes.
 
 
-Place some log files in `E:\fenago\logs\`. To get Filebeat to
+Place some log files in `/home/elasticsearch/logs/`. To get Filebeat to
 ship the logs, execute the following command:
 
 ```
-Windows:
-E:\>filebeat-7.0.0-windows-x86_64>filebeat.exe
-
-Linux:
-[locationOfFilebeat]$ ./filebeat
+filebeat
 ```
 
 
@@ -513,8 +396,7 @@ To run the preceding example, please replace the content of the default
 preceding snippet.
 
 
-To validate whether the logs were shipped to
-Elasticsearch, execute the following command:
+To validate whether the logs were shipped to Elasticsearch, execute the following command:
 
 ```
 E:\>curl -X GET http://localhost:9200/filebeat*/_search?pretty
@@ -570,7 +452,7 @@ Sample Response:
           "log" : {
             "offset" : 0,
             "file" : {
-              "path" : "E:\\fenago\\logs\\one.log"
+              "path" : "/home/elasticsearch/logs/one.log"
             }
           },
           "message" : "exception at line1",
@@ -595,29 +477,11 @@ the `filebeat-YYYY.MM.DD` pattern. The log data would be
 placed in the `message` field.
 
 
-#### Filebeat inputs
-
-
-
-This section will show you how to configure Filebeat manually instead of
-using out-of-the-box preconfigured modules for shipping
-files/logs/events. This section contains a list of inputs that
-Filebeat uses to locate and process log
-files. Each input item begins with a dash (`-`) and
-contains input-specific configuration options to define the behavior of
-the input.
-
-A sample configuration is as follows:
-
-
-![](./images/cae1801d-ffdc-4cb5-95aa-888e21bed548.png)
 
 
 
 
 #### Filebeat general/global options
-
-
 
 This section contains configuration options and some general/global settings to control the behavior of
 Filebeat. 
@@ -709,8 +573,7 @@ Logstash, Kafka, Redis, file, and console.
 Some outputs that can be configured are as follows:
 
 
--   `elasticsearch`: It is used to send the events directly to
-    Elasticsearch. 
+-   `elasticsearch`: It is used to send the events directly to Elasticsearch. 
 
 
 A sample Elasticsearch output configuration is as follows:
@@ -801,7 +664,6 @@ pretty: true
 #### Logging
 
 
-
 This section contains the options for configuring the Filebeat logging
 output. The logging system can write logs to `syslog` or
 `rotate log` files. If logging is not explicitly configured,
@@ -819,69 +681,11 @@ logging.files:
  keepfiles: 10
 ```
 
-Some available configuration options are as follows:
-
-
--   `level`: To specify the logging level.
--   `to_files`: To write all logging output to files. The
-    files are subject to file rotation. This is the default value.
--   `to_syslog`: To write the logging output to
-    `syslogs` if this setting is set to `true`.
-
-
-
--   `files.path`, `files.name`,
-    and `files.keepfiles`: These are used to
-    specify the location of the file, the name of the file, and the
-    number of most recently rotated log files to keep on the disk,
-    respectively.
-
 
 #### Filebeat modules
 
 
-
-Filebeat modules simplify the process of
-collecting, parsing, and visualizing logs of common formats. 
-
-A module is made up of one or more filesets. A fileset is made up of the
-following:
-
-
--   Filebeat input configurations that contain the default paths
-    needed to look out for logs. It also provides configuration for
-    combining multiline events when needed.
--   An Elasticsearch Ingest pipeline definition to parse and enrich
-    logs. 
--   Elasticsearch templates, which define the field definitions so that
-    appropriate mappings are set to the fields of the events.
--   Sample Kibana dashboards, which can be used for visualizing logs.
-
-
-
-### Note
-
-Filebeat modules require the Elasticsearch Ingest node. The version of
-Elasticsearch should be greater that 5.2.
-
-
-Some of the modules that are shipped with Filebeat are as follows:
-
-
--   Apache module
--   Auditd module
--   Elasticsearch module
--   Haproxy module
--   IIS module
--   Kafka module
--   MongoDB module
--   MySQL module
--   Nginx module
--   PostgreSQL module
--   Redis module
-
-
-The`modules.d` directory contains the default configurations for all the modules that are available in
+The `modules.d` directory contains the default configurations for all the modules that are available in
 Filebeat. Any configuration that\'s specific to a module is stored in
 a`.yml` file, with the name of the file being the name of the
 module. For example, the configuration related to the `redis`
@@ -918,11 +722,7 @@ To enable modules, execute the `modules enable` command,
 passing one or more module names:
 
 ```
-Windows:
-E:\filebeat-7.0.0-windows-x86_64>filebeat.exe modules enable redis mysql
-
-Linux:
-[locationOfFileBeat]$./filebeat modules enable redis mysql
+filebeat modules enable redis mysql
 ```
 
 
@@ -938,22 +738,17 @@ the `modules disable` command, passing one or more module
 names to it. For example:
 
 ```
-Windows:
-E:\filebeat-7.0.0-windows-x86_64>filebeat.exe modules disable redis mysql
-
-Linux:
-[locationOfFileBeat]$./filebeat modules disable redis mysql
+filebeat modules disable redis mysql
 ```
 
 Once the module is enabled, to load the recommended index template for
 writing to Elasticsearch, and to deploy sample dashboards for
-visualizing data in Kibana, execute the`setup` command, as
+visualizing data in Kibana, execute the `setup` command, as
 follows:
 
-```
 
-Linux:
-[locationOfFileBeat]$./filebeat -e setup 
+```
+filebeat -e setup 
 ```
 
 The `-e` flag specifies logging the output to
@@ -961,17 +756,6 @@ The `-e` flag specifies logging the output to
 `setup` command is run, to load index templates and sample
 dashboards, start Filebeat as usual so that it can start shipping logs
 to Elasticsearch.
-
-
-### Note
-
-The `setup` command has to be executed while installating or
-upgrading Filebeat, or after a new module is enabled.
-
-Most modules have dependency plugins such as `ingest-geoip`
-and `ingest-user-agent`, which need to be installed on
-Elasticsearch prior to setting up the modules, otherwise the setup will
-fail.
 
 
 Rather than enabling the modules by passing them as command-line
@@ -985,6 +769,7 @@ filebeat.modules:
 -module: mysql
 ```
 
+
 Each of the modules has associated filesets which contain certain
 variables that can be overridden either using the configuration file or
 by passing it as a command-line parameter using the `-M` flag
@@ -996,14 +781,14 @@ For the configuration file, use the following code:
 filebeat.modules:
 -module: nginx
   access:
-    var.paths: ["C:\ngnix\access.log*"]
+    var.paths: ["\var\ngnix\access.log"]
 ```
+
 
 For the command line, use the following code:
 
 ```
-Linux:
-[locationOfFileBeat]$./filebeat-e-modules=nginx-M"nginx.access.var.paths=[\var\ngnix\access.log*]"
+filebeat-e-modules=nginx-M"nginx.access.var.paths=[\var\ngnix\access.log*]"
 ```
 
 

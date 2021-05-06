@@ -1,23 +1,18 @@
 <img align="right" src="./images/logo.png">
 
 
-Lab 1. Introducing Elastic Stack
+Lab 1. Elastic Search
 ---------------------------------------------
 
 
 
-In this lab, we will cover the following topics:
+In this lab, we will start the following services:
 
-
--   What is Elasticsearch, and why use it?
--   A brief history of Elasticsearch and Apache Lucene
--   Elastic Stack components
--   Use cases of Elastic Stack
-
+1) Elastic Search
+2) Kibana
 
 
 ### Running Elasticsearch
-
 
 
 Elasticsearch can be downloaded as a ZIP, TAR, DEB, or RPM package. We will use the ZIP format as it is the least intrusive and the easiest
