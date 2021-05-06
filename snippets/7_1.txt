@@ -1,0 +1,13 @@
+ log [09:00:51.216] [info][status][plugin:kibana@undefined] Status changed from uninitialized to green - Ready
+ log [09:00:51.279] [info][status][plugin:elasticsearch@undefined] Status changed from uninitialized to yellow - Waiting for Elasticsearch
+ log [09:00:51.293] [info][status][plugin:interpreter@undefined] Status changed from uninitialized to green - Ready
+ log [09:00:51.300] [info][status][plugin:metrics@undefined] Status changed from uninitialized to green - Ready
+ log [09:00:51.310] [info][status][plugin:apm_oss@undefined] Status changed from uninitialized to green - Ready
+ log [09:00:51.320] [info][status][plugin:console@undefined] Status changed from uninitialized to green - Ready
+ log [09:00:51.779] [info][status][plugin:timelion@undefined] Status changed from uninitialized to green - Ready
+ log [09:00:51.785] [info][status][plugin:tile_map@undefined] Status changed from uninitialized to green - Ready
+ log [09:00:51.987] [info][status][plugin:elasticsearch@undefined] Status changed from yellow to green - Ready
+ log [09:00:52.036] [info][migrations] Creating index .kibana_1.
+ log [09:00:52.995] [info][migrations] Pointing alias .kibana to .kibana_1.
+ log [09:00:53.099] [info][migrations] Finished in 1075ms.
+ log [09:00:53.102] [info][listening] Server running at http://localhost:5601

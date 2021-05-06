@@ -1,0 +1,14 @@
+{
+  "@timestamp": "2019-04-02T11:53:08.056Z",
+  "metricset": {
+    "host": "localhost:27017",
+    "rtt": 1003057,
+    "module": "mongodb",
+    "name": "status"
+  },
+"error": {
+    "message": "no reachable servers"
+  },
+  "mongodb": {
+    "status": {}
+}

@@ -1,0 +1,20 @@
+PUT index_standard_analyzer
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "std": { 
+          "type": "standard"
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "my_text": {
+        "type": "text",
+        "analyzer": "std"
+      }
+    }
+  }
+}

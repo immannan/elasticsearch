@@ -1,0 +1,26 @@
+{
+  "sensor_id": 1,
+  "time": 1512113760000,
+  "reading": 16.24,
+  "lookupResult": [
+    {
+      "buildingName": "222 Broadway",
+      "sensorType": "Temperature",
+      "latitude": 40.710936,
+      "locationOnFloor": "Desk 102",
+      "department": "Engineering",
+      "floor": "Floor 1",
+      "room": "101",
+      "customer": "Linkedin",
+      "longitude": -74.0085
+    }
+  ],
+  "@timestamp": "2019-05-26T05:23:22.618Z",
+  "@version": "1",
+  "host": "0:0:0:0:0:0:0:1",
+  "headers": {
+    "remote_user": "sensor_data",
+    "http_accept": "*\/*",
+    ...
+  }
+}

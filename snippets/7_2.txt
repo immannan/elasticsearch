@@ -1,0 +1,3 @@
+C:\>curl localhost:9200/_cat/indices/kibana_sample*?v
+health status index uuid pri rep docs.count docs.deleted store.size pri.store.size
+green open kibana_sample_data_ecommerce 4fjYoAkMTOSF8MrzMObaXg 1 0 4675 0 4.8mb 4.8mb

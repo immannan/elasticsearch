@@ -1,0 +1,35 @@
+curl -X GET 'http://localhost:9200/_cat/indices?v=&format=json' 
+
+Sample Response:
+[
+    {
+        "health": "yellow",
+        "status": "open",
+        "index": "metricbeat-7.0.0-2019.04.02",
+        "uuid": "w2WoP2IhQ9eG7vSU_HmgnA",
+        "pri": "1",
+        "rep": "1",
+        "docs.count": "29",
+        "docs.deleted": "0",
+        "store.size": "45.3kb",
+        "pri.store.size": "45.3kb"
+    },
+    {
+        "health": "yellow",
+        "status": "open",
+        "index": ".kibana",
+        "uuid": "sSzeYu-YTtWR8vr2nzKrbg",
+        "pri": "1",
+        "rep": "1",
+        "docs.count": "108",
+        "docs.deleted": "59",
+        "store.size": "289.3kb",
+        "pri.store.size": "289.3kb"
+    }
+]
+
+curl -X GET 'http://localhost:9200/_cat/indices?v' 
+
+health status index uuid pri rep docs.count docs.deleted store.size pri.store.size
+yellow open metricbeat-7.0.0-2019.04.02 w2WoP2IhQ9eG7vSU_HmgnA 1 1 29 0 45.3kb 45.3kb
+yellow open .kibana sSzeYu-YTtWR8vr2nzKrbg 1 1 108 59 289.3kb 289.3kb

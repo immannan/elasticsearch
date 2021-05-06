@@ -1,0 +1,43 @@
+{
+  ...
+  "hits": 
+    {
+    "total" : {
+      "value" : 10000,
+      "relation" : "gte"
+    },
+    "max_score": 1,
+    "hits": [
+            {
+        "_index": "bigginsight",
+        "_type": "_doc",
+        "_id": "AV7Sy4FofN33RKOLlVH0",
+        "_score": 1,
+        "_source": {
+          "inactiveMs": 1316,
+          "bandwidth": 51.03333333333333,
+          "signalStrength": -58,
+          "accessPointId": "AP-1D7F0",
+          "usage": 3062,
+          "downloadCurrent": 39.93333333333333,
+          "uploadCurrent": 11.1,
+          "mac": "d2:a1:74:28:c0:5a",
+          "tags": [],
+          "@timestamp": "2017-09-30T12:38:25.867Z",
+          "application": "Dropbox",
+          "downloadTotal": 2396,
+          "@version": "1",
+          "networkId": "Guest",
+          "location": "23.102900,72.595611",
+          "time": 1506164775655,
+          "band": "2.4 GHz",
+          "department": "HR",
+          "category": "File Sharing",
+          "uploadTotal": 666,
+          "username": "Cheryl Stokes",
+          "customer": "Microsoft"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{"@timestamp" : "2019-04-22T12:40:16.608Z",
+"service" : {
+  "type" : "system"
+},
+"system" : {
+  "uptime" : {
+    "duration" : {
+      "ms" : 830231705
+    }
+  }
+},
+"event" : {
+  "module" : "system",
+  "duration" : 221012700,
+  "dataset" : "system.uptime"
+},
+"metricset" : {
+  "name" : "uptime"
+},
+"agent" : {
+  "type" : "metricbeat",
+  "ephemeral_id" : "1956888d-7da0-469f-9a38-ab8b9ad52e07",
+  "hostname" : "madsh01-I21350",
+  "id" : "5b28d885-1389-4e32-a3a9-3c5e8f9063b0",
+  "version" : "7.0.0"
+},
+"ecs" : {
+  "version" : "1.0.0"
+},
+"host" : {
+  "name" : "madsh01-I21350",
+  "os" : {
+    "kernel" : "6.1.7601.24408 (win7sp1_ldr_escrow.190320-1700)",
+    "build" : "7601.24411",
+    "platform" : "windows",
+    "version" : "6.1",
+    "family" : "windows",
+    "name" : "Windows 7 Enterprise"
+  },
+  "id" : "254667db-4667-46f9-8cf5-0d52ccf2beb9",
+  "hostname" : "madsh01-I21350",
+  "architecture" : "x86_64"
+}
+}

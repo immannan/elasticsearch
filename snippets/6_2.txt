@@ -1,0 +1,23 @@
+#grok1.conf
+
+input { 
+   file{
+      path => "D:\es\logs\msg.log"
+      start_position => "beginning"
+      sincedb_path => "NULL"
+   }
+
+} 
+
+filter {
+  grok{
+  match => {"message" => "%{TIMESTAMP_ISO8601:eventtime} %{USERNAME:userid}  %{GREEDYDATA:data}" }
+  } 
+}
+
+output { 
+  stdout { 
+    codec => rubydebug 
+    }
+
+} 

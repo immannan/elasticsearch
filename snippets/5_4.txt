@@ -1,0 +1,32 @@
+E:\logstash-7.0.0\bin>logstash -f ../conf/beats.conf -r
+Sending Logstash logs to E:/logstash-7.0.0/logs which is now configured via log4j2.properties
+[2019-04-22T10:45:04,551][WARN ][logstash.config.source.multilocal] Ignoring the 'pipelines.yml' file because modules or command line options are spec
+ified
+[2019-04-22T10:45:04,579][INFO ][logstash.runner ] Starting Logstash {"logstash.version"=>"7.0.0"}
+[2019-04-22T10:45:12,622][INFO ][logstash.outputs.elasticsearch] Elasticsearch pool URLs updated {:changes=>{:removed=>[], :added=>[http://127.0.0.1:9
+200/]}}
+[2019-04-22T10:45:13,008][WARN ][logstash.outputs.elasticsearch] Restored connection to ES instance {:url=>"http://127.0.0.1:9200/"}
+[2019-04-22T10:45:13,114][INFO ][logstash.outputs.elasticsearch] ES Output version determined {:es_version=>7}
+[2019-04-22T10:45:13,119][WARN ][logstash.outputs.elasticsearch] Detected a 6.x and above cluster: the `type` event field won't be used to determine t
+he document _type {:es_version=>7}
+[2019-04-22T10:45:13,148][INFO ][logstash.outputs.elasticsearch] New Elasticsearch output {:class=>"LogStash::Outputs::ElasticSearch", :hosts=>["//127
+.0.0.1"]}
+[2019-04-22T10:45:13,162][INFO ][logstash.outputs.elasticsearch] Using default mapping template
+[2019-04-22T10:45:13,186][INFO ][logstash.javapipeline ] Starting pipeline {:pipeline_id=>"main", "pipeline.workers"=>4, "pipeline.batch.size"=>125
+, "pipeline.batch.delay"=>50, "pipeline.max_inflight"=>500, :thread=>"#<Thread:0x1bf9b54c run>"}
+[2019-04-22T10:45:13,453][INFO ][logstash.outputs.elasticsearch] Index Lifecycle Management is set to 'auto', but will be disabled - Index Lifecycle m
+anagement is not installed on your Elasticsearch cluster
+[2019-04-22T10:45:13,459][INFO ][logstash.outputs.elasticsearch] Attempting to install template {:manage_template=>{"index_patterns"=>"logstash-*", "v
+ersion"=>60001, "settings"=>{"index.refresh_interval"=>"5s", "number_of_shards"=>1}, "mappings"=>{"dynamic_templates"=>[{"message_field"=>{"path_match
+"=>"message", "match_mapping_type"=>"string", "mapping"=>{"type"=>"text", "norms"=>false}}}, {"string_fields"=>{"match"=>"*", "match_mapping_type"=>"s
+tring", "mapping"=>{"type"=>"text", "norms"=>false, "fields"=>{"keyword"=>{"type"=>"keyword", "ignore_above"=>256}}}}}], "properties"=>{"@timestamp"=>
+{"type"=>"date"}, "@version"=>{"type"=>"keyword"}, "geoip"=>{"dynamic"=>true, "properties"=>{"ip"=>{"type"=>"ip"}, "location"=>{"type"=>"geo_point"},
+"latitude"=>{"type"=>"half_float"}, "longitude"=>{"type"=>"half_float"}}}}}}}
+[2019-04-22T10:45:13,513][INFO ][logstash.outputs.elasticsearch] Installing elasticsearch template to _template/logstash
+[2019-04-22T10:45:13,902][INFO ][logstash.inputs.beats ] Beats inputs: Starting input listener {:address=>"0.0.0.0:1234"}
+[2019-04-22T10:45:13,932][INFO ][logstash.javapipeline ] Pipeline started {"pipeline.id"=>"main"}
+[2019-04-22T10:45:14,196][INFO ][logstash.agent ] Pipelines running {:count=>1, :running_pipelines=>[:main], :non_running_pipelines=>[]}
+[2019-04-22T10:45:14,204][INFO ][org.logstash.beats.Server] Starting server on port: 1234
+[2019-04-22T10:45:14,695][INFO ][logstash.agent ] Successfully started Logstash API endpoint {:port=>9600}
+
+

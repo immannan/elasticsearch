@@ -1,0 +1,8 @@
+GET /_xpack/security/user                             -- To list all the users
+GET /_xpack/security/user/<username>                  -- To get the details of a specific user
+DELETE /_xpack/security/user/<username>               -- To Delete a user
+POST /_xpack/security/user/<username>                 -- To Create a new user
+PUT /_xpack/security/user/<username>                  -- To Update an existing user
+PUT /_xpack/security/user/<username>/_disable         -- To disable an existing user
+PUT /_xpack/security/user/<username>/_enable          -- To enable an existing disabled user
+PUT /_xpack/security/user/<username>/_password        -- to Change the password

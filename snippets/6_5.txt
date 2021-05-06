@@ -1,0 +1,65 @@
+E:\>curl -X GET http://localhost:9200/filebeat*/_search?pretty
+
+Sample Response:
+{
+  "took" : 2,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 3,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "filebeat-7.0.0-2019.04.22",
+        "_type" : "_doc",
+        "_id" : "bPnZQ2oB_501XGfHmzJg",
+        "_score" : 1.0,
+        "_source" : {
+          "@timestamp" : "2019-04-22T07:01:30.820Z",
+          "ecs" : {
+            "version" : "1.0.0"
+          },
+          "host" : {
+            "id" : "254667db-4667-46f9-8cf5-0d52ccf2beb9",
+            "name" : "madsh01-I21350",
+            "hostname" : "madsh01-I21350",
+            "architecture" : "x86_64",
+            "os" : {
+              "platform" : "windows",
+              "version" : "6.1",
+              "family" : "windows",
+              "name" : "Windows 7 Enterprise",
+              "kernel" : "6.1.7601.24408 (win7sp1_ldr_escrow.190320-1700)",
+              "build" : "7601.24411"
+            }
+          },
+          "agent" : {
+            "type" : "filebeat",
+            "ephemeral_id" : "d2ef4b77-3c46-4af4-85b4-e9f690ce00f1",
+            "hostname" : "madsh01-I21350",
+            "id" : "29600459-f3ca-4516-8dc4-8a0fd1bd6b0f",
+            "version" : "7.0.0"
+          },
+          "log" : {
+            "offset" : 0,
+            "file" : {
+              "path" : "E:\\fenago\\logs\\one.log"
+            }
+          },
+          "message" : "exception at line1",
+          "input" : {
+            "type" : "log"
+          }
+        }
+      },
+    ...
+    ...
+    ...

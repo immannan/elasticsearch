@@ -1,0 +1,21 @@
+PUT index_standard_analyzer_english_stopwords
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "std": { 
+          "type": "standard",
+"stopwords": "_english_"
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "my_text": {
+        "type": "text",
+        "analyzer": "std"
+      }
+    }
+  }
+}

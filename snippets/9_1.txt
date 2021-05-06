@@ -1,0 +1,8 @@
+curl -XPUT 'http://localhost:9200/_snapshot/backups' -H 'Content-Type: application/json' -d '{
+    "type": "s3",
+    "settings": {
+        "bucket": "bucket_name",
+        "region": "us-west",
+        ...
+    }
+}'

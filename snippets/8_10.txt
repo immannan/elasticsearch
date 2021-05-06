@@ -1,0 +1,11 @@
+curl -u elastic:elastic -X POST http://localhost:9200/_xpack/security/user/user3 -H 'content-type: application/json' -d '
+{
+  "password" : "randompassword",
+  "roles" : [ "monitor_role"],
+  "full_name" : "user3",
+  "email" : "user3@fenago.com"
+
+}'
+
+Response:
+user":{"created":true}}

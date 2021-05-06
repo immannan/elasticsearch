@@ -1,0 +1,23 @@
+{
+  ...,
+  "aggregations": {
+    "by_users": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 453,
+      "buckets": [
+        {
+          "key": "Jay May",
+          "doc_count": 2170,
+          "total_usage": {
+            "value": 6516943
+          }
+        },
+        {
+          "key": "Guadalupe Rice",
+          "doc_count": 2157,
+          "total_usage": {
+            "value": 6492653
+          }
+        },
+   ...
+}

@@ -1,0 +1,57 @@
+{
+  "took": 11,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "failed": 0
+  },
+  "hits": {
+    "total" : {
+      "value" : 10000,                            1
+      "relation" : "gte"
+    },                              
+    "max_score": 0,
+    "hits": []                                    2
+  },
+  "aggregations": {                               3
+    "byCategory": {                               4
+      "doc_count_error_upper_bound": 0,           5
+      "sum_other_doc_count": 0,                   6
+      "buckets": [                                8
+        {
+          "key": "Chat",                          9
+          "doc_count": 52277                      10
+        },
+        {
+          "key": "File Sharing",
+          "doc_count": 46912
+        },
+        {
+          "key": "Other HTTP",
+          "doc_count": 38535
+        },
+        {
+          "key": "News",
+          "doc_count": 25784
+        },
+        {
+          "key": "Email",
+          "doc_count": 21003
+        },
+        {
+          "key": "Gaming",
+          "doc_count": 19578
+        },
+        {
+          "key": "Jobs",
+          "doc_count": 19429
+        },
+        {
+          "key": "Blogging",
+          "doc_count": 19317
+        }
+      ]
+    }
+  }
+}

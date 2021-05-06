@@ -1,0 +1,53 @@
+curl -u user2:password "http://localhost:9200/employee/_search?pretty"
+{
+  "took" : 1,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 3,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "employee",
+        "_type" : "_doc",
+        "_id" : "xsTc2GoBlyaBuhcfU42x",
+        "_score" : 1.0,
+        "_source" : {
+"gender" : "M",
+          "state" : "NE",
+          "email" : "user1@fenago.com"
+        }
+      },
+      {
+        "_index" : "employee",
+        "_type" : "_doc",
+        "_id" : "x8Tc2GoBlyaBuhcfU42x",
+        "_score" : 1.0,
+        "_source" : {
+ "gender" : "F",
+          "state" : "OR",
+          "email" : "user2@fenago.com"
+        }
+      },
+      {
+        "_index" : "employee",
+        "_type" : "_doc",
+        "_id" : "yMTc2GoBlyaBuhcfU42x",
+        "_score" : 1.0,
+        "_source" : {
+ "gender" : "F",
+          "state" : "CA",
+          "email" : "user3@fenago.com"
+        }
+      }
+    ]
+  }
+}

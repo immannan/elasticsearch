@@ -1,0 +1,35 @@
+PUT /custom_analyzer_index
+{
+  "settings": {
+    "index": {
+      "analysis": {
+        "analyzer": {
+          "custom_analyzer": {
+            "type": "custom",
+            "tokenizer": "standard",
+            "filter": [
+              "lowercase",
+              "custom_edge_ngram"
+            ]
+          }
+        },
+        "filter": {
+          "custom_edge_ngram": {
+            "type": "edge_ngram",
+            "min_gram": 2,
+            "max_gram": 10
+          }
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "product": {
+        "type": "text",
+        "analyzer": "custom_analyzer",
+        "search_analyzer": "standard"
+      }
+    }
+  }
+}

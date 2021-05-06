@@ -1,0 +1,29 @@
+{
+"took": 3,
+"timed_out": false,
+"_shards": {
+"total": 16,
+"successful": 16,
+    </span>"failed": 0
+},
+"hits": {
+"total": 4,
+"max_score": 1,
+"hits": [
+      {
+        "_index": ".kibana",
+        "_type": "doc",
+        "_id": "config:7.0.0",
+        "_score": 1,
+        "_source": {
+          "type": "config",
+          "config": {
+            "buildNum": 16070
+          }
+        }
+      },
+      ...
+      ...
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+"_source": {
+  "customer": "Google"         // Customer to which the WiFi router and device belongs to
+  "accessPointId": "AP-59484", // Identifier of the WiFi router or Access Point
+  "time": 1506148631061,       // Time of the record in milliseconds since Epoch Jan 1, 1970
+  "mac": "c6:ec:7d:c6:3d:8d",  // MAC address of the client device
+
+  "username": "Pedro Harrison", // Name of the user to whom the device is assigned
+  "department": "Operations",   // Department of the user to which the device belongs to
+
+  "application": "CNBC",        // Application name or domain name for which traffic is reported
+  "category": "News",           // Category of the application
+
+  "networkId": "Internal",      // SSID of the network
+  "band": "5 GHz", // Band 5 GHz or 2.4 GHz
+
+  "location": "23.102789,72.595381", // latitude & longitude separated by comma
+
+  "uploadTotal": 1340,      // Bytes uploaded since the last report
+  "downloadTotal": 2129,    // Bytes downloaded since the last report
+  "usage": 3469,            // Total bytes downloaded and uploaded in current period
+
+  "uploadCurrent": 22.33,   // Upload speed in bytes/sec in current period
+  "downloadCurrent": 35.48, // Download speed in bytes/sec in current period
+  "bandwidth": 57.82,       // Total speed in bytes/sec (Upload speed + download speed)
+
+  "signalStrength": -25,    // Signal strength between WiFi router and device
+  ...
+}

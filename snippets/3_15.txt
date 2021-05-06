@@ -1,0 +1,28 @@
+GET /amazon_products/_search
+{
+  "query": {
+    "constant_score": {
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "price": {
+                  "gte": 10,
+                  "lte": 20
+                }
+              }
+            }
+          ],
+          "must_not": [
+            {
+              "term": {
+                "manufacturer.raw": "encore"
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+GET /_xpack/security/role                               -- To retrieve the list of all roles 
+GET /_xpack/security/role/<rolename>                        -- To retrieve details of a specific role
+POST /_xpack/security/role/<rolename>/_clear_cache          -- To evict/clear roles from the native role cache
+POST /_xpack/security/role/<rolename>                       -- To create a role
+PUT /_xpack/security/role/<rolename>                        -- To update an existing role

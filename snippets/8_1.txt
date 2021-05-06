@@ -1,0 +1,17 @@
+[2019-05-21T13:38:08,679][INFO ][o.e.p.PluginsService ] [MADSH01-APM01] loaded module [x-pack-ccr]
+[2019-05-21T13:38:08,682][INFO ][o.e.p.PluginsService ] [MADSH01-APM01] loaded module [x-pack-core]
+[2019-05-21T13:38:08,684][INFO ][o.e.p.PluginsService ] [MADSH01-APM01] loaded module [x-pack-deprecation]
+[2019-05-21T13:38:08,687][INFO ][o.e.p.PluginsService ] [MADSH01-APM01] loaded module [x-pack-graph]
+[2019-05-21T13:38:08,689][INFO ][o.e.p.PluginsService ] [MADSH01-APM01] loaded module [x-pack-ilm]
+[2019-05-21T13:38:08,690][INFO ][o.e.p.PluginsService ] [MADSH01-APM01] loaded module [x-pack-logstash]
+[2019-05-21T13:38:08,692][INFO ][o.e.p.PluginsService ] [MADSH01-APM01] loaded module [x-pack-ml]
+[2019-05-21T13:38:08,694][INFO ][o.e.p.PluginsService ] [MADSH01-APM01] loaded module [x-pack-monitoring]
+[2019-05-21T13:38:08,696][INFO ][o.e.p.PluginsService ] [MADSH01-APM01] loaded module [x-pack-rollup]
+[2019-05-21T13:38:08,698][INFO ][o.e.p.PluginsService ] [MADSH01-APM01] loaded module [x-pack-security]
+[2019-05-21T13:38:08,700][INFO ][o.e.p.PluginsService ] [MADSH01-APM01] loaded module [x-pack-sql]
+[2019-05-21T13:38:08,707][INFO ][o.e.p.PluginsService ] [MADSH01-APM01] loaded module [x-pack-watcher]
+
+:
+:
+[2019-05-21T13:38:18,783][INFO ][o.e.l.LicenseService ] [MADSH01-APM01] license [727c7d40-2008-428f-bc9f-b7f511fc399e] mode [basic] - valid
+[2019-05-21T13:38:18,843][INFO ][o.e.g.GatewayService ] [MADSH01-APM01] recovered [0] indices into cluster_states

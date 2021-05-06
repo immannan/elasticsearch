@@ -1,0 +1,19 @@
+PUT /catalog1
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 5,
+      "number_of_replicas": 2
+    }
+  },
+  "mappings": {
+    "properties": {
+      "f1": {
+        "type": "text"
+      },
+      "f2": {
+        "type": "keyword"
+      }
+    }
+  }
+}

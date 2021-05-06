@@ -1,0 +1,29 @@
+{
+  "took": 15,
+  "timed_out": false,
+  ...,
+  "hits": {
+    "total" : {
+      "value" : 10000,
+      "relation" : "gte"
+    },
+    "max_score": 0,
+    "hits": []
+  },
+  "aggregations": {
+    "download_estats": {
+      "count": 242835,
+      "min": 0,
+      "max": 241213,
+      "avg": 9049.102065188297,
+      "sum": 2197438700,
+      "sum_of_squares": 133545882701698,
+      "variance": 468058704.9782911,
+      "std_deviation": 21634.664429528162,
+      "std_deviation_bounds": {
+        "upper": 52318.43092424462,
+        "lower": -34220.22679386803
+      }
+    }
+  }
+}

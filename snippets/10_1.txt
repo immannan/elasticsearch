@@ -1,0 +1,18 @@
+select 
+    st.sensor_type as sensorType,
+    l.customer as customer,
+    l.department as department,
+    l.building_name as buildingName,
+    l.room as room,
+    l.floor as floor,
+    l.location_on_floor as locationOnFloor,
+    l.latitude,
+    l.longitude
+from
+    sensors s
+        inner join
+    sensor_type st ON s.sensor_type_id = st.sensor_type_id
+        inner join
+    location l ON s.location_id = l.location_id
+where
+    s.sensor_id = 1; 

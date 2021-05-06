@@ -1,0 +1,28 @@
+GET amazon_products_with_features/_search
+{
+  "query": {
+    "has_child": {
+      "type": "feature",                                     1
+      "query": {
+        "bool": {                                            2
+          "must": [
+            {
+              "term": {                                      3
+                "feature_key": {
+                  "value": "processor_series"
+                }
+              }
+            },
+            {
+              "term": {                                      4
+                "feature_value": {
+                  "value": "Core i7"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

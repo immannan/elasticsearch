@@ -1,0 +1,23 @@
+GET /bigginsight/usageReport/_search?size=0
+{
+  "query": {                                      1
+    "bool": {
+      "must": [
+        {"term": {"customer": "Linkedin"}}, 
+        {"range": {"time": {"gte": 1506257800000, "lte": 1506314200000}}}
+      ]
+    }
+  },
+  "aggs": {
+    "by_users": {                                 2
+      "terms": {
+        "field": "username"
+      },
+      "aggs": {
+        "total_usage": {                          3
+          "sum": { "field": "usage" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "tokens": [
+    {
+      "token": "Tokenizer",
+      "start_offset": 0,
+      "end_offset": 9,
+      "type": "<ALPHANUM>",
+      "position": 0
+    },
+    {
+      "token": "breaks",
+      "start_offset": 10,
+      "end_offset": 16,
+      "type": "<ALPHANUM>",
+      "position": 1
+    },
+    {
+      "token": "characters",
+      "start_offset": 17,
+      "end_offset": 27,
+      "type": "<ALPHANUM>",
+      "position": 2
+    },
+    {
+      "token": "into",
+      "start_offset": 28,
+      "end_offset": 32,
+      "type": "<ALPHANUM>",
+      "position": 3
+    },
+    {
+      "token": "tokens",
+      "start_offset": 33,
+      "end_offset": 39,
+      "type": "<ALPHANUM>",
+      "position": 4
+    }
+  ]
+}

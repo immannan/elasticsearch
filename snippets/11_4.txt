@@ -1,0 +1,43 @@
+############### Metricbeat Configuration Example ################
+#============== Modules configuration =========================
+
+metricbeat.config.modules:
+  # Glob pattern for configuration loading
+  path: ${path.config}/modules.d/*.yml
+
+  # Set to true to enable config reloading
+  reload.enabled: false
+
+  # Period on which files under path should be checked for changes
+  #reload.period: 10s
+
+#=========== Elasticsearch template setting =================
+
+setup.template.settings:
+  index.number_of_shards: 1
+  index.codec: best_compression
+  #_source.enabled: false
+
+#=================== General  Settings===============================
+name: metricbeat_inst1
+
+tags: ["system-metrics", "localhost"]
+
+fields:
+  env: test-env
+
+#============================== Dashboards ===========================
+setup.dashboards.enabled: true
+
+#============================== Kibana Settings ===========================
+setup.kibana:
+  host: "localhost:5601"
+  #username: "elastic"
+  #password: "changeme"
+
+#-------------------------- Elasticsearch output Settings ---------------------
+output.elasticsearch:
+  # Array of hosts to connect to.
+  hosts: ["localhost:9200"]
+  #username: "elastic"
+  #password: "changeme"

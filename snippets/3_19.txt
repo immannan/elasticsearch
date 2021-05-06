@@ -1,0 +1,13 @@
+GET amazon_products_with_features/_search
+{
+  "query": {
+    "has_parent": {
+      "parent_type": "product",                                  1
+      "query": {                                                 2
+        "ids": {
+          "values": ["c0001"]
+        }
+      }
+    }
+  }
+}

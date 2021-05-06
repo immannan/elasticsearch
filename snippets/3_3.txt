@@ -1,0 +1,46 @@
+{
+  "tokens": [
+    {
+      "token": "the",
+      "start_offset": 0,
+      "end_offset": 3,
+      "type": "<ALPHANUM>",
+      "position": 0
+    },
+    {
+      "token": "standard",
+      "start_offset": 4,
+      "end_offset": 12,
+      "type": "<ALPHANUM>",
+      "position": 1
+    },
+    {
+      "token": "analyzer",
+      "start_offset": 13,
+      "end_offset": 21,
+      "type": "<ALPHANUM>",
+      "position": 2
+    },
+    {
+      "token": "works",
+      "start_offset": 22,
+      "end_offset": 27,
+      "type": "<ALPHANUM>",
+      "position": 3
+    },
+    {
+      "token": "this",
+      "start_offset": 28,
+      "end_offset": 32,
+      "type": "<ALPHANUM>",
+      "position": 4
+    },
+    {
+      "token": "way",
+      "start_offset": 33,
+      "end_offset": 36,
+      "type": "<ALPHANUM>",
+      "position": 5
+    }
+  ]
+}

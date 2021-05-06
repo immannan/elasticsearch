@@ -1,0 +1,11 @@
+GET /amazon_products/_search
+{
+  "query": {
+    "match": {
+      "manufacturer": {
+        "query": "victory multimedia",
+        "operator": "and"
+      }
+    }
+  }
+}

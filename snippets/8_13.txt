@@ -1,0 +1,31 @@
+curl -u elastic:elastic -XGET http://localhost:9200/_xpack/security/role/employee_read_new?pretty
+Response:
+{
+  "employee_read" : {
+    "cluster" : [ ],
+    "indices" : [
+      {
+        "names" : [
+          "employee"
+        ],
+        "privileges" : [
+          "read"
+        ],
+        "field_security" : {
+          "grant" : [
+            "*"
+          ],
+          "except" : [
+            "address*",
+            "salary"
+          ]
+        }
+      }
+    ],
+    "run_as" : [ ],
+    "metadata" : { },
+    "transient_metadata" : {
+      "enabled" : true
+    }
+  }
+}

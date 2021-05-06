@@ -1,0 +1,17 @@
+curl -u elastic:elastic -X POST http://localhost:9200/_xpack/security/role/employee_read_new -H 'content-type: application/json' -d '{
+
+  "indices": [
+    {
+      "names": [ "employee" ],
+      "privileges": [ "read" ],
+      "field_security" : {
+        "grant" : [ "*" ],
+        "except": [ "address*","salary" ]
+      }
+
+    }
+  ]
+}'
+
+Response:
+role":{"created":true}}

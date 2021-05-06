@@ -1,0 +1,20 @@
+#filebeat.yml
+#=========================== Filebeat inputs =============================
+
+filebeat.inputs:
+
+- type: log
+
+  # Change to true to enable this input configuration.
+  enabled: true
+
+  # Paths that should be crawled and fetched. Glob based paths.
+  paths:
+    - E:\fenago\logs\*.log
+
+#================================ Outputs =====================================
+
+#-------------------------- Elasticsearch output ------------------------------
+output.elasticsearch:
+ # Array of hosts to connect to.
+ hosts: ["localhost:9200"]

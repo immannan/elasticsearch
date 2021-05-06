@@ -1,0 +1,23 @@
+{
+  ...,
+  "aggregations": {
+    "counts_over_time": {
+      "buckets": [
+        {
+          "key_as_string": "2017-09-25T00:00:00.000+05:30",
+          "key": 1506277800000,
+          "doc_count": 465,
+          "hourly_usage": {
+            "value": 1385524
+          }
+        },
+        {
+          "key_as_string": "2017-09-25T01:00:00.000+05:30",
+          "key": 1506281400000,
+          "doc_count": 478,
+          "hourly_usage": {
+            "value": 1432123
+          }
+        },
+   ...
+}

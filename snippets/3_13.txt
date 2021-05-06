@@ -1,0 +1,28 @@
+GET /amazon_products/_search
+{
+  "query": {
+    "constant_score": {
+      "filter": {
+        "bool": {
+          "should": [
+            {
+              "range": {
+                "price": {
+                  "gte": 10,
+                  "lte": 13
+                }
+              }
+            },
+            {
+              "term": {
+                "manufacturer.raw": {
+                  "value": "valuesoft"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

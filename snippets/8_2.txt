@@ -1,0 +1,16 @@
+  log [05:57:13.939] [info][status][plugin:xpack_main@7.0.0] Status changed from uninitialized to yellow - Waiting for Elasticsearch
+  log [05:57:13.952] [info][status][plugin:graph@7.0.0] Status changed from uninitialized to yellow - Waiting for Elasticsearch
+  log [05:57:13.968] [info][status][plugin:monitoring@7.0.0] Status changed from uninitialized to green - Ready
+  log [05:57:13.974] [info][status][plugin:spaces@7.0.0] Status changed from uninitialized to yellow - Waiting for Elasticsearch
+  :
+  :
+  log [05:57:14.136] [info][status][plugin:beats_management@7.0.0] Status changed from uninitialized to yellow - Waiting for Elasticsearch
+  log [05:57:14.162] [info][status][plugin:apm_oss@undefined] Status changed from uninitialized to green - Ready
+  log [05:57:14.179] [info][status][plugin:apm@7.0.0] Status changed from uninitialized to green - Ready
+ :
+ :
+log [05:57:16.798] [info][license][xpack] Imported license information from Elasticsearch for the [data] cluster: mode: basic | status: active
+  :
+  :
+  log [05:57:19.711] [info][listening] Server running at http://localhost:5601
+  log [05:57:20.530] [info][status][plugin:spaces@7.0.0] Status changed from yellow to green - Ready

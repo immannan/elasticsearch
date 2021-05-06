@@ -1,0 +1,15 @@
+E:\logstash-7.0.0\bin>logstash -e "input { stdin {}} output { stdout{}}"
+Sending Logstash logs to E:/logstash-7.0.0/logs which is now configured via log4j2.properties
+[2019-03-17T15:17:23,771][INFO ][logstash.setting.writabledirectory] Creating directory {:setting=>"path.queue", :path=>"E:/logstash-7.0.0/data/queue"}
+[2019-03-17T15:17:23,782][INFO ][logstash.setting.writabledirectory] Creating directory {:setting=>"path.dead_letter_queue", :path=>"E:/logstash-7
+.0.0/data/dead_letter_queue"}
+[2019-03-17T15:17:23,942][WARN ][logstash.config.source.multilocal] Ignoring the 'pipelines.yml' file because modules or command line options are specified
+[2019-03-17T15:17:23,960][INFO ][logstash.runner ] Starting Logstash {"logstash.version"=>"7.0.0"}
+[2019-03-17T15:17:24,006][INFO ][logstash.agent ] No persistent UUID file found. Generating new UUID {:uuid=>"5e0b1f2a-d1dc-4c0b-9c4f-8efded
+6c3260", :path=>"E:/logstash-7.0.0/data/uuid"}
+[2019-03-17T15:17:32,701][INFO ][logstash.javapipeline ] Starting pipeline {:pipeline_id=>"main", "pipeline.workers"=>4, "pipeline.batch.size"=>125
+, "pipeline.batch.delay"=>50, "pipeline.max_inflight"=>500, :thread=>"#<Thread:0x74a9c9ab run>"}
+[2019-03-17T15:17:32,807][INFO ][logstash.javapipeline ] Pipeline started {"pipeline.id"=>"main"}
+The stdin plugin is now waiting for input:
+[2019-03-17T15:17:32,897][INFO ][logstash.agent ] Pipelines running {:count=>1, :running_pipelines=>[:main], :non_running_pipelines=>[]}
+[2019-03-17T15:17:33,437][INFO ][logstash.agent ] Successfully started Logstash API endpoint {:port=>9600}

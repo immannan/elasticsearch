@@ -1,0 +1,37 @@
+GET /amazon_products/_search
+{
+  "query": {
+    "constant_score": {
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "range": {
+                "price": {
+                  "gte": 10,
+                  "lte": 30
+                }
+              }
+            }
+          ],
+          "should": [
+            {
+              "term": {
+                "manufacturer.raw": {
+                  "value": "valuesoft"
+                }
+              }
+            },
+            {
+              "term": {
+                "manufacturer.raw": {
+                  "value": "pinnacle"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

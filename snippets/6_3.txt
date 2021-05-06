@@ -1,0 +1,12 @@
+{
+          "path" => "D:\\es\\logs\\msg.log",
+    "@timestamp" => 2017-11-24T12:30:54.039Z,
+"data" => "this is a random message\r",
+      "@version" => "1",
+          "host" => "SHMN-IN",
+"messageId" => 1,
+"eventtime" => "2017-10-11T21:50:10.000+00:00",
+       "message" => "2017-10-11T21:50:10.000+00:00 tmi_19 001 this is a random message\r",
+"userid" => "tmi_19"
+}
+

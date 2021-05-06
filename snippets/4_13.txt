@@ -1,0 +1,17 @@
+{
+  ...,
+  "aggregations": {
+    "geo_hash": {
+      "buckets": [
+        {
+          "key": "ts5e7vy",
+          "doc_count": 161893
+        },
+        {
+          "key": "ts5e7vw",
+          "doc_count": 80942
+        }
+      ]
+    }
+  }
+}

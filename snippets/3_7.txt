@@ -1,0 +1,18 @@
+POST /custom_analyzer_index/_doc
+{
+  "product": "Learning Elastic Stack 7"
+}
+
+POST /custom_analyzer_index/_doc
+{
+ "product": "Mastering Elasticsearch"
+}
+
+GET /custom_analyzer_index/_search
+{
+ "query": {
+   "match": {
+     "product": "Ela"
+   }
+ }
+}

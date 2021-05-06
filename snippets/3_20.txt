@@ -1,0 +1,70 @@
+{
+  "took" : 0,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 3,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "amazon_products_with_features",
+        "_type" : "doc",
+        "_id" : "c0001_screen_size",
+        "_score" : 1.0,
+        "_routing" : "c0001",
+        "_source" : {
+          "product_or_feature" : {
+            "name" : "feature",
+            "parent" : "c0001"
+          },
+          "feature_key" : "screen_size",
+          "parent_id" : "c0001",
+          "feature_value" : "14 inches",
+          "feature" : "Screen Size"
+        }
+      },
+      {
+        "_index" : "amazon_products_with_features",
+        "_type" : "doc",
+        "_id" : "c0001_processor_series",
+        "_score" : 1.0,
+        "_routing" : "c0001",
+        "_source" : {
+          "product_or_feature" : {
+            "name" : "feature",
+            "parent" : "c0001"
+          },
+          "feature_key" : "processor_series",
+          "parent_id" : "c0001",
+          "feature_value" : "Core i5",
+          "feature" : "Processor Series"
+        }
+      },
+      {
+        "_index" : "amazon_products_with_features",
+        "_type" : "doc",
+        "_id" : "c0001_clock_speed",
+        "_score" : 1.0,
+        "_routing" : "c0001",
+        "_source" : {
+          "product_or_feature" : {
+            "name" : "feature",
+            "parent" : "c0001"
+          },
+          "feature_key" : "clock_speed",
+          "parent_id" : "c0001",
+          "feature_value" : "2.30 GHz",
+          "feature" : "Clock Speed"
+        }
+      }
+    ]
+  }
+}

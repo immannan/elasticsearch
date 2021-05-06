@@ -1,0 +1,29 @@
+curl -u user1:password "http://localhost:9200/department/_search?pretty"
+{
+  "took" : 19,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 1,
+      "relation" : "eq"
+    },
+    "max_score" : 1.0,
+    "hits" : [
+      {
+        "_index" : "department",
+        "_type" : "department",
+        "_id" : "ycTc2GoBlyaBuhcfU42x",
+        "_score" : 1.0,
+        "_source" : {
+"name" : "IT",
+          "employees" : 50
+        }
+      }
+    ]
+  }
