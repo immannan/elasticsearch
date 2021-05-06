@@ -94,7 +94,6 @@ the server\'s resource usage and lists the installed plugins, as shown in the f
 ### Configuring Kibana
 
 
-
 When Kibana was started, it started on port `5601`, and it
 tried to connect to Elasticsearch running on
 port `9200`. What if we want to change some of these settings?
@@ -107,18 +106,6 @@ that, unless those are overridden, the value specified in the property
 is considered the default value. To uncomment the property, remove the
 `#` before the property and save the file.
 
-The following are some of the key configuration settings that you should
-look for when starting out with Kibana:
-
-![](./images/11.PNG)
-
-
-### Note
-
-The `.yml` file is space-sensitive and indentation-aware. Make
-sure all the uncommented properties have the same indentation;
-otherwise, an error will be thrown upon Kibana startup and it will fail
-to start.
 
 
 
@@ -318,102 +305,9 @@ visualizations and a dashboard to derive insights about data.
 
 
 
-### User interaction
-
-
-
-Let\'s understand user interaction before diving into the core
-components of Kibana. A typical user interaction flow is as depicted in
-the following diagram:
-
-
-![](./images/ae8e04be-01e2-4ccd-8a66-0e53d70e60b6.png)
-
-
-The following points will give you a clear idea of the user interaction
-flow in Kibana:
-
-
--   Prior to using Kibana for data analysis, the user will have already
-    loaded the data into Elasticsearch.
--   In order to analyze the data using Kibana, the user has to first
-    make Kibana aware of the data stored in ES indexes. So, the user
-    will need to configure the indexes on which they want to perform
-    analysis.
--   Once configured, the user has to find out the data structure, such
-    as the fields present in the document and the type of fields present
-    in the document, and explore the data. This is done so that they can
-    decide how they can visualize this, and what type of
-    questions they want to pose and find
-    answers for, in terms of the data.
--   After understanding the data, and having formed questions to find
-    answers to, the user will create appropriate visualizations that
-    will help them seek the answers easily from huge amounts of data.
--   The user then creates a dashboard from the set of visualizations
-    created earlier, which will tell the story of the data.
-
-
- 
-
-
--   This is an iterative process and the user would juggle around the
-    various stages to find answers to their questions. Thus, in this
-    process, they might gain deeper insights into the data and
-    discover answers to newly formed questions, that they might not even
-    have thought of before beginning this process.
-
-
-Now that we have an idea about how the user would use Kibana and
-interact with it, let\'s understand what Kibana is made up of. As seen
-in the left-hand side of the collapsible menu/sidebar, the Kibana
-UI consists of the following components:
-
-
--   **Discover**: This page assists in exploring the data present in ES Indexes. It provides
-    the ability to query data, filter data, and inspect document
-    structures.
--   **Visualize**: This page assists in building visualizations. It contains a variety of
-    visualizations, such as bar charts, line charts, maps, tag clouds,
-    and so on. The user can pick and choose the appropriate
-    visualizations that help in analyzing the data.
--   **Dashboard**: This page assists in bringing multiple visualizations on to a single page,
-    and thus builds a story about the data.
--   **Dev Tools**: This page consists of a set of plugins,
-    each of which assists in performing
-    different functionalities. By default, this page contains only a
-    single plugin, called `Console`, which provides a UI to interact
-    with the REST API of Elasticsearch.
--   **Management**: This page assists in the configuring and managing of indexes. It also
-    assists in the management (deleting, exporting, and importing) of
-    existing visualizations, dashboards, and search queries.
-
 
 ### Configuring the index pattern
 
-
-
-Before you can start working with data and
-creating visualizations to analyze data, Kibana requires you to
-configure/create an index pattern. Index patterns are used to identify
-the Elasticsearch index, that will have search and analytics run against
-it. They are also used to configure fields. An index pattern is a string
-with optional wildcards that can match multiple indices. Typically, two
-types of index exist within Elasticsearch:
-
-
--   **Time-series indexes**: If there is a correlation between the timestamp and the data, the
-    data is called **time-series
-    data**. This data will have a timestamp field. Examples of
-    this would be logs data, metrics data, and tweet data. When this
-    data is stored in Elasticsearch, the data is stored in multiple
-    indexes (rolling indexes) with index names appended by a timestamp,
-    usually; for example, `unixlogs-2017.10.10`,
-    `tweets-2017.05`, `logstash-2017.08.10`.
--   **Regular indexes**: If the data doesn\'t contain timestamp and the data has no
-    correlation with time, then the data is called **regular
-    data**. Typically, this data is
-    stored in single indexes---for example, departments data and product
-    catalog data.
 
 
 Open up Kibana from the browser using

@@ -22,17 +22,6 @@ Parsing and enriching logs using Logstash
 -----------------------------------------------------------
 
 
-
-The analysis of structured data is easier
-and helps us find meaningful/deeper analysis,
-rather than trying to perform analysis on unstructured data. Most
-analysis tools depend on structured data. Kibana, which we will be
-making use of for analysis and visualization,
-can be used effectively if the data in Elasticsearch is right (the
-information in the log data is loaded into
-appropriate fields, and the datatypes of the fields are more appropriate
-than just having all the values of the log data in a single field). 
-
 Log data is typically made up of two parts, as follows:
 
 ```
@@ -42,49 +31,12 @@ logdata = timestamp + data
 `timestamp` is the time when the event occurred and
 `data` is the information about the event.
 `data` may contain just a single piece of information or it
-may contain many pieces of information. For example, if we take
-`apache-access` logs, the data piece will contain the response
-code, request URL, IP address, and so on. We would need to have a
-mechanism for extracting this information from the data and thus
-converting the unstructured data/event into a structured data/event.
-This is where the filter section of the Logstash pipeline comes in
-handy. The filter section is made up of one or more filter plugins that
-assist in parsing and enriching the log data.
+may contain many pieces of information.
 
-
-
-### Filter plugins
-
-
-
-A filter plugin is used to perform transformations on data. It allows us
-to combine one or more plugins, and the order of the
-plugins defines the order in which the data
-is transformed. A sample filter section in a Logstash pipeline would
-look as follows:
-
-
-![](./images/0d2594e5-e3ae-47f5-ab4e-c76d08d47227.png)
-
-
-The generated event from the input plugin goes through each of the
-plugins defined in the filter section, during which it transforms the
-event based on the plugins defined. Finally, it is sent to the output
-plugin to send the event to the appropriate destination.
-
-In the following sections, we will explore some common filter plugins
-that are used for transformation.
 
 
 
 #### CSV filter 
-
-
-
-This filter is useful for parsing
-`.csv` files. This plugin takes an
-event containing CSV data, parses it, and stores it as individual
-fields.
 
 Let\'s take some sample data and use a CSV filter to parse data out of
 it. Store the following data in a file named `users.csv`:
@@ -187,62 +139,9 @@ conversion targets are `integer`, `string`,
 `float`, and `boolean`. 
 
 
-### Note
 
-If the conversion type is `boolean`, these are the possible
-values:**True**: true, t, yes, y, and 1.**False**:
-false, f, no, n, and 0.
-
-
-The `rename` setting within the `filter` helps
-rename one or more fields. The preceding example renames the
-`FName` field to `Firstname` and
-`LName` to `Lastname`.
-
-`gsub` matches a regular expression against a field value and
-replaces all matches with a replacement string. Since regular
-expressions work only on strings, this field can only take a field
-containing a string or an array of strings. It takes an array consisting
-of three elements per substitution (that is, it takes the field
-name,`regex`, and the replacement string). In the preceding
-example, `.` in the `EmailId` field is replaced with
-`_`.
-
-
-### Note
-
-Make sure to escape special characters such as `\`,
-`.`, `+`, and `?` when building
-`regex`.
-
-
-`strip` is used to strip the leading and training white
-spaces. 
-
-
-### Note
-
-The order of the settings within the `mutate` filter matters.
-The fields are mutated in the order the settings are defined. For
-example, since the `FName` and `LName` fields in the
-incoming event were renamed to `Firstname` and
-`Lastname` using the `rename` setting, other
-settings can no longer refer to `FName` and `LName`.
-Instead, they have to use the newly renamed fields.
-
-
-`uppercase` is used to convert the
-string into upper case. In the preceding example, the value in the `Gender` field is
-converted into upper case.
-
-Similarly, by using various settings of the `mutate` filter,
-such as `lowercase`, `update`, `replace`,
-`join`, and `merge`, you can lower-case a string,
-update an exiting field, replace the value of a field, join an array of
-values, or merge fields. 
 
 #### Grok filter
-
 
 
 This is a powerful and often used plugin for
@@ -477,210 +376,14 @@ containing user agent details, as shown in the following screenshot:
 
 
 
-Introducing Beats
------------------------------------
 
 
 
-**Beats** are lightweight data shippers that are installed as agents on edge servers to ship operational
-data to Elasticsearch. Just like Elasticsearch, Logstash, Kibana, and
-Beats are open source products too. Depending on the use case, Beats can
-be configured to ship the data to Logstash to transform events prior to
-pushing the events to Elasticsearch. 
-
-The Beats framework is made up of a library called `libbeat`,
-which provides an infrastructure to simplify the process of shipping
-operation data to Elasticsearch. It offers the API that all Beats can
-use to ship data to an output (such as Elasticsearch, Logstash, Redis,
-Kafka, and so on), configure the input/output options, process events,
-implement logging, and more. The `libbeat` library is built
-using the Go programming language. Go was chosen to build Beats because
-it\'s easy to learn, very resource-friendly, and, since it\'s statically
-compiled, it\'s easy to deploy.
-
-Elastic.co has built and maintained several Beats, such as Filebeat,
-Packetbeat, Metricbeat, Heartbeat, and Winlogbeat. There are several
-community Beats, including amazonbeat, mongobeat, httpbeat, and
-nginxbeat, which have been built into the Beats framework by the open
-source community. Some of these Beats can be extended to meet business
-needs, as some of them provide extension points. If a Beat for your
-specific use case is not available, then custom Beats can be easily
-built with the `libbeat` library:
-
-
-![](./images/546aa9e8-0cda-4684-8b00-5a1785f6036e.png)
-
-### Beats by Elastic.co
-
-
-
-Let\'s take a look at some used Beats
-commonly used by Elastic.co in the following sections.
-
-
-
-#### Filebeat
-
-
-
-Filebeat is an open source, lightweight log shipping
-agent that ships logs from local files.
-Filebeat runs as a binary and no runtime, such as JVM, is needed, hence
-it\'s very lightweight, executable, and also
-consumes fewer resources. It is installed as an agent on the edge
-servers from where the logs need to be shipped. It is used to monitor
-log directories, tail the files, and send them to Elasticsearch,
-Logstash, Redis, or Kafka. It is easily scalable and allows us to send
-logs from different systems to a centralized server, where the logs can
-then be parsed and processed. 
-
-#### Metricbeat
-
-
-
-Metricbeat is a lightweight shipper that
-periodically collects metrics from the
-operating system and from services running on the server. It helps
-you monitor servers by collecting metrics from the system and services
-such as Apache, MondoDB, Redis, and so on, that are running on the
-server. Metricbeat can push collected metrics directly into
-Elasticsearch or send them to Logstash, Redis, or Kafka. To monitor
-services, Metricbeat can be installed on the edge server where services
-are running; it provides you with the ability to collect metrics from a
-remote server as well. However, it\'s recommended to have it installed
-on the edge servers where the services are running. 
-
-#### Packetbeat
-
-
-
-Packetbeat captures the network traffic
-between applications and servers. It is a packet analyzer that works in
-real-time. It does tasks such as decoding the application
-layer protocols, namely HTTP, MySQL,
-Memcache, and Redis. It also correlates the requests to responses and
-records the different transaction fields that may interest you.
-Packetbeat is used to sniff the traffic between different servers and
-parses the application-level protocol; it also converts messages into
-transactions. It also notices issues with the backend application, such
-as bugs or other performance-related problems, and so it makes
-troubleshooting tasks easy. Packetbeat can run on the same server which
-contains application processes, or on its own servers. Packetbeat ships
-the collected transaction details to the configured output, such
-as Elasticsearch, Logstash, Redis, or Kafka. 
-
-#### Heartbeat
-
-
-
-Heatbeat is a new addition to the Beat
-ecosystem and is used to check if a service
-is up or not, and if the services are reachable. Heartbeat is a
-lightweight daemon that is installed on a remote server to periodically
-check the status of services running on the host. Heartbeat supports
-ICMP, TCP, and HTTP monitors for checking hosts/services.
-
-#### Winlogbeat
-
-
-
-Winlogbeat is a Beat dedicated to the Windows
-platform. Winlogbeat is installed as a
-Windows service on Windows XP or later versions. It reads from
-many event logs using Windows APIs. It can also filter events on the
-basis of user-configured criteria. After this, it sends the event data
-to the configured output, such as Elasticsearch or Logstash. Basically,
-Winlogbeat captures event data such as application events, hardware
-events, security events, and system events.
-
-#### Auditbeat
-
-
-
-Auditbeat is a new addition to the Beats
-family, and was first implemented in the Elastic Stack 6.0. Auditbeat is
-a lightweight shipper that is installed on servers in order to monitor user activity. It analyzes and processes
-event data in the Elastic Stack without using Linux\'s auditd. It works
-by directly communicating with the Linux audit framework and collects
-the same data that the auditd collects. It also does the job of sending
-events to the Elastic Stack in real time. By using auditbeat, you can
-watch the list of directories and identify whether there were any
-changes as file changes are sent to the configured output in real time.
-This helps us identify various security policy violations.
-
-#### Journalbeat
-
-
-
-Journalbeat is one of the latest additions to the Beats family, starting with Elastic Stack 6.5. Journalbeat is a
-lightweight shipper that is installed as
-agents on servers to collect and ship systemd journals to either
-Elasticsearch or Logsatsh. Journalbeat requires systemd v233 or later to
-function properly.
-
-#### Functionbeat
-
-
-
-As lot of organizations are adopting
-serverless computing. Functionbeat is one of
-the latest additions to the Beats family, starting with the Elastic
-Stack 6.5, and is used to collect events on serverless environments and
-ship these events to Elasticsearch. At the time of writing, these events
-can only be sent to Elasticsearch. 
-
- 
-
-
-### Community Beats
-
-
-
-These are Beats that are developed by the
-open source community using the Beats
-framework. Some of these open source Beats are as follows:
-
-![](./images/10.PNG)
-
- 
-A complete list of community Beats can be
-found
-at <https://www.elastic.co/guide/en/beats/devguide/current/community-beats.html>.
-
-
-### Note
-
-Elastic.co doesn\'t support or provide warranties for community Beats.
-The Beats Developer guide provides the necessary information to create a
-custom Beat. The developer guide can be found
-at <https://www.elastic.co/guide/en/beats/devguide/current/index.html>.
-
-
-### Logstash versus Beats
-
-
-
-After reading through the Logstash and Beats introduction, you might
-be confused as to whether Beats is a replacement for Logstash, the
-difference between them, or when to use one over the other. Beats are lightweight agents and consume fewer
-resources, and hence are installed on the edge servers where the
-operational data needs to be collected and shipped. Beats lack the
-powerful features of Logstash for parsing and
-transforming events. Logstash has many options in terms of inputs,
-filters, and output plugins for collecting, enriching, and transforming
-data. However, it is very resource-intensive and can also be used as an
-independent product outside of the Elastic Stack. Logstash is
-recommended to be installed on a dedicated server rather than edge
-servers, and listens for incoming events for processing. Beats and
-Logstash are complementary products, and depending on the use case, both
-of them can be used or just one of them can be used, as described in the
-[*Introducing*] [*Beats*]  section.
 
 
 
 Filebeat
 --------------------------
-
 
 
 Filebeat is an open source, lightweight log
@@ -689,7 +392,6 @@ files. It monitors log directories, tails the files, and sends them to
 Elasticsearch, Logstash, Redis, or Kafka. It allows us to send logs from
 different systems to a centralized server. The logs can then be parsed
 or processed from here.
-
 
 
 ### Downloading and installing Filebeat
@@ -706,48 +408,6 @@ is simple and straightforward:
 
 
 
-### Note
-
-In this course, we will be using the Apache 2.0 version of Beats. Beats
-version 7.0.x is compatible with Elasticsearch 6.7.x and 7.0.x, and
-Logstash 6.7.x and 7.0.x. The compatibility matrix can be found
-at <https://www.elastic.co/support/matrix#matrix_compatibility>. When
-you come across Elasticsearch and Logstash examples with Beats in this
-lab, make sure that you have compatible versions of Elasticsearch
-and Logstash installed. 
-
-#### Installing on Windows
-
-
-
-Unzip the downloaded file and navigate to
-the extracted location, as follows:
-
-```
-E:> cd E:\filebeat-7.0.0-windows-x86_64
-```
-
-To install Filebeat as a service on Windows, refer to the following
-steps:
-
-
-1.  Open Windows PowerShell as an administrator and navigate to the
-    extracted location.
-2.  Run the following commands from the PowerShell prompt to install
-    Filebeat as a Windows service:
-
-
-```
-PS >cd E:\filebeat-7.0.0-windows-x86_64
- PS E:\filebeat-7.0.0-windows-x86_64>.\install-service-filebeat.ps1
-```
-
-In the event script execution is disabled on your system, you will have
-to set the execution policy for the current session:
-
-```
- PowerShell.exe -ExecutionPolicy UnRestricted -File .\install-service-filebeat.ps1
-```
 
 
 #### Installing on Linux
@@ -763,92 +423,6 @@ $> tar -xzf filebeat-7.0.0-linux-x86_64.tar.gz
 $> cd filebeat
 ```
 
-To install using `dep` or `rpm`, execute the
-appropriate commands in the Terminal:
-
-`deb`:
-
-```
-curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.0.0-amd64.deb
-sudo dpkg -i filebeat-7.0.0-amd64.deb
-```
-
-`rpm`:
-
-```
-curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.0.0-x86_64.rpm
-sudo rpm -vi filebeat-7.0.0-x86_64.rpm
-```
-
-Filebeat will be installed in the `/usr/share/filebeat`
-directory. The configuration files will be present
-in `/etc/filebeat`. The `init` script will be
-present in `/etc/init.d/filebeat`. The `log` files
-will be present within the `/var/log/filebeat` directory.
-
-
-### Architecture
-
-
-
-Filebeat is made up of key components called **inputs**,
-**harvesters**, and **spoolers**. These
-components work in unison in order to tail
-files and allow you to send event data to the specified output. The
-input is responsible for identifying the list of files to read logs
-from. The input is configured with one or
-many file paths, from which it identifies the
-files to read logs from; it starts a harvester for each file. The harvester reads the contents of the file.
-In order to send the content to the output, it reads each file, line by
-line. It also opens and closes the file, This implies that the
-descriptor is always open when the harvester runs. Once the harvester
-starts for one file, it sends the read content -- also known as the
-events -- to the spooler. The spooler aggregates the events to the
-configured outputs.
-
-Each instance of Filebeat can be configured with one or more inputs. As
-of Filebeat 6.0, there are two types of input the Filebeat supports,
-that is, `log` and `stdin`. Later versions of
-Filebeats started supporting multiple types of input. As of Filebeat
-7.0, the list of inputs that are supported is: Log, Stdin, Redis, UDP,
-Docker, TCP, Syslog, and NetFlow. For example, if the log is the input
-file, then the input finds all the related files on the drive that match
-the predefined glob paths, and then the harvester is started for every
-file. Every input uses its own Go routine to run. If the type is
-`stdin`, it reads from standard inputs and if the input type
-is UDP/TCP, it reads/captures events over UDP/TCP.
-
-Every time Filebeat reads a file, the state of the last read is offset
-by the harvester, and if the read line is sent to the output, it is
-maintained in a registry file which is flushed periodically to a disk.
-If the output (Elasticsearch, Logstash, Kafka, or Redis) is unreachable,
-it keeps track of the lines that were sent last and continues to read
-the file after the output becomes reachable. This is done by keeping the
-state information in memory by each input when the Filebeat is running.
-If the Filebeat restarts, the state is built by referring to the
-registry file. 
-
-Filebeat will not consider a log line shipped until the output
-acknowledges the request. Since the state of the delivery of the lines
-to the configured output is maintained in the `registry` file,
-you can safely assume that events will be delivered to the configured
-outputs at least once and without any data loss:
-
-
-![](./images/cb1168d6-2fdd-4fb3-b610-05e390c96bb6.png)
-
-
-(Reference: <https://www.elastic.co/guide/en/beats/filebeat/7.0/images/filebeat.png>)
-
-
-### Note
-
-The location of `registry-js` is as follows:
-`data/registry` for `.tar.gz` and
-`.zip` archives, `/var/lib/filebeat/registry` for
-DEB and RPM packages,
-and `C:\ProgramData\filebeat\registry` for the Windows
-`.zip` file (if Filebeat is installed as a service).
 
 
 ### Configuring Filebeat
@@ -1020,12 +594,6 @@ which is a time-based index based on
 the `filebeat-YYYY.MM.DD` pattern. The log data would be
 placed in the `message` field.
 
-To start Filebeat on `deb` or `rpm` installations,
-execute the `sudo service filebeat start` command. If
-installed as a service on Windows, then use Powershell to execute the
-following command:
-
-`PS C:\> Start-Service filebeat`
 
 #### Filebeat inputs
 
@@ -1045,165 +613,6 @@ A sample configuration is as follows:
 ![](./images/cae1801d-ffdc-4cb5-95aa-888e21bed548.png)
 
 
-As of Filebeat 7.0, inputs supported are Log,
-Stdin, Redis, UDP, Docker, TCP, Syslog, and NetFlow. Depending on the
-type of input configured, each input has specific configuration
-parameters that can be set to define the behavior of log/file/event
-collection. You can configure multiple input types and
-selectively enable or disable them before running Filebeat by setting
-the `enabled` parameter to `true` or
-`false`.
-
-Since logs are one commonly used input, let\'s look into some of the
-configurations that can be set to define the behavior of Filebeat to
-collect logs.
-
-`log` input-specific configuration options are as follows:
-
-
--   `type`: It has to be set to `log` in order to
-    read every log line from the file. 
--   `paths`: It is used to specify one or more paths to look
-    for files that need to be crawled. One path needs to be specified
-    per line, starting with a dash (`-`). It accepts Golang
-    glob-based paths, and all patterns Golang
-    glob (<https://golang.org/pkg/path/filepath/#Glob>) supports are
-    accepted by the `paths` parameter.
--   `exclude_files`: This parameter takes `regex` to
-    exclude file patterns from processing.
--   `exclude_lines`: It accepts a list of
-    regular expressions to match. It drops the lines that match any
-    regular expression from the list. In the preceding configuration
-    example, it drops all the lines beginning with `DBG`. 
--   `include_lines`: It accepts a list of
-    regular expressions to match. It exports the lines that match any
-    regular expressions from the list. In the preceding configuration
-    example, it exports all the lines beginning with either
-    `ERR` or `WARN`.
-
-
-
-### Note
-
-Regular expressions are based on RE2. You can refer to the following
-link for all supported `regex` patterns:
-<https://godoc.org/regexp/syntax>.
-
-
-
--   `tags`: It accepts a list of tags that will be included in
-    the `tags` field of every event Filebeat ships.
-    `tags` aid conditional filtering of events in Kibana or
-    Logstash. In the preceding configuration example,
-    `java_logs` is appended to the `tags` list.
--   `fields`: It is used to specify option
-    fields that need to be included in each event Filebeat ships. Like
-    `tags`, it helps with the conditional filtering of events
-    in Kibana or Logstash. Fields can be scalar values, arrays,
-    dictionaries, or any nested combination of these. By default, the
-    fields that you specify will be grouped under a
-    `fields` sub-dictionary in the output document. In the preceding configuration example, a new
-    field called `env` with the `staging` value
-    would be created under the `fields` field.
-
-
-
-### Note
-
-To store custom fields as top-level fields, set the
-`fields_under_root` option to `true`.
-
-
-
--   `scan_frequency`: It is used to specify the
-    time interval after which the input checks for any new files under
-    the configured paths. By default, `scan_frequency` is set
-    to `10` seconds.
--   `multiline`: It specifies how logs that are
-    spread over multiple lines need to be processed. This is very
-    beneficial for processing stack traces/exception messages. It is
-    made up of a `pattern` that specifies the
-    regular expression pattern to match; `negate`, which
-    specifies whether or not the pattern is negated; and
-    `match`, which specifies how Filebeat combines matching
-    lines with an event. The values for the `negate` setting
-    are either `true` or `false`; by
-    default, `false` is used. The values for
-    the `match` setting are either `after`
-    or `before`. In the preceding configuration example, all
-    consecutive lines that begin with the space pattern are appended to
-    the previous line that doesn\'t begin with a space. 
-
-
-
-### Note
-
-The `after` setting is similar to
-the `previous` Logstash multi-line setting, and
-`before` is similar to the `next` Logstash
-multi-line setting.
-
-
-Let\'s look into another frequently used input type, `docker`,
-which is used to read logs from docker containers. It also contain many
-overlapping configuration parameters for the `log` input type.
-
-`docker` input-specific configuration options are as follows:
-
-
--   `type`: It has to be set to `docker` in order to
-    read container logs.
--   `containers.ids`: This parameter is used to specify the
-    list of containers to read logs from. In order to read logs from all
-    containers, you can specify `*`. This is a required
-    parameter.
--   `containers.path`: The base path where logs are present so
-    that Filebeat can read from them. If the location is not specified,
-    it defaults to `/var/lib/docker/` containers.
--   `containers.stream`: The stream to read the file from. The
-    list of streams available is: `all`, `stdout`,
-    and `stderr`. `all` is the default option.
-
-
-
--   `exclude_lines`: It accepts a list of
-    regular expressions to match. It drops lines that match any regular
-    expression from the list. In the preceding configuration example, it
-    drops all lines beginning with `DBG`. 
--   `include_lines`: It accepts a list of
-    regular expressions to match. It exports lines that match any
-    regular expressions from the list. In the preceding configuration
-    example, it exports all lines beginning with either `ERR`
-    or `WARN`.
--   `tags`: It accepts a list of tags that will be included in
-    the `tags` field of every event Filebeat
-    ships. `tags` aids conditional filtering of events in
-    Kibana or Logstash. In the preceding configuration
-    example, `java_logs` is appended to
-    the `tags` list.
--   `fields`: It is used to specify option
-    fields that need to be included in each event Filebeat ships.
-    Like `tags`, it aids conditional filtering of events in
-    Kibana or Logstash. Fields can be scalar values, arrays,
-    dictionaries, or any nested combination of these. By default, the
-    fields that you specify will be grouped under
-    a `fields` sub-dictionary in the output document. In the preceding configuration example, a new
-    field called `env` with the `staging` value
-    would be created under the `fields` field.
-
-
-
-### Note
-
-To store custom fields as top-level fields, set the
-`fields_under_root` option to `true`.
-
-
-
--   `scan_frequency`: It is used to specify the
-    time interval after which the input checks for any new files under
-    the configured paths. By default, `scan_frequency` is set
-    to `10` seconds.
 
 
 #### Filebeat general/global options
@@ -1542,8 +951,6 @@ visualizing data in Kibana, execute the`setup` command, as
 follows:
 
 ```
-Windows:
-E:\filebeat-7.0.0-windows-x86_64>filebeat.exe -e setup 
 
 Linux:
 [locationOfFileBeat]$./filebeat -e setup 
@@ -1595,9 +1002,6 @@ filebeat.modules:
 For the command line, use the following code:
 
 ```
-Windows:
-E:\filebeat-7.0.0-windows-x86_64>filebeat.exe-e-modules=nginx-M"nginx.access.var.paths=[C:\ngnix\access.log*]"
-
 Linux:
 [locationOfFileBeat]$./filebeat-e-modules=nginx-M"nginx.access.var.paths=[\var\ngnix\access.log*]"
 ```

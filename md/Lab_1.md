@@ -57,7 +57,7 @@ for development purposes.
 ```
 
 
-3.  Open `http://localhost:5601` in Midori browser.
+3.  Open `http://localhost:5601` in Midori browser. We will use Kibana in the next lab.
 
 
 Congratulations! You have a working setup of Elasticsearch and Kibana.
@@ -74,5 +74,4 @@ In this lab, we started Elasticsearch and Kibana to begin the journey of learni
 In the next lab, we will understand the core concepts of
 Elasticsearch. We will learn about indexes, types, shards, datatypes,
 mappings, and other fundamentals. We will also interact with
-Elasticsearch by using **Create**, **Read**,
-**Update,** and **Delete** (CRUD) operations, and learn the basics of searching.
+Elasticsearch by using **Create**, **Read**, **Update,** and **Delete** (CRUD) operations, and learn the basics of searching.

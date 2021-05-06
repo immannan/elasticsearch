@@ -81,13 +81,6 @@ One record contains various metrics for the given end client device at
 the given time.
 
 
-### Note
-
-Please note that all the data included in this example is synthetic.
-Although the names of customers, users, and MAC addresses look
-realistic, the data was generated using a simulator. The data doesn\'t
-belong to any real customers.
-
 
 Now that we know what our data represents and what each record represents, let\'s load the data in our local instance.
 
@@ -236,10 +229,12 @@ cd /elasticstack/logstash-7.12.1
 logstash -f files_lab4/logstash_network_traffic_data.conf
 ```
 
+<span style="color:red;">Note: Logstash will take few minutes to import the data. Please wait for import to complete</span>
+
 
 #### Verify Data Import
-Once you have imported the data, verify that your data has been imported
-with the following query:
+
+Once you have imported the data, verify that your data has been imported with the following query:
 
 ```
 GET /bigginsight/_search
@@ -1698,8 +1693,7 @@ Now, let\'s look at GeoHash grid aggregation.
 
 GeoHash grid aggregation uses the GeoHash
 mechanism to divide the map into smaller
-units. You can read about GeoHash
-at <https://en.wikipedia.org/wiki/Geohash>. The GeoHash system divides
+units. The GeoHash system divides
 the world map into a grid of rectangular
 regions of different precisions. Lower values of precision represent
 larger geographical areas, while higher values represent smaller, more
@@ -1822,9 +1816,9 @@ GET /bigginsight/_search?size=0
         "hourly_usage": {
           "sum": { "field": "usage" }
         },
-        "cumulative_hourly_usage": {            1
-          "cumulative_sum": {                   2
-              "buckets_path": "hourly_usage"    3 
+        "cumulative_hourly_usage": {
+          "cumulative_sum": {              
+              "buckets_path": "hourly_usage"
           }
         }
       }
@@ -1849,7 +1843,7 @@ The response should look as follows. It has been truncated for brevity:
           "hourly_usage": {
             "value": 1385524
           },
-"cumulative_hourly_usage": {
+          "cumulative_hourly_usage": {
             "value": 1385524
           }
         },
@@ -1860,7 +1854,7 @@ The response should look as follows. It has been truncated for brevity:
           "hourly_usage": {
             "value": 1432123
           },
-"cumulative_hourly_usage": 
+          "cumulative_hourly_usage": 
            {
             "value": 2817647
            }

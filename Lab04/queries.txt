@@ -446,9 +446,9 @@ GET /bigginsight/_search?size=0
         "hourly_usage": {
           "sum": { "field": "usage" }
         },
-        "cumulative_hourly_usage": {            1
-          "cumulative_sum": {                   2
-              "buckets_path": "hourly_usage"    3 
+        "cumulative_hourly_usage": { 
+          "cumulative_sum": {        
+              "buckets_path": "hourly_usage"
           }
         }
       }
