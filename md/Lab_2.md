@@ -21,17 +21,7 @@ Using the Kibana Console UI
 
 
 
-Before we start writing our first queries to
-interact with Elasticsearch, we should familiarize ourselves with a very
-important tool: Kibana Console. This is important because Elasticsearch
-has a very rich REST API, allowing you to do all sorts of operations
-with Elasticsearch. Kibana Console has an editor that is very capable
-and aware of the REST API. It allows for auto completion, and for the
-formatting of queries as you write them.
-
-
-In Lab 1, we successfully
-installed Kibana and launched the UI at
+In Lab 1, we successfully installed Kibana and launched the UI at
 `http://localhost:5601`. As we mentioned previously, Kibana is
 the window into the Elastic Stack. It not only provides insight into the
 data through visualizations, but it also has developer tools such as the `Console`. The following diagram shows
@@ -650,12 +640,6 @@ PUT /catalog1
 ### Creating type mapping in an existing index
 
 
-
-With Elasticsearch 7.0, indexes contain strictly one type, and hence it is generally recommended that you
-create the index and the default type within that index at index
-creation time. The default type name is `_doc`.
-
- 
 In the earlier versions of Elasticsearch (6.0 and before), it was
 possible to define an index and then add multiple types to that index as
 needed. This is still possible but it is a deprecated feature. A type
@@ -811,24 +795,6 @@ process, and add fields after the type is created.
 
 REST API overview
 -----------------------------------
-
-
-We just looked at how to perform basic CRUD
-operations. Elasticsearch supports a wide variety of operation types.
-Some operations deal with documents, that is, creating, reading,
-updating, deleting, and more. Some operations provide search and
-aggregations, while other operations are for providing cluster-related
-operations, such as monitoring health. Broadly, the APIs that deal with
-Elasticsearch are categorized into the following types of APIs:
-
-
--   Document APIs
--   Search APIs
--   Aggregation APIs
--   Indexes APIs
--   Cluster APIs
--   cat APIs
-
 
 In the following section, we will cover the common API conventions that
 are applicable to all REST APIs.
