@@ -28,34 +28,17 @@ We will cover the following topics in this lab:
 
 
 
-
-### Installing on Linux
-
+### Running Kibana
 
 
-
-To start Kibana, navigate to the `bin` folder, type
-`./kibana` (in the case of Linux) or
-`kibana.bat` (in the case of Windows), and press
-[*Enter*] . 
-
-You should get the following logs:
+Switch to `elasticsearch` user and type `kibana` to start the service if not running already.
 
 ```
- log [09:00:51.216] [info][status][plugin:kibana@undefined] Status changed from uninitialized to green - Ready
- log [09:00:51.279] [info][status][plugin:elasticsearch@undefined] Status changed from uninitialized to yellow - Waiting for Elasticsearch
- log [09:00:51.293] [info][status][plugin:interpreter@undefined] Status changed from uninitialized to green - Ready
- log [09:00:51.300] [info][status][plugin:metrics@undefined] Status changed from uninitialized to green - Ready
- log [09:00:51.310] [info][status][plugin:apm_oss@undefined] Status changed from uninitialized to green - Ready
- log [09:00:51.320] [info][status][plugin:console@undefined] Status changed from uninitialized to green - Ready
- log [09:00:51.779] [info][status][plugin:timelion@undefined] Status changed from uninitialized to green - Ready
- log [09:00:51.785] [info][status][plugin:tile_map@undefined] Status changed from uninitialized to green - Ready
- log [09:00:51.987] [info][status][plugin:elasticsearch@undefined] Status changed from yellow to green - Ready
- log [09:00:52.036] [info][migrations] Creating index .kibana_1.
- log [09:00:52.995] [info][migrations] Pointing alias .kibana to .kibana_1.
- log [09:00:53.099] [info][migrations] Finished in 1075ms.
- log [09:00:53.102] [info][listening] Server running at http://localhost:5601
+$  su elasticsearch
+$  kibana
 ```
+
+
 
 Kibana is a web application and, unlike Elasticsearch and Logstash,
 which run on the JVM, Kibana is powered by Node.js. During bootup,
@@ -82,13 +65,7 @@ tried to connect to Elasticsearch running on
 port `9200`. What if we want to change some of these settings?
 All the configurations of Kibana are stored in a file called
 `kibana.yml`, which is present under
-the `config`folder, under `$KIBANA_HOME`. When this
-file is opened in your favorite text editor, it contains many properties
-(key-value pairs) that are commented by default. What this means is
-that, unless those are overridden, the value specified in the property
-is considered the default value. To uncomment the property, remove the
-`#` before the property and save the file.
-
+the `config` folder, under `$KIBANA_HOME`.
 
 
 
@@ -107,22 +84,12 @@ time, you will see the following screen:
 ![](./images/32e487fd-8950-47e9-9437-d8d32047d247.png)
 
 
-You can click on the `Try our sample data` button to get started
-quickly with Kibana by loading predefined data, or you can configure
-existing indexes present in Elasticsearch and analyze existing data by
-clicking on the `Explore on my own` button.
-
 Clicking on the `Try our sample data` button will take you to the following screen:
 
 
 ![](./images/437cd832-47ab-4351-bb0a-515115ff3740.jpg)
 
 
-Clicking on `Add data` on any of the three widgets/panels will add
-some default data to Elasticsearch as well as
-sample visualizations and dashboards that you can readily explore.
-Don\'t worry what visualizations and dashboards are now; we will be
-covering them in detail in the subsequent sections.
 
 Go ahead and click on `Add data` for `Sample eCommerce orders`.
 It should load data, visualizations, and dashboards in the background.
@@ -146,10 +113,6 @@ the `kibana_sample_data_ecommerce` index, which has `4675` docs:
 
 ```
 curl localhost:9200/_cat/indices/kibana_sample*?v
-
-
-health status index uuid pri rep docs.count docs.deleted store.size pri.store.size
-green open kibana_sample_data_ecommerce 4fjYoAkMTOSF8MrzMObaXg 1 0 4675 0 4.8mb 4.8mb
 ```
 
 
@@ -162,13 +125,10 @@ sample logs data.
 
 
 If you want to navigate back to the home page, you can always click on
-the `Kibana` icon
+the `Kibana` icon ![](./images/c20e47c9-78f3-4761-ba4d-5c353e3c3d99.png)
 
 
-![](./images/c20e47c9-78f3-4761-ba4d-5c353e3c3d99.png)
-
-
- at the top-left corner, which will take you to the home screen, which
+At the top-left corner, which will take you to the home screen, which
 will be the default screen once you load Kibana in the browser again.
 This is in same screen you would have been taken to if you had clicked
 on the `Explore on my own` button when Kibana was loaded for the
@@ -182,12 +142,10 @@ Clicking on the link in section 1 will take you to the `Sample data`
 page that we just saw. Similarly, if you want to configure Kibana
 against your own index and use it for data exploration and
 visualization, you can click on the link in section 2, in the previous
-screenshot. In earlier labs, you might have read briefly about
-**Beats**, which is used for ingesting file or metric data
-easily into Elasticsearch. Clicking on the buttons in section 3 will
-take you to screens that provide standard instructions of how you can
-enable the insertion of various types of data using Beats. We will be
-covering more about Beats in the subsequent labs. 
+screenshot.
+
+
+#### Loading Custom Data
 
 In this lab, rather than relying on the sample default data shipped
 out of the box, we will load custom data which we will use to follow the
@@ -201,22 +159,15 @@ server logs that were collected for
 the [www.logstash.net](http://www.logstash.net/)site during the
 period of May 2014 to June 2014. It contains 300,000 log events.
 
-Navigate to
-<https://github.com/elastic/elk-index-size-tests/blob/master/logs.gz>
-and click the **Download** button. Unzip the
-`logs.gz` file and place it in a folder (For example:
-`C:\fenago\data`).
 
-Make sure you have Logstash version 7.0 or above installed. Create a
-config file named `apache.conf` in the
-`$LOGSTASH_HOME\bin` folder, as shown in the following code
-block:
+
+Create a config file named `apache.conf` in the `$LOGSTASH_HOME/bin` folder, as shown in the following code block:
 
 ```
 input 
 { 
  file {
- path => ["C:/fenago/data/logs"]
+ path => ["/home/elasticsearch/Lab07/data/logs"]
  start_position => "beginning"
  sincedb_path => "NUL"
  }
@@ -248,10 +199,13 @@ filter
 
 output 
 { 
+
  stdout { 
  codec => dots
  } 
- elasticsearch { }
+ elasticsearch { 
+ index => "logstash-%{+yyyy-MM-dd}"
+  }
 }
 ```
 
@@ -261,7 +215,9 @@ start and then you should see a series of dots (a dot per processed log
 line):
 
 ```
-$LOGSTASH_HOME\bin>logstash –f apache.conf
+cd $LOGSTASH_HOME/bin
+
+logstash –f apache.conf
 ```
 
 Let\'s verify the total number of documents (log events) indexed into
@@ -294,7 +250,7 @@ visualizations and a dashboard to derive insights about data.
 Open up Kibana from the browser using
 the [http://localhost:5601](http://localhost:5601/) URL. In the
 landing page, click on
-the`Connect to your Elasticsearch instance` link and type in
+the `Connect to your Elasticsearch instance` link and type in
 `logstash-*` in the `Index pattern` text field and click
 on the `Next step` button, as shown in the following screenshot:
 
@@ -423,18 +379,7 @@ the column name. Similarly, by clicking the remove button,
     icon**.**
 
 
-The query bar accepts three types of queries:
-
-
--   An Elasticsearch query string/Lucene query, which is based on the
-    Lucene query
-    syntax: <https://lucene.apache.org/core/2_9_4/queryparsersyntax.html>
--   A full JSON-based Elasticsearch query
-    DSL: <https://www.elastic.co/guide/en/elasticsearch/reference/5.5/query-dsl.html>
--   Kibana Query Language
-
-
-Let\'s explore the three options in detail.
+The query bar accepts three types of queries. Let\'s explore the three options in detail.
 
 
 
@@ -540,18 +485,7 @@ denotes zero or one match, as shown in the following screenshot:
 
 
 
-### Note
 
-Wildcard searches can be computationally expensive. It is always
-preferable to add a wildcard as a suffix rather than a prefix of the
-search text.
-
-
-Like wildcards, **regex queries** are supported too. By
-using slashes (`/`) and square
-brackets (`[]`), regex patterns can be specified. But be
-cautious when using regex queries, as they are very computationally
-expensive.
 
 #### Elasticsearch DSL query
 
@@ -748,8 +682,7 @@ specified field value. 
 
 You can add field filters from **Fields list** or
 **Documents table**, and even manually add a filter. In
-addition to creating positive and negative filters, **Documents
-table** enables you to determine whether a field is present. 
+addition to creating positive and negative filters, **Documents table** enables you to determine whether a field is present. 
 
 To add a positive or negative filter, in `Fields List` or
 `Documents Table`, click on the positive icon or negative icon
@@ -1340,12 +1273,6 @@ external data sources using a public API. Timelion has a native API for
 pulling data from the World Bank, Quandl, and Graphite.
 
 
-### Note
-
-Timelion expressions support around 50 different functions
-(<https://github.com/elastic/timelion/blob/master/FUNCTIONS.md>),
-which you can use to build expressions.
-
 
 
 Using plugins
@@ -1392,13 +1319,6 @@ $ KIBANA_HOME>bin/kibana-plugin install https://github.com/sivasamyk/logtrail/re
 ```
 
 
-### Note
-
-LogTrail is a plugin for viewing, analyzing, searching, and tailing log
-events from multiple hosts in real time with a developer friendly
-interface, inspired by Papertrail (<https://papertrailapp.com/>).  A
-list of publicly available Kibana plugins can be found
-at <https://www.elastic.co/guide/en/kibana/6.0/known-plugins.html>.
 
 
 ### Removing plugins
