@@ -164,7 +164,7 @@ input {
 
 filter {
   grok{
-  match => {"message" => "%{TIMESTAMP_ISO8601:eventtime} %{USERNAME:userid}  %{GREEDYDATA:data}" }
+  match => {"message" => "%{USERNAME:userid}" }
   } 
 }
 
@@ -179,21 +179,17 @@ output {
 <span style="color:red;">Note: msg.log file exists at following path: home/elasticsearch/Lab06/</span>
 
 
-If the input line is of the
-`"2017-10-11T21:50:10.000+00:00 tmi_19 001 this is a random message"` format,
-then the output would be as follows:
+If the input line is of the `fenagouser randomData` format, then the output would be as follows:
 
 ```
 {
       "path" => "/home/elasticsearch/Lab06/msg.log",
-      "@timestamp" => 2017-11-24T12:30:54.039Z,
-      "data" => "this is a random message\r",
+      "@timestamp" => 2021-11-24T12:30:54.039Z,
       "@version" => "1",
       "host" => "SHMN-IN",
       "messageId" => 1,
-      "eventtime" => "2017-10-11T21:50:10.000+00:00",
-       "message" => "2017-10-11T21:50:10.000+00:00 tmi_19 001 this is a random message\r",
-      "userid" => "tmi_19"
+      "message" => "fenagouser randomData\r",
+      "userid" => "fenagouser"
 }
 ```
 
@@ -207,60 +203,13 @@ logstash -f ./conf/grok1.conf
 
 ### Note
 
-If the pattern doesn\'t match the text, it will add a
-`_grokparsefailure` tag to the `tags` field.
+If the pattern doesn\'t match the text, it will add a `_grokparsefailure` tag to the `tags` field.
 
 
-### Note
-
-Grok Debugger utility is automatically enabled when you install X-Pack in Kibana. It is located
+Grok Debugger utility is automatically enabled in Kibana. It is located
 under the `DevTools `tab in Kibana.
 
-`kibana-plugin install x-pack`
-
-#### Date filter
-
-
-We can use the plugin like so:
-
-```
-filter {
-    date {
-    match => [ "timestamp", "dd/MMM/YYYY:HH:mm:ss Z" ]
-         }
-}
-```
-
-By default, the date filter overwrites the `@timestamp`
-field, but this can be changed by providing an explicit target field, as
-shown in the following code snippet. Thus, the user can keep the event
-time processed by Logstash, too:
-
-```
-filter {
-    date {
-    match => [ "timestamp", "dd/MMM/YYYY:HH:mm:ss Z" ]
-    target => "event_timestamp"
-    }
-}
-```
-
-
-### Note
-
-By default, the timezone will be the server local time, unless specified
-otherwise. To manually specify the timezone, use the
-`timezone` parameter/setting of the plugin. Valid timezone
-values can be found
-at [http://joda-time.sourceforge.net/timezones.html.](http://joda-time.sourceforge.net/timezones.html)
-
-
-If the time field has multiple possible time formats, then those can be
-specified as an array of values to the `match` parameter:
-
-```
-match => [ "eventdate", "dd/MMM/YYYY:HH:mm:ss Z", "MMM dd yyyy HH:mm:ss","MMM d yyyy HH:mm:ss", "ISO8601" ]
-```
+![](./images/s1.png)
 
 
 
@@ -363,7 +312,7 @@ preceding snippet.
 To validate whether the logs were shipped to Elasticsearch, execute the following command:
 
 ```
-E:\>curl -X GET http://localhost:9200/filebeat*/_search?pretty
+curl -X GET http://localhost:9200/filebeat*/_search?pretty
 
 Sample Response:
 {
@@ -560,8 +509,8 @@ can be passed using the `username` and
 output.elasticsearch:
   enabled: true  
   hosts: ["localhost:9200"]
-  username: "elasticuser"
-  password: "password"
+  username: "elasticsearch"
+  password: "elasticpassword"
 ```
 
 To ship an event to the Elasticsearch ingest
