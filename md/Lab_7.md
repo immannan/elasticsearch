@@ -90,6 +90,13 @@ Clicking on the `Try our sample data` button will take you to the following sc
 ![](./images/437cd832-47ab-4351-bb0a-515115ff3740.jpg)
 
 
+#### ProTip:
+
+
+You can search Kibana features from the search menu:
+
+![](./images/s3.png)
+
 
 Go ahead and click on `Add data` for `Sample eCommerce orders`.
 It should load data, visualizations, and dashboards in the background.
@@ -125,27 +132,11 @@ sample logs data.
 
 
 If you want to navigate back to the home page, you can always click on
-the `Kibana` icon ![](./images/c20e47c9-78f3-4761-ba4d-5c353e3c3d99.png)
+this icon ![](./images/c20e47c9-78f3-4761-ba4d-5c353e3c3d99.png)
 
 
-At the top-left corner, which will take you to the home screen, which
-will be the default screen once you load Kibana in the browser again.
-This is in same screen you would have been taken to if you had clicked
-on the `Explore on my own` button when Kibana was loaded for the
-first time:
 
-
-![](./images/cb1298d6-9d1d-492f-a5e6-aea968d052dc.png)
-
-
-Clicking on the link in section 1 will take you to the `Sample data`
-page that we just saw. Similarly, if you want to configure Kibana
-against your own index and use it for data exploration and
-visualization, you can click on the link in section 2, in the previous
-screenshot.
-
-
-#### Loading Custom Data
+### Loading Custom Data
 
 In this lab, rather than relying on the sample default data shipped
 out of the box, we will load custom data which we will use to follow the
@@ -156,7 +147,7 @@ it in Kibana for analysis/building visualizations.
 
 <https://github.com/elastic/elk-index-size-tests> hosts a dump of Apache
 server logs that were collected for
-the [www.logstash.net](http://www.logstash.net/)site during the
+the [www.logstash.net](http://www.logstash.net/) site during the
 period of May 2014 to June 2014. It contains 300,000 log events.
 
 
@@ -217,8 +208,11 @@ line):
 ```
 cd $LOGSTASH_HOME/bin
 
-logstash –f apache.conf
+logstash -f apache.conf
 ```
+
+<span style="color:red;">Note: Logstash will take few minutes to import the data. Please wait for import to complete</span>
+
 
 Let\'s verify the total number of documents (log events) indexed into
 Elasticsearch:
@@ -249,10 +243,12 @@ visualizations and a dashboard to derive insights about data.
 
 Open up Kibana from the browser using
 the [http://localhost:5601](http://localhost:5601/) URL. In the
-landing page, click on
-the `Connect to your Elasticsearch instance` link and type in
-`logstash-*` in the `Index pattern` text field and click
-on the `Next step` button, as shown in the following screenshot:
+landing page, search  `Index pattern` and click it. 
+
+![](./images/s2.png)
+
+
+Click "Create Index" button and type in `logstash-*` in the `Index pattern` text field and click on the `Next step` button, as shown in the following screenshot:
 
 
 ![](./images/f94ce1a0-921b-4a50-bdb9-b52c51f07cb8.png)
@@ -280,15 +276,6 @@ following screen:
 ### Discover
 
 
-
-The **Discover** page helps you to
-interactively explore data. It allows the user to interactively perform
-search queries, filter search results, and view document data. It also
-allows the user to save the search, or filter criteria so that it can be
-reused or used to create visualizations on top of the filtered results.
-Clicking on the third icon from the top-left takes you to the
-`Discover` page.
-
 By default, the `Discover` page displays the events of the last 15
 minutes. As the log events are from the period May 2014 to June 2014,
 set the appropriate date range in the time filter. Navigate to
@@ -301,41 +288,15 @@ following screenshot:
 ![](./images/103d7059-34fc-4dfc-a84c-f98c288be45f.jpg)
 
 
-The `Discover` page contains the sections shown in the following
-screenshot:
+The `Discover` page contains the sections shown in the following screenshot:
 
 
 ![](./images/6c56eac0-f9be-474c-a5cb-653db5af3a63.jpg)
 
 
-The numbers in the preceding screenshot, represent individual sections---Index Pattern (1),
-Fields List (2), Document Table (3), Query
-Bar (4), Hits (5), Histogram
-(6), Toolbar (7), Time Picker
-(8), Filters (9), and Expand/Collapse
-(10).
-
-Let\'s look at each one of them:
 
 
--   **Index Pattern**: All the configured
-    index patterns are shown here in a dropdown and the default one is
-    selected automatically. The user can choose the appropriate index
-    pattern for data exploration.
--   **Fields List**: All the fields that are
-    part of the document are shown in this section. Clicking on the
-    field shows `Quick Count`, that is, how many of the documents in
-    the documents table contain a particular field, what the top five
-    values are, and what percentage of documents contain each value, as
-    shown in the following screenshot:
-
-
-
-![](./images/cc677e1c-0bcc-4d6b-a43b-9a1e680ddfc8.jpg)
-
-
-
--   **Document Table**: This section shows the actual
+**Document Table**: This section shows the actual
     document data. The table shows the **500** most recent
     documents that match the user-entered query/filters, sorted by
     timestamp (if the field exists). By clicking the `Expand` button
@@ -345,16 +306,6 @@ Let\'s look at each one of them:
 
 
 ![](./images/814550e4-bd8d-41f4-965c-fb6cde7f011f.jpg)
-
-
-During data exploration, we are often interested in a subset of fields
-rather than the whole of a document. In order to add fields to the
-document table, either hover over the field on the fields list and click
-its add button, or expand the document and click the
-field\'s `Toggle column in table` button:
-
-
-![](./images/2c9b8d05-3ecc-4a0f-87b0-0a6653e0fcba.png)
 
 
 Added field columns replace the **\_source** column in the
@@ -368,23 +319,8 @@ the column name. Similarly, by clicking the remove button,
 
 
 
--   **Query Bar**: Using the query bar/search
-    bar, the user can enter queries to filter the search results.
-    Submitting a search request results in the histogram being updated
-    (if the time field is configured for the selected index pattern),
-    and the documents table, fields lists, and hits being updated to
-    reflect the search results. Matching search text is highlighted in
-    the document table. To search your data, enter your search criteria
-    in the query bar and press [*Enter*], or click the search
-    icon**.**
-
-
-The query bar accepts three types of queries. Let\'s explore the three options in detail.
-
-
 
 #### Elasticsearch query string/Lucene query
-
 
 
 This provides the ability to perform various
@@ -407,17 +343,12 @@ the query bar:
 ![](./images/331852be-8b94-47e9-8539-0bf3f002d56f.png)
 
 
-When you enter a group of words to search for, as long as the document
-contains any of the words, or all or part of the words in any order, the
-document is included in the search result.
-
 If you are doing an exact phrase search, that is, the documents should
 contain all the words given the search criteria, and the words should be
 in the same order, then surround the phrase with quotes. For
 example, `file logstash` or `files logstash`.
 
-**Field search**: To search for values against a specific field, use the
-`syntax` field: `value`:
+**Field search**: To search for values against a specific field, use the `syntax` field: `value`:
 
 
 ![](./images/926cab44-beba-4cb1-9eef-c192046bf3aa.png)
@@ -506,19 +437,9 @@ have `IE` in the `useragent.name` field and
 **Hits**: Hits represent the total number of documents that
 match the user-entered input query/criteria.
 
+
+
 #### KQL
-
-
-
-**Kibana Query Language** (KQL) is a query
-language specifically built for Kibana that
-is built to simplify query usage with easy-to-use syntax, support for
-querying on scripted fields, and ease of migration of queries as the
-product evolves. The query syntax is similar to the Lucene query syntax
-that was explained in the previous sections. For example, in a Lucene
-query, `response:404 geoip.city_name:Diedorf`would search for
-any documents having a response of `404` or any documents
-having `geoip.city_name` with `Diedorf`.
 
 KQL doesn\'t allow spaces between expressions and the same thing would
 have to be written as
@@ -543,37 +464,14 @@ The operators `and`, `or`, and `not` are
 case-insensitive.
 
 
-**Histogram**: This section is only visible if a time field is configured for the selected index
-pattern. This section displays the distribution of documents over time
-in a histogram. By default, the best time interval for generating the
-histogram is automatically inferred based on the time set in the time
-filter. However, the histogram interval can be changed by selecting the
-interval from the dropdown, as shown in the following screenshot:
-
+**Histogram**
 
 ![](./images/1558ff78-915c-4db2-8b23-7b40660f174e.png)
 
 
-During data exploration, the user can slice and dice through the
-histogram and filter the search results. Hovering over the histogram
-converts the mouse pointer to a `+` symbol. When
-left-clicking, the user can draw a rectangle to inspect/filter the
-documents that fall in those selected intervals.
 
 
-### Note
-
-After slicing through a histogram, the time interval/period changes. To
-revert back, click the browser\'s back button.
-
-
-**Toolbar**: User-entered search
-queries and applied filters can be saved so that they can be reused or
-used to build visualizations on top of the filtered search results. The
-toolbar provides options for clearing the search (New),
-and saving (Save), viewing (Open), sharing
-(Share), and inspecting (Inspect) search
-queries.
+**Toolbar**
 
 The user can refer to existing stored searches later and modify the
 query, and they can either overwrite the existing search or save it as a
@@ -584,8 +482,7 @@ new search (by toggling the `Save as new search` option in the
 ![](./images/5ec1c4be-72be-4952-ab88-f553efe9230e.png)
 
 
-Clicking the **Open** button displays the saved searches, as
-shown in the following screenshot:
+Clicking the **Open** button displays the saved searches, as shown in the following screenshot:
 
 
 ![](./images/91505d6f-dcf4-41ab-9904-0b0ae5ae80a9.png)
@@ -609,12 +506,6 @@ ES query, as shown in the following screenshot:
 
 ![](./images/5a13f7d9-533d-42e2-9ebc-c58d3e3a163d.png)
 
-
-**Time Picker**: This section is only visible if a time field is configured for the selected index
-pattern. The Time Filter restricts the search results to a specific time
-period, thus assisting in analyzing the data belonging to the period of
-interest. When the `Discover` page is opened, by default, the Time
-Filter is set to `Last 15 minutes`.
 
 **Time Filter** provides the following options to
 select time periods. Click
@@ -664,21 +555,6 @@ to access the following options:
 
 
 
-### Note
-
-Time Filter is present on the **Discover**,
-**Visualize**, and **Dashboard** pages. The time
-range that gets selected/set on any of these pages gets carried over to
-other pages, too.
-
- 
-
-
-**Filters**: By using positive filters,
-you can refine the search results to display
-only those documents that contain a particular value in a field. You can
-also create negative filters that exclude documents that contain the
-specified field value. 
 
 You can add field filters from **Fields list** or
 **Documents table**, and even manually add a filter. In
@@ -737,14 +613,11 @@ country. Kibana provides a variety of visualizations, shown as follows:
 ### Creating a visualization
 
 
-
-The following are the steps to create
-visualizations:
+The following are the steps to create visualizations:
 
 
 1.  Navigate to the `Visualize` page and click
-    the `Create a new Visualization` button or the
-     `+`  button
+    the `Create a new Visualization` button or the `+`  button
 2.  Select a visualization type
 3.  Select a data source
 4.  Build the visualization
@@ -781,6 +654,7 @@ Filter** \| **Absolute Time Range** and set
 **From** as `2014-05-28 00:00:00.000` and
 **To** to `2014-07-01 00:00:00.000`; click
 `Go`.
+
 
 #### Response codes over time
 
@@ -943,9 +817,6 @@ The steps are as follows:
 3.  Select `logstash-*` under
     `From a New Search, Select Index`
 4.  Set the bucket type as` Geo Coordinates`
-
-
-
 5.  Select the **Aggregation** as **Geohash**
 6.  Select the **geoip.location** field
 7.  In the **Options** tab, select `Map Type` as
@@ -992,11 +863,7 @@ The steps are as follows:
 
 1.  Create a new visualization
 2.  Click on `New` and select `Tag Cloud`
-3.  Select `logstash-*` under
-    `From a New Search, Select Index`
-
-
-
+3.  Select `logstash-*` under `From a New Search, Select Index`
 4.  Set the bucket type to **Tags**
 5.  Select the **Terms** aggregation
 6.  Select the **useragent.name.keyword** field
@@ -1122,28 +989,12 @@ another user or embed the dashboard in a web page as aniframe:
 
 
 
-Timelion
---------------------------
-
-
-
-**Timelion** visualizations are special type of
-visualization for analyzing time-series data
-in Kibana. They enable you to combine totally independent data sources
-within the same visualization. Using its simple expression language, you
-can execute advanced mathematical calculations, such as dividing and
-subtracting metrics, calculating derivatives and moving averages, and
-visualize the results of these calculations.
-
-
 
 ### Timelion 
 
 
-
 `Timelion` is available just like any other
-visualization in the **New
-Visualization** window, as follows:
+visualization in the **New Visualization** window, as follows:
 
 
 ![](./images/ddb108d6-691c-4480-bea2-712c4c8a49b5.png)
@@ -1159,19 +1010,12 @@ functions.
 
 
 
-The simplest Timelion expression used for
-generating graphs is as follows:
+The simplest Timelion expression used for generating graphs is as follows:
 
 ```
 .es(*) 
 ```
 
-Timelion expressions always start with a dot followed by the function
-name that can accept one or more parameters. The
-`.es(*)` expression queries data from all the indexes present
-in Elasticsearch. By default, it will just count the number of
-documents, resulting in a graph showing the number of documents over
-time.
 
 If you\'d like to restrict Timelion to data within a specific index (for
 example, `logstash-*`), you can specify the index within the
@@ -1345,7 +1189,3 @@ beautiful dashboards for effective storytelling about your data.
 
 We learned how to configure Kibana to visualize data from Elasticsearch.
 We also looked at how to add custom plugins to Kibana.
-
-In the next lab, we will cover ElasticSearch and the core components
-that help when building data pipelines. We will also cover visualizing
-data to add the extensions needed for specific use cases.
