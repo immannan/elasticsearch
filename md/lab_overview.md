@@ -31,10 +31,6 @@ Labs for the course:
 5. Analyzing Log Data
 6. Building Data Pipelines with Logstash
 7. Visualizing Data with Kibana
-8. Elastic X-Pack
-9. Running Elastic Stack in Production
-10. Building a Sensor Data Analytics Application
-11. Monitoring Server Infrastructure
 
 
 ### About
