@@ -8,9 +8,7 @@ Lab 6. Building Data Pipelines with Logstash
 ---------------------------------------------------------
 
 
-
 In this lab, we will be covering the following topics:
-
 
 -   Parsing and enriching logs using Logstash
 -   The Elastic Beats platform
@@ -37,23 +35,20 @@ logdata = timestamp + data
 Let\'s take some sample data and use a CSV filter to parse data out of
 it. Store the following data in a file named `users.csv`:
 
+<span style="color:red;">Note: csv file exists at following path: home/elasticsearch/Lab06/users.csv</span>
+
+
 ```
 FName,LName,Age,Salary,EmailId,Gender
 John,Thomas,25,50000,John.Thomas,m
 Raj, Kumar,30,5000,Raj.Kumar,f
-Rita,Tony,27,60000,Rita.Tony,m
 ```
 
-The following code block shows the usage of the CSV filter plugin. The
-CSV plugin has no required parameters. It scans each row of data and
-uses default column names such as `column1`,
-`column2`, and so on to place the data. By default, this
-plugin uses `,` (a comma) as a field separator. The default
-separator can be changed by using the `separator` parameter of
-the plugin. You can either specify the list of column names using the
+The following code block shows the usage of the CSV filter plugin. You can either specify the list of column names using the
 `columns` parameter, which accepts an array of column names,
 or by using the `autodetect_column_names`parameter, set to
 true. In doing so, you can let the plugin know that it needs to detect column names automatically, as follows:
+
 
 ```
 #csv_file.conf
@@ -77,6 +72,14 @@ output {
 }
 ```
 
+
+Let\'s run Logstash using this new configuration that\'s stored in the `csv_file.conf` file, as follows:
+
+```
+cd $LOGSTASH_HOME
+
+logstash -f ./conf/csv_file.conf
+```
 
 #### Mutate filter
 
@@ -135,65 +138,17 @@ conversion targets are `integer`, `string`,
 `float`, and `boolean`. 
 
 
+```
+cd $LOGSTASH_HOME
+
+logstash -f ./conf/csv_file_mutuate.conf
+```
 
 
 #### Grok filter
 
 
-This is a powerful and often used plugin for
-parsing the unstructured data into structured
-data, thus making the data easily queryable/filterable. In simple terms,
-Grok is a way of matching a line against a pattern (which is based on a
-regular expression) and mapping specific parts of the line to dedicated
-fields. The general syntax of a `grok` pattern is as follows:
-
-```
-%{PATTERN:FIELDNAME}
-```
-
-`PATTERN` is the name of the pattern that will match the text.
-`FIELDNAME` is the identifier for the piece of text being
-matched. 
-
-By default, groked fields are strings. To cast either to
-`float` or `int` values, you can use the following
-format:
-
-```
-%{PATTERN:FIELDNAME:type}
-```
-
-Logstash ships with about 120 patterns by default. These patterns are
-reusable and extensible. You can create a custom pattern by combining
-existing patterns. These patterns are based on the Oniguruma regular
-expression library.
-
-Patterns consist of a label and a `regex`. For example:
-
-```
-USERNAME [a-zA-Z0-9._-]+
-```
-
-Patterns can contain other patterns, too; for example:
-
-```
-HTTPDATE %{MONTHDAY}/%{MONTH}/%{YEAR}:%{TIME} %{INT}
-```
-
-
-
-If a pattern is not available, then you can use a regular expression by
-using the following format:
-
-```
-(?<field_name>regex)
-```
-
-For example, `regex (?<phone>\d\d\d-\d\d\d-\d\d\d\d)` would
-match telephone numbers, such as 123-123-1234, and place the parsed
-value into the `phone` field.
-
-Let\'s look at some examples to understand `grok` better:
+Let\'s look at some examples to understand `grok` filter:
 
 ```
 #grok1.conf
@@ -221,6 +176,9 @@ output {
 } 
 ```
 
+<span style="color:red;">Note: msg.log file exists at following path: home/elasticsearch/Lab06/</span>
+
+
 If the input line is of the
 `"2017-10-11T21:50:10.000+00:00 tmi_19 001 this is a random message"` format,
 then the output would be as follows:
@@ -240,6 +198,13 @@ then the output would be as follows:
 ```
 
 
+```
+cd $LOGSTASH_HOME
+
+logstash -f ./conf/grok1.conf
+```
+
+
 ### Note
 
 If the pattern doesn\'t match the text, it will add a
@@ -248,10 +213,10 @@ If the pattern doesn\'t match the text, it will add a
 
 ### Note
 
-X-Pack 5.5 onward contains the Grok Debugger utility and is
-automatically enabled when you install X-Pack in Kibana. It is located
+Grok Debugger utility is automatically enabled when you install X-Pack in Kibana. It is located
 under the `DevTools `tab in Kibana.
 
+`kibana-plugin install x-pack`
 
 #### Date filter
 
@@ -310,7 +275,6 @@ match => [ "eventdate", "dd/MMM/YYYY:HH:mm:ss Z", "MMM dd yyyy HH:mm:ss","MMM d 
 2. Important: Switch to `elasticsearch` user:
       
       `su elasticsearch`
-
 
 
 
@@ -631,34 +595,6 @@ output.logstash:
   hosts: ["localhost:5044"]
 ```
 
-By using the `enabled` setting, you can enable or disable the
-output. `hosts` accepts one or more Logstash servers. Multiple
-hosts can be defined for failover purposes. If the configured host is
-unresponsive, then the event will be sent to one of the other configured
-hosts. When multiple hosts are configured, the events are distributed in
-a random order. To enable load balancing of events across the Logstash
-hosts, use the `loadbalance` flag, set
-to `true`:
-
-```
-output.logstash:
-hosts: ["localhost:5045", "localhost:5046"]
-  loadbalance: true
-```
-
-
--   `console`: This is used to send the events to
-    `stdout`. The events are written in JSON format. It is
-    useful during debugging or testing.
-
-
-A sample console configuration is as follows:
-
-```
-output.console:
-  enabled: true
-pretty: true
-```
 
 
 #### Logging
@@ -676,7 +612,7 @@ A sample configuration is as follows:
 logging.level: debug
 logging.to_files: true
 logging.files:
- path: C:\logs\filebeat
+ path: /elasticstack/filebeat-7.12.1-linux-x86_64/logs
  name: metricbeat.log 
  keepfiles: 10
 ```
