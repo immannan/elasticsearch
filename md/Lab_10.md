@@ -165,6 +165,8 @@ POST _template/sensor_data_template
 /elasticstack/logstash-7.12.1/files_lab10/logstash_sensor_data_http.conf
 ```
 
+**Note:** Open new terminal and run MYSQL commands as root user.
+
 4. Ensure that you MySQL server is running:
 
 `service mysql status`
@@ -172,15 +174,18 @@ POST _template/sensor_data_template
 6. Login to the MySQL database using a command-line mysql client where SQL scripts can be executed. Execute the script in the create_sensor_metadata.sql to load the metadata into the MySQL database.
 
 Execute in Terminal:
-`mysql -u root -p fenago`
+`mysql -uroot -pfenago`
 
 Execute in mysql shell: 
 `source /root/Desktop/elasticsearch/Lab10/files_lab10/create_sensor_metadata.sql`
+
+![](./images/db1.png)
 
 
 7. Start logstash from command line, using the following commands
 
 ```
+su elasticsearch
 cd /elasticstack/logstash-7.12.1
 logstash  -f files_lab10/logstash_sensor_data_http.conf
 ```
@@ -196,7 +201,7 @@ Setting up the metadata database
 
 Log in to the newly created `sensor_metadata` database and verify that the three tables, `sensor_type`, `locations`, and` sensors` exist in the database.
 
-`mysql -u root -p fenago`
+`mysql -uroot -pfenago`
 
 
 You can verify that the database was created and populated successfully
@@ -229,6 +234,8 @@ The result of the previous query will look like this:
 
 ![](./images/19.PNG)
 
+
+![](./images/db2.png)
  
 
 Our `sensor_metadata` database is ready to look up the
@@ -303,7 +310,7 @@ configuration file:
 ```
 filter {
   jdbc_streaming {
-    jdbc_driver_library => "/root/Desktop/elasticsearch/Lab10/mysql-connector-java-8.0.25.jar"
+    jdbc_driver_library => "/home/elasticsearch/mysql-connector-java-8.0.25.jar"
     jdbc_driver_class => "com.mysql.jdbc.Driver"
     jdbc_connection_string => "jdbc:mysql://localhost:3306/sensor_metadata"
     jdbc_user => "root"
@@ -520,10 +527,7 @@ output {
 ```
 
 This way, we will have one index for every day, where each day\'s data
-will be stored within its index. We had learned the index per time frame
-in Lab 9[*, Running the Elastic Stack in Production.*] 
-
-Now that we have our Logstash data pipeline ready, let\'s send some
+will be stored within its index. Now that we have our Logstash data pipeline ready, let\'s send some
 data.
 
 
@@ -598,17 +602,10 @@ Let\'s go through each step.
 ### Setting up an index pattern in Kibana
 
 
+Open up Kibana from the browser using the [http://localhost:5601](http://localhost:5601/) URL. In the landing page, 
+search  `Index pattern` and click it. 
 
-Before we can start building visualizations,
-we need to set up the index pattern for all indexes that we will
-potentially have for the Sensor Data Analytics application. We need to
-do this because our index names are dynamic. We will have one index per
-day, but we want to be able to create visualizations and dashboards that work across multiple indices of sensor data
-even when there are multiple indices. To do this, click on the **Index Patterns** link under
-the `Manage and Administer the Elastic Stack` section, as follows:
-
-
-![](./images/a03e33a5-9526-45fe-9ac2-cad6e848f926.png)
+![](./images/s2.png)
 
 
 In the `Index pattern` field, type

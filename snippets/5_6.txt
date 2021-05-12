@@ -2,7 +2,7 @@
 input {
 jdbc {
             # path of the jdbc driver
-            jdbc_driver_library => "/root/Desktop/elasticsearch/Lab10/mysql-connector-java-8.0.25.jar"
+            jdbc_driver_library => "/home/elasticsearch/mysql-connector-java-8.0.25.jar"
 
             # The name of the driver class 
             jdbc_driver_class => "com.mysql.jdbc.Driver"
