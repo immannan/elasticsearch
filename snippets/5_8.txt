@@ -10,7 +10,7 @@ output {
       index => "company"
       document_type => "employee"
       hosts => "198.162.43.30:9200"
-user => "elastic"
+      user => "elastic"
       password => "elasticpassword"
   }
 } 
