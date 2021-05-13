@@ -158,11 +158,11 @@ POST _template/sensor_data_template
 
 2. Switch user from terminal: `su elasticsearch`
 3. Logstash has been already downloaded at following path: `/elasticstack/logstash-7.12.1`.
-4. Files have been already copied at path `/elasticstack/logstash-7.12.1/files_lab10` . The structure of files should look like -
+4. Files have been already copied at path `/elasticstack/logstash-7.12.1/files_mysql` . The structure of files should look like -
 
 
 ```
-/elasticstack/logstash-7.12.1/files_lab10/logstash_sensor_data_http.conf
+/elasticstack/logstash-7.12.1/files_mysql/logstash_sensor_data_http.conf
 ```
 
 **Note:** Open new terminal and run MYSQL commands as root user.
@@ -177,7 +177,7 @@ Execute in Terminal:
 `mysql -uroot -pfenago`
 
 Execute in mysql shell: 
-`source /root/Desktop/elasticsearch/Lab10/files_lab10/create_sensor_metadata.sql`
+`source /root/Desktop/elasticsearch/Lab09/files_mysql/create_sensor_metadata.sql`
 
 ![](./images/db1.png)
 
@@ -187,7 +187,7 @@ Execute in mysql shell:
 ```
 su elasticsearch
 cd /elasticstack/logstash-7.12.1
-logstash  -f files_lab10/logstash_sensor_data_http.conf
+logstash  -f files_mysql/logstash_sensor_data_http.conf
 ```
 
 This index template will create a new index with the name
@@ -314,7 +314,7 @@ filter {
     jdbc_driver_class => "com.mysql.jdbc.Driver"
     jdbc_connection_string => "jdbc:mysql://localhost:3306/sensor_metadata"
     jdbc_user => "root"
-    jdbc_password => "<password>"
+    jdbc_password => "fenago"
     statement => "select st.sensor_type as sensorType, l.customer as customer, l.department as department, l.building_name as buildingName, l.room as room, l.floor as floor, l.location_on_floor as locationOnFloor, l.latitude, l.longitude from sensors s inner join sensor_type st on s.sensor_type_id=st.sensor_type_id inner join location l on s.location_id=l.location_id where s.sensor_id= :sensor_identifier"
     parameters => { "sensor_identifier" => "sensor_id"}
     target => lookupResult
@@ -546,13 +546,13 @@ curl -XPOST -u sensor_data:sensor_data --header "Content-Type: application/json"
 
 Since we don\'t have real sensors, we will simulate the data by sending
 these types of requests. The simulated data and script that send this
-data are present in `Lab10/data`.
+data are present in `Lab09/data`.
 
 
-Now, go to the `Lab10/data` directory and execute `load_sensor_data.sh`:
+Now, go to the `Lab09/data` directory and execute `load_sensor_data.sh`:
 
 ```
-$ cd ~/Desktop/elasticsearch/Lab10/data
+$ cd ~/Desktop/elasticsearch/Lab09/data
 $ ls
 load_sensor_data.sh sensor_data.json
 
