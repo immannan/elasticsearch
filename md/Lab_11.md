@@ -6,18 +6,6 @@
 Lab 11. Monitoring Server Infrastructure
 -----------------------------------------------------
 
-
-
-In the previous lab, we covered how to effectively run the Elastic
-Stack in a production environment, and the best practices to follow when
-running the Elastic Stack in production.
-
-In this lab, we will be covering how to use the Beats platform to
-monitor server infrastructure. We will learn about Metricbeat in detail,
-a Beat that helps IT administrators and application support teams
-monitor their applications and server infrastructure and respond to
-infrastructure outages in a timely manner. 
-
 In this lab, we will cover the following topics:
 
 
@@ -26,201 +14,6 @@ In this lab, we will cover the following topics:
 -   Capturing system metrics
 -   Deployment architecture
 
-
-
-### Downloading and installing Metricbeat
-
-
-
-Navigate to <https://www.elastic.co/downloads/beats/metricbeat-oss> and,
-depending on your operating system, download the ZIP/TAR file, as shown in the following screenshot. The installation of
-Metricbeat is simple and straightforward as follows:
-
-
-![](./images/41517c39-18d5-4968-ac11-51a3d1839f19.png)
-
-
-
-### Note
-
-For this tutorial, we\'ll use the Apache 2.0 version of Metricbeat.
-Beats version 7.0.x is compatible with Elasticsearch 6.7.x and 7.0.x,
-and Logstash 6.7.x and 7.0.x. The compatibility matrix can be found
-at <https://www.elastic.co/support/matrix#matrix_compatibility>. When
-you come across Elasticsearch and Logstash examples, or scenarios using
-Beats in this lab, make sure that you have compatible versions of
-Elasticsearch and Logstash installed.
-
-
-
-#### Installing on Linux
-
-
-
-Unzip the `tar.gz` package and navigate to the newly created folder, as shown in the following code snippet:
-
-```
-$>tar -xzf metricbeat-7.0.0-linux-x86_64.tar.gz
-$>cd metricbeat
-```
-
-
-### Note
-
-To install using dep/rpm, execute the appropriate commands in the
-Terminal as follows:
-
-**deb:`curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.0.0-amd64.deb``sudo dpkg -i metricbeat-7.0.0-amd64.deb`
-
-**rpm:`curl -L -O https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.0.0-x86_64.rpm``sudo rpm -vi metricbeat-7.0.0-x86_64.rpm`
-
-Metricbeat will be installed in the `/usr/share/metricbeat`
-directory. The configuration files will be present
-in `/etc/metricbeat`. The `init` script will be
-present in `/etc/init.d/metricbeat`. The log files will be
-present within the `/var/log/metricbeat` directory.
-
-
-
-### Architecture
-
-
-
-Metricbeat is made up of two components: one
-is called **modules** and the other is called
-**metricsets**. A Metricbeat module defines the basic logic of collecting data from a
-specific service, such as MongoDB, Apache,
-and so on. The module specifies details about the service, including how
-to connect, how often to collect metrics, and which metrics to collect.
-
-Each module has one or more metricsets. A metricset is the component
-that collects a list of related metrics from services or the operating
-system using a single request. It structures event data and ships it to
-the configured outputs, such as Elasticsearch or Logstash. 
-
-Metricbeat collects metrics periodically, based on the interval
-specified in the `metricbeat.yml` configuration file, and
-publishes the event to the configured output asynchronously. Since the
-events are published asynchronously, just like in Filebeat, which
-guarantees delivery at least once, if the configured output is not
-available, the events will be lost. 
-
-For example, the MongoDB module provides the `status` and
-`dbstats` metricsets, which collect information and statistics
-by parsing the returned response obtained from running the
-`db.serverStatus()` and `db.stats()` commands on
-MongoDB, as shown in the following diagram:
-
-
-![](./images/a2b64ee4-7b3e-473e-aa3f-fe3bccb8205d.png)
-
-
-
-#### Event structure
-
-
-
-Metricbeat sends two types of event:
-
-
--   Regular events containing the fetched metrics
--   Error events when the service is down/unreachable
-
-
-Irrespective of the type of event, all events have the same basic
-structure and contain the following fields as a minimum, irrespective of
-the type of module that\'s enabled:
-
-
--   `@timestamp`: Time when the event was captured
--   `host.hostname`: Hostname of the server on which Beat is
-    running
--   `host.os`: Operating system details of the server where
-    Beat is running
--   `agent.type`: Name given to Beat 
--   `agent.version`: The Beat version
--   `event.module`: Name of the module that the data is from
--   `event.dataset`: Name of the metricset that the data is
-    from
-
-
-In the case of error events, an error field such
-as `error.message`, containing the error message, code, and
-type, will be appended to the event. 
-
-An example of a regular event is as follows:
-
-```
-{"@timestamp" : "2019-04-22T12:40:16.608Z",
-"service" : {
-  "type" : "system"
-},
-"system" : {
-  "uptime" : {
-    "duration" : {
-      "ms" : 830231705
-    }
-  }
-},
-"event" : {
-  "module" : "system",
-  "duration" : 221012700,
-  "dataset" : "system.uptime"
-},
-"metricset" : {
-  "name" : "uptime"
-},
-"agent" : {
-  "type" : "metricbeat",
-  "ephemeral_id" : "1956888d-7da0-469f-9a38-ab8b9ad52e07",
-  "hostname" : "madsh01-I21350",
-  "id" : "5b28d885-1389-4e32-a3a9-3c5e8f9063b0",
-  "version" : "7.0.0"
-},
-"ecs" : {
-  "version" : "1.0.0"
-},
-"host" : {
-  "name" : "madsh01-I21350",
-  "os" : {
-    "kernel" : "6.1.7601.24408 (win7sp1_ldr_escrow.190320-1700)",
-    "build" : "7601.24411",
-    "platform" : "windows",
-    "version" : "6.1",
-    "family" : "windows",
-    "name" : "Windows 7 Enterprise"
-  },
-  "id" : "254667db-4667-46f9-8cf5-0d52ccf2beb9",
-  "hostname" : "madsh01-I21350",
-  "architecture" : "x86_64"
-}
-}
-```
-
-An example of an error event when `mongodb` is not reachable
-is as follows: 
-
-```
-{
-  "@timestamp": "2019-04-02T11:53:08.056Z",
-  "metricset": {
-    "host": "localhost:27017",
-    "rtt": 1003057,
-    "module": "mongodb",
-    "name": "status"
-  },
-"error": {
-    "message": "no reachable servers"
-  },
-  "mongodb": {
-    "status": {}
-}
-```
-
-Along with the minimum fields (the basic structure of the event) that Metricbeat ships with, it ships fields
-related to the modules that are enabled. The complete list of fields it
-ships with per module can be obtained
-at <https://www.elastic.co/guide/en/beats/metricbeat/current/exported-fields.html>.
 
 
 
@@ -247,13 +40,6 @@ The `metricbeat.yml` file contains the following:
 Let\'s explore some of these sections.
 
 
-### Note
-
-The location of the `metricbeat.yml` file will be present in
-the installation directory if `.zip` or `.tar` files
-are used for installation. If `.dep` or `.rpm` files
-are used for installation, then it will be present in the
-`/etc/metricbeat` location.
 
 ### Module configuration
 
@@ -336,14 +122,8 @@ true and specify a frequency with which to look for config file changes.
 Set the `reload.period` parameter under
 the `metricbeat.config.modules` property.
 
-**For example**:
-
-`#metricbeat.yml``metricbeat.config.modules:``path: ${path.config}/modules.d/*.yml``reload.enabled: true``reload.period: 20s`
-
 
 #### Enabling module configs in the metricbeat.yml file
-
-
 
 If you\'re used to using earlier versions of Metricbeat, you can enable
 the appropriate modules and metricsets in the
@@ -365,13 +145,6 @@ metricbeat.modules:
   metricsets: ["dbstats", "status"]
   period: 5s
 ```
-
-
-### Note
-
-It is possible to specify a module multiple times and specify a
-different period one or more metricsets should be used for. For
-example:`#------- Couchbase Module -----------------------------``- module: couchbase``metricsets: ["bucket"]``period: 15s``hosts: ["localhost:8091"]``- module: couchbase``metricsets: ["cluster", "node"]``period: 30s``hosts: ["localhost:8091"]`
 
 
 
@@ -603,60 +376,6 @@ Some of the available configuration options are as follows:
     specify the location of the file, the name of the file, and the
     number of recently rotated log files to keep on the disk.
 
-
-
-Capturing system metrics
-------------------------------------------
-
-
-
-In order to monitor and capture metrics
-related to servers, Metricbeat provides the `system` module.
-The `system` module provides the following metricsets to
-capture server metrics, as follows:
-
-
--   `core`: This metricset provides usage statistics for each
-    CPU core.
--   `cpu`: This metricset provides CPU statistics.
--   `diskio`: This metricset provides disk IO metrics
-    collected from the operating system. One event is created for each
-    disk mounted on the system.
--   `filesystem`: This metricset provides filesystem
-    statistics. For each file system, one event is created.
--   `process`: This metricset provides process statistics. One
-    event is created for each process.
--   `process_summary`: This metricset collects high-level
-    statistics about the running processes.
--   `fsstat`: This metricset provides overall filesystem
-    statistics.
--   `load:` This metricset provides load statistics.
--   `memory`: This metricset provides memory statistics.
--   `network`: This metricset provides network IO metrics
-    collected from the operating system. One event is created for each
-    network interface.
--   `socket`: This metricset reports an event for each new TCP
-    socket that it sees. This metricset is available on Linux only and
-    requires kernel 2.6.14 or newer.
-
-
-Some of these metricsets provide configuration options for fine-tuning
-returned metrics. For example, the `cpu` metricset provides
-a `cpu.metrics` configuration to control the CPU metrics that
-are reported. However, metricsets such
-as `memory` and `diskio` don\'t provide any
-configuration options. Unlike other modules, which can be monitored from
-other servers by configuring the hosts appropriately (not a highly
-recommended approach), `system` modules are local to the
-server and can collect the metrics of
-underlying hosts.
-
-
-### Note
-
-A complete list of fields per metricset that are exported by the
-`system` module can be found
-at <https://www.elastic.co/guide/en/beats/metricbeat/current/exported-fields-system.html>.
 
 ### Running Metricbeat with the system module
 
@@ -949,7 +668,7 @@ filter metrics based on a particular host, enter the search/filter
 criterion in the search/query bar. In the following screenshot, the
 filter criterion is **agent.name:metricbeat\_inst1**. Any
 attribute that uniquely identifies a system/host can be used; for
-example, you can filter based on**host.hostname**, as
+example, you can filter based on **host.hostname**, as
 follows:
 
 
@@ -972,8 +691,6 @@ the `Start `button as shown in the following screenshot:
 
 
 ![](./images/308abb94-3636-4abb-a29b-5f798fbb8fee.png)
-
-
 
 
 

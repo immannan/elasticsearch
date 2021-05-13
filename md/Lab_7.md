@@ -1182,8 +1182,6 @@ $ KIBANA_HOME>bin/kibana-plugin remove x-pack
 Summary
 -------------------------
 
-
-
 In this lab, we covered how to effectively use Kibana to build
 beautiful dashboards for effective storytelling about your data.
 
