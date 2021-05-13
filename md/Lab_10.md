@@ -3,7 +3,7 @@
 
 
 
-Lab 11. Monitoring Server Infrastructure
+Lab 10. Monitoring Server Infrastructure
 -----------------------------------------------------
 
 In this lab, we will cover the following topics:

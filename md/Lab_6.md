@@ -31,7 +31,7 @@ logdata = timestamp + data
 Let\'s take some sample data and use a CSV filter to parse data out of
 it. Store the following data in a file named `users.csv`:
 
-<span style="color:red;">Note: csv file exists at following path: home/elasticsearch/Lab06/users.csv</span>
+<span style="color:red;">Note: csv file exists at following path: /home/elasticsearch/Lab06/users.csv</span>
 
 
 ```
@@ -172,7 +172,7 @@ output {
 } 
 ```
 
-<span style="color:red;">Note: msg.log file exists at following path: home/elasticsearch/Lab06/</span>
+<span style="color:red;">Note: msg.log file exists at following path: /home/elasticsearch/Lab06/</span>
 
 
 If the input line is of the `fenagouser randomData` format, then the output would be as follows:

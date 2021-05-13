@@ -4,7 +4,7 @@
 
 
 
-Lab 10. Building a Sensor Data Analytics Application
+Lab 9. Building a Sensor Data Analytics Application
 -----------------------------------------------------------------
 
 
@@ -248,28 +248,7 @@ Logstash data pipeline.
 ### Accepting JSON requests over the web
 
 
-This function is achieved by the input
-plugin. Logstash has support for the `http` input plugin,
-which does precisely that. It builds an HTTP interface using different
-types of payloads that can be submitted to Logstash as an input.
-
-The relevant part from `logstash_sensor_data_http.conf`, which
-has the input filter, is as follows:
-
-```
-input {
-  http {
-    id => "sensor_data_http_input"
-  }
-}
-```
-
-Here, the `id` field is a string that can uniquely identify
-this input filter later in the file if needed. We will not need to
-reference this name in the file; we just choose the name
-`sensor_data_http_input`.
-
-In this instance, since we are using the default configuration of
+We are using the default configuration of
 the `http` input plugin, we have just
 specified `id`. We should secure this HTTP endpoint as it will be exposed over the internet to allow
 sensors to send data from anywhere. We can
@@ -386,9 +365,7 @@ fields apart from the `lookupResult` field. These fields were
 added by Logstash and the `headers` field was added by the
 HTTP input plugin.
 
-In the next section, we will use the `mutate` filter plugin to
-modify this JSON to the desired end result that we want in
-Elasticsearch. 
+
 
 #### The mutate plugin
 
