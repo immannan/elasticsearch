@@ -32,13 +32,12 @@ Labs for the course:
 6. Building Data Pipelines with Logstash
 7. Visualizing Data with Kibana
 8. Elastic X-Pack
-9. Running Elastic Stack in Production
-10. Building a Sensor Data Analytics Application
-11. Monitoring Server Infrastructure
+9. Building a Sensor Data Analytics Application
+10. Monitoring Server Infrastructure
 
 
 ### About
 
 The Elastic Stack is a powerful combination of tools for techniques such as distributed search, analytics, logging, and visualization of data. Elastic Stack 7 encompasses new features and capabilities that will enable you to find unique insights into analytics using these techniques. This course will give you a  understanding of what the stack is all about, and help you use it efficiently to build powerful real-time data processing applications.
 
-By the end of this course, you’ll be well versed with the fundamental Elastic Stack functionalities and the role of each component in the stack to solve different data processing problems.
+By the end of this course, you’ll be well versed with the Elastic Stack functionalities and the role of each component in the stack to solve different data processing problems.
