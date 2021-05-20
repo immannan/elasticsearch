@@ -519,7 +519,7 @@ cd /elasticstack/metricbeat-7.12.1-linux-x86_64
 ./metricbeat -e
 ```
 
-**Note:** You will get error message because we have enabled mongodb and redis but they are not installined in the lab environment.
+**Note:** You will get error message because we have enabled mongodb and redis but they are not installed in the lab environment.
 
 Once Metricbeat is started, it loads sample Kibana dashboards and
 starts shipping metrics to Elasticsearch. To
@@ -566,24 +566,6 @@ yellow open .kibana sSzeYu-YTtWR8vr2nzKrbg 1 1 108 59 289.3kb 289.3kb
 
 ### Specifying aliases
 
-
-
-Elasticsearch allows the user to create an alias---a virtual index
-name that can be used to refer to an index or
-multiple indices.The Elasticsearch index API aliases an index with a
-name. This enables all the APIs to automatically convert their alias
-names into the actual index name. 
-
-Say, for example, that we want to query against a set of similar
-indexes. Rather than specifying each of the index names in the query, we
-can make use of aliases and execute the query
-against the alias. The alias will internally point to all the indexes
-and perform a query against them. This will be highly beneficial if we
-added certain indexes dynamically on a regular basis, so that one
-application/user performing the query need not worry about including
-those indexes in the query as long as the index is updated with the
-alias (which can be done manually by an admin or specified during index
-creation). 
 
 Let\'s say the IT admin creates an alias pointing to all the indexes
 containing the metrics for a specific month. For example, as shown in
