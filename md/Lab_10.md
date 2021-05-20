@@ -15,7 +15,14 @@ In this lab, we will cover the following topics:
 -   Deployment architecture
 
 
+**Note:**
 
+Run metricbeat commands from following directory:
+
+```
+su elasticsearch
+cd /elasticstack/metricbeat-7.12.1-linux-x86_64
+```
 
 Configuring Metricbeat
 ----------------------------------------
@@ -222,8 +229,8 @@ be passed using the `username` and
 output.elasticsearch:
   enabled: true  
   hosts: ["localhost:9200"]
-  username: "elasticuser"
-  password: "password"
+  username => "elasticsearch"
+  password => "elasticpassword"
 ```
 
 To ship events to the Elasticsearch ingest node pipeline so that they
@@ -355,7 +362,7 @@ A sample configuration is as follows:
 logging.level: debug
 logging.to_files: true
 logging.files:
- path: C:\logs\metricbeat
+ path: /elasticstack/logs/metricbeat
  name: metricbeat.log 
  keepfiles: 10
 ```
@@ -453,13 +460,10 @@ and set the appropriate values.
 
 
 ```
-Windows:
-E:\metricbeat-7.0.0-windows-x86_64>metricbeat.exe modules enable system
-Module system is already enabled
+cd /elasticstack/metricbeat-7.12.1-linux-x86_64
 
-Linux:
-[locationOfMetricBeat]$./metricbeat modules enable system
-Module system is already enabled
+./metricbeat modules enable system
+
 ```
 
 
@@ -510,13 +514,12 @@ metricsets. The `cpu`, `memory`,
 
 
 ```
-Windows:
-E:\metricbeat-7.0.0-windows-x86_64>metricbeat.exe -e
+cd /elasticstack/metricbeat-7.12.1-linux-x86_64
 
-
-Linux:
-[locationOfMetricBeat]$./metricbeat -e
+./metricbeat -e
 ```
+
+**Note:** You will get error message because we have enabled mongodb and redis but they are not installined in the lab environment.
 
 Once Metricbeat is started, it loads sample Kibana dashboards and
 starts shipping metrics to Elasticsearch. To
