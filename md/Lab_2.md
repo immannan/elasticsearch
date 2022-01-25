@@ -449,7 +449,7 @@ response would be as expected:
 The update API is useful for updating the existing document by ID.
 
 The format of an update request
-is `POST <index>/<type>/<id>/_update`, with a JSON request as
+is `POST <index>/_update/<id>`, with a JSON request as
 the body:
 
 ```
